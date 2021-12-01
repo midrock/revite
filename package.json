@@ -1,0 +1,38 @@
+{
+  "name": "revite",
+  "version": "0.1.0",
+  "license": "MIT",
+  "scripts": {
+    "build": "vite build",
+  },
+  "dependencies": {
+    "reflect-metadata": "^0.1.13",
+    "typescript-ioc": "^3.2.2"
+  },
+  "devDependencies": {
+    "@iconify/json": "^1.1.422",
+    "@rollup/plugin-dynamic-import-vars": "^1.4.1",
+    "@typescript-eslint/eslint-plugin": "^5.2.0",
+    "@typescript-eslint/parser": "^5.2.0",
+    "@vitejs/plugin-vue": "^1.9.2",
+    "@vue/compiler-sfc": "^3.1.1",
+    "@vue/eslint-config-standard": "^6.1.0",
+    "@vue/eslint-config-typescript": "^8.0.0",
+    "autoprefixer": "^10.3.6",
+    "eslint": "^7.32.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jest": "^24.5.0",
+    "eslint-plugin-lodash": "^7.1.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^5.1.0",
+    "eslint-plugin-vue": "^7.18.0",
+    "inquirer": "^8.2.0",
+    "postcss": "^8.3.11",
+    "postcss-import": "^14.0.2",
+    "tailwindcss": "^2.0.2",
+    "typescript": "^4.4.4",
+    "unplugin-icons": "^0.12.17",
+    "vite": "^2.0.5",
+    "vite-plugin-pwa": "^0.5.6"
+  }
+}
