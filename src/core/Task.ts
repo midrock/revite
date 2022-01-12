@@ -1,9 +1,11 @@
-interface ReportOptions {
-  label: string
-  color?: string
-}
+import { logger } from '../utils/log'
 
 export abstract class Task {
+  /**
+   * Label for the current task. For example, to use with logger.
+   */
+  label = ''
+
   /**
    *
    */
@@ -13,9 +15,8 @@ export abstract class Task {
    *
    */
   isCompleted = false
-
   promise?: Promise<any>
-
+  protected logger = logger
   private executeTime = 0
 
   get isFailed() {
@@ -23,52 +24,61 @@ export abstract class Task {
   }
 
   /**
-   *
+   * Method to define the runner in an extended class
    */
-  abstract run(context: Revite.Controller, ...args: any[]): Promise<any>
+  abstract run(...args: any[]): Promise<any>
 
-  async execute(context: Revite.Controller, ...args: any[]) {
+  /**
+   * WWrapper to run the task with additional info
+   */
+  async execute(...args: any[]) {
     const startTime = performance.now()
 
     try {
-      this.promise = this.run(context, ...args)
+      this.beginReport()
+      this.promise = this.run(...args)
 
       await this.promise
     } catch (error) {
-      if (error instanceof Error) {
-        this.error = error
-      } else {
-        console.error('implement', error)
-      }
+      this.error = error as Error
     } finally {
       this.executeTime = performance.now() - startTime
       this.isCompleted = true
-      this.endReport(context)
+      this.endReport()
     }
 
     return this.promise
   }
 
-  endReport(context: Revite.Controller, options?: ReportOptions) {
+  beginReport() {
+    if (!this.label) return
+
+    this.logger().log({
+      level: 'debug',
+      context: this.label,
+      message: 'Executing...',
+    })
+  }
+
+  endReport() {
     const { error } = this
 
-    // if (error) {
-    //   revite.log({
-    //     label: `Failed in ${this.formatTime(this.executeTime)}`,
-    //     level: 'error',
-    //     context: this.log.label,
-    //     entry: () => {
-    //       revite.error(error)
-    //     },
-    //   })
-    // } else {
-    //   revite.log({
-    //     level: 'info',
-    //     color: this.log.color,
-    //     context: this.log.label,
-    //     message: `Completed in ${this.formatTime(this.executeTime)}`,
-    //   })
-    // }
+    if (error) {
+      this.logger().group({
+        message: `Failed in ${this.formatTime(this.executeTime)}`,
+        level: 'error',
+        context: this.label || this.constructor.name,
+        entry: () => {
+          this.logger().error(error)
+        },
+      })
+    } else if (this.label) {
+      this.logger().log({
+        level: 'debug',
+        context: this.label,
+        message: `Completed in ${this.formatTime(this.executeTime)}`,
+      })
+    }
   }
 
   private formatTime(time: number) {

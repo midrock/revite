@@ -1,6 +1,6 @@
-import { LoggerServiceContract } from '../LoggerServiceContract'
+import { LoggerServiceContract, LogLevel } from '../contracts/LoggerServiceContract'
 
-export class ConsoleLoggerService extends LoggerServiceContract {
+export class LoggerService extends LoggerServiceContract {
   private colors = {
     debug: '#666666',
     info: '#5c6bc0',
@@ -15,27 +15,11 @@ export class ConsoleLoggerService extends LoggerServiceContract {
     cyan: '#00acc1',
   }
 
-  warn(...args: any[]) {
-    if (this.checkLevel('warn')) {
-      console.warn(...args)
-    }
-  }
-
-  info(...args: any[]) {
-    const logArguments = this.makeStyles({
-      args,
-      level: 'info',
-      context: this.context,
-    })
-
-    console.info(...logArguments)
-  }
-
   error(error: Error | string) {
     console.error(error)
   }
 
-  log(options: Revite.Logger.LogOptions) {
+  log(options) {
     if (!this.checkLevel(options.level)) return
 
     const args: any[] = []
@@ -48,7 +32,7 @@ export class ConsoleLoggerService extends LoggerServiceContract {
       args,
       level: options.level || 'info',
       color: options.color,
-      context: options.context || this.context,
+      context: options.context,
     })
 
     console.log(...logArguments, ...(options.args || []))
@@ -58,13 +42,13 @@ export class ConsoleLoggerService extends LoggerServiceContract {
     console.dirxml(object)
   }
 
-  group(options: Revite.Logger.GroupOptions) {
+  group(options) {
     if (options.level && !this.checkLevel(options.level)) return
 
     const logArguments = this.makeStyles({
       level: options.level || 'info',
       args: [options.label],
-      context: options.context || this.context,
+      context: options.context,
     })
 
     if (options.collapsed) {
@@ -87,7 +71,7 @@ export class ConsoleLoggerService extends LoggerServiceContract {
 
   private makeStyles(options: {
     args: any[]
-    level: Revite.Logger.Level
+    level: LogLevel
     color?: string
     context?: string
   }): string[] {

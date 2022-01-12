@@ -1,6 +1,6 @@
-import { Task } from '../Task'
+import { Task } from '../core/Task'
 
-export class ProviderBootTask extends Task<Revite.Provider.Manifest> {
+export class ProviderBootTask extends Task {
   log = {
     color: 'success',
     label: 'Boot Provider',

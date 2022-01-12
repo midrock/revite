@@ -4,21 +4,26 @@
   "license": "MIT",
   "scripts": {
     "build": "vite build",
+    "demo": "vite",
+    "unit": "vite-jest --no-cache",
+    "typecheck": "vue-tsc --noEmit -p tsconfig.json"
   },
   "dependencies": {
-    "reflect-metadata": "^0.1.13",
+    "mitt": "^3.0.0",
     "typescript-ioc": "^3.2.2"
   },
   "devDependencies": {
-    "@iconify/json": "^1.1.422",
-    "@rollup/plugin-dynamic-import-vars": "^1.4.1",
+    "@types/jest": "^27.4.0",
     "@typescript-eslint/eslint-plugin": "^5.2.0",
     "@typescript-eslint/parser": "^5.2.0",
-    "@vitejs/plugin-vue": "^1.9.2",
+    "@vitejs/plugin-vue": "^2.0.1",
     "@vue/compiler-sfc": "^3.1.1",
     "@vue/eslint-config-standard": "^6.1.0",
     "@vue/eslint-config-typescript": "^8.0.0",
     "autoprefixer": "^10.3.6",
+    "babel-core": "^6.26.3",
+    "babel-plugin-import-glob": "^2.0.0",
+    "babel-plugin-require-context-hook": "^1.0.0",
     "eslint": "^7.32.0",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-jest": "^24.5.0",
@@ -26,13 +31,26 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^5.1.0",
     "eslint-plugin-vue": "^7.18.0",
+    "fast-glob": "^3.2.7",
+    "generate-source-map": "^0.0.5",
     "inquirer": "^8.2.0",
+    "jest": "^27.4.7",
+    "jest-environment-node": "^27.4.6",
     "postcss": "^8.3.11",
     "postcss-import": "^14.0.2",
+    "rollup-plugin-require-context": "^1.0.1",
     "tailwindcss": "^2.0.2",
+    "ts-jest": "^27.1.2",
     "typescript": "^4.4.4",
     "unplugin-icons": "^0.12.17",
     "vite": "^2.0.5",
-    "vite-plugin-pwa": "^0.5.6"
+    "vite-jest": "^0.1.4",
+    "vite-plugin-node": "^0.0.15",
+    "vite-plugin-pwa": "^0.5.6",
+    "vue": "^3.2.26",
+    "vue-jest": "^3.0.7",
+    "vue-router": "^4.0.12",
+    "vue-template-compiler": "^2.6.14",
+    "vue-tsc": "^0.30.2"
   }
 }

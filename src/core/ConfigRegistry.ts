@@ -1,20 +1,16 @@
-import { getImportsByFileNames } from './utils'
+import { getImportsByFileNames } from '../utils/import'
+import { ioc } from '../state'
 
 export class ConfigRegistry {
-  private registry = new Map()
-
-  constructor(private context: Revite.Controller) {
-  }
-
   set(key: string, config: Revite.Config.SourceRaw) {
-    this.registry.set(key, config)
+    ioc.bindValue(`config.${key}`).to(config)
   }
 
-  get(key: string) {
-    return this.registry.get(key)
+  get<T>(key: string): T {
+    return ioc.getValue(`config.${key}`)
   }
 
-  apply(raw: Revite.Config.Sources) {
+  async apply(raw: Revite.Config.Sources) {
     const config = getImportsByFileNames(raw)
 
     for (const key in config) {

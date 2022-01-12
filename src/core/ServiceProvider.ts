@@ -1,10 +1,8 @@
-import { ProviderBootTask } from './tasks/ProviderBootTask'
-import { ProviderRegisterTask } from './tasks/ProviderRegisterTask'
+import { ProviderBootTask } from '../tasks/ProviderBootTask'
+import { ProviderRegisterTask } from '../tasks/ProviderRegisterTask'
+import { BootContext, RegisterContext } from '../types'
 
 export abstract class ServiceProvider {
-  preload = false
-  config = ''
-
   private tasks: {
     register?: ProviderRegisterTask
     boot?: ProviderBootTask
@@ -55,19 +53,38 @@ export abstract class ServiceProvider {
    * The provider has errors while registering or booting.
    */
   get isFailed() {
-    const {
-      register,
-      boot,
-    } = this.tasks
+    const { register, boot } = this.tasks
 
     return !!(register?.isFailed || boot?.isFailed)
   }
 
-  beforeRegister?(ctx: Revite.Provider.RegisterContext): Promise<void>
+  getRegisterTask() {
+    return this.tasks.register
+  }
 
-  register?(ctx: Revite.Provider.RegisterContext): Promise<void>
+  setRegisterTask(task: ProviderRegisterTask) {
+    if (this.tasks.register) {
+      throw new Error('The register task already exist')
+    }
 
-  beforeBoot?(ctx: Revite.Provider.RegisterContext): Promise<void>
+    this.tasks.register = task
+  }
 
-  boot?(ctx: Revite.Provider.BootContext): Promise<void>
+  getBootTask() {
+    return this.tasks.boot
+  }
+
+  setBootTask(task: ProviderBootTask) {
+    if (this.tasks.boot) {
+      throw new Error('The boot task already exist')
+    }
+
+    this.tasks.boot = task
+  }
+
+  register?(ctx: RegisterContext): void | Promise<void>
+
+  beforeBoot?(ctx: BootContext): void | Promise<void>
+
+  boot?(ctx: BootContext): void | Promise<void>
 }

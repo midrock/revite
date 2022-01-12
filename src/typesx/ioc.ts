@@ -2,9 +2,6 @@ declare namespace Revite {
 
   namespace Ioc {
 
-    type SyncFactory = any
-    type AsyncFactory = () => Promise<Factory<T, O>>
-
     interface BindOptions<T = any, O = any> {
       bind: Revite.AbstractConstructor<any>
       to?: Revite.Constructor<T, O> | Revite.Import

@@ -6,9 +6,14 @@ declare namespace Revite {
 
     type Sources = Record<string, Source>
 
-    interface Bootstrap {
+    interface Main {
+      logger?: LoggerConfig
       providers: Config.ProviderManifest[]
-      handleError?: () => (void | Promise<void>)
+    }
+
+    interface LoggerConfig {
+      service?: Revite.Constructor<import('revite').LoggerServiceContract>
+      level?: string
     }
 
     type ProviderManifest =
@@ -16,7 +21,7 @@ declare namespace Revite {
   }
 }
 
-declare module '@revite/config' {
+declare module 'revite/config' {
   const config: Record<string, any>
 
   export default config
