@@ -1,0 +1,43 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "removeComments": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "noImplicitAny": false,
+    "declaration": true,
+    "emitDecoratorMetadata": false,
+    "importHelpers": false,
+    "baseUrl": ".",
+    "strict": true,
+    "paths": {
+      "revite": [
+        "src"
+      ],
+      "/~/*": [
+        "demo/src/*"
+      ]
+    },
+    "lib": [
+      "ES2020"
+    ],
+    "types": [
+      "vite/client",
+      "jest"
+    ]
+  },
+  "include": [
+    "src/**/*.ts",
+    "demo/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist"
+  ],
+  "files": [
+    "./revite.d.ts",
+  ]
+}

@@ -1,18 +1,13 @@
-import { LoggerServiceContract, LogLevel } from '../contracts/LoggerServiceContract'
+import { LogLevel } from '../types'
+import { LoggerServiceContract } from '../contracts/LoggerServiceContract'
 
 export class LoggerService extends LoggerServiceContract {
   private colors = {
-    debug: '#666666',
+    debug: '#616161',
     info: '#5c6bc0',
-    warn: '#ff8f00',
+    warn: '#f57f17',
     error: '#d32f2f',
     success: '#43a047',
-    brown: '#8d6e63',
-    teal: '#00897b',
-    gray: '#616161',
-    purple: '#8e24aa',
-    black: '#000',
-    cyan: '#00acc1',
   }
 
   error(error: Error | string) {
@@ -47,7 +42,7 @@ export class LoggerService extends LoggerServiceContract {
 
     const logArguments = this.makeStyles({
       level: options.level || 'info',
-      args: [options.label],
+      args: [options.message],
       context: options.context,
     })
 

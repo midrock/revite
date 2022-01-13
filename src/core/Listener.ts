@@ -1,14 +1,15 @@
+import { logger } from '../utils/log'
+
 export abstract class Listener {
   abstract handle(...args: any[]): void | Promise<void>
 
   execute = (...args: any[]) => {
     this.handle(...args)
-    revite.logger.log({
+    logger().log({
       args: [...args],
-      level: 'info',
-      color: 'info',
+      level: 'debug',
       context: this.constructor.name,
-      message: 'Executed by'
+      message: 'Executed by',
     })
   }
 }

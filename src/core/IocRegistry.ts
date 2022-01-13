@@ -4,13 +4,14 @@ import { providers } from '../state'
 import { BindContext } from './BindContext'
 
 export class IocRegistry {
-  binders = new Map<AbstractConstructor<any>, BindContext<any>>()
+  binders = new Map<AbstractConstructor, BindContext<any>>()
+  container = Container
 
   getValue(target: string) {
     return Container.getValue(target)
   }
 
-  get<T>(target: AbstractConstructor<T>): T {
+  get<T>(target: AbstractConstructor): T {
     const instance = Container.get(target)
 
     if (/contract/i.test(instance.constructor.name)) {
@@ -24,14 +25,14 @@ export class IocRegistry {
     return Container.bindName(name)
   }
 
-  bind<T extends AbstractConstructor<T>>(contract: T): BindContext<T> {
+  bind<T extends AbstractConstructor>(contract: T): BindContext<T> {
     const context = new BindContext<T>(contract)
 
     this.binders.set(contract, context)
     return context
   }
 
-  async resolve<T extends AbstractConstructor<T>>(contract: T, options?: ResolveOptions): Promise<T> {
+  async resolve<T extends AbstractConstructor>(contract: T, options?: ResolveOptions): Promise<InstanceType<T>> {
     if (options?.loaded) {
       await providers.ensureLoaded(contract)
     }
@@ -46,7 +47,7 @@ export class IocRegistry {
     return this.get(contract)
   }
 
-  async resolveIfExist<T extends AbstractConstructor<T>>(contract: T, options?: ResolveOptions): Promise<T | undefined> {
+  async resolveIfExist<T extends AbstractConstructor>(contract: T, options?: ResolveOptions): Promise<InstanceType<T> | undefined> {
     try {
       return this.resolve(contract, options)
     } catch (error) {

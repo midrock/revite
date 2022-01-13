@@ -1,12 +1,15 @@
-export class Event {
+import { logger } from '../utils/log'
+import { events } from '../state'
+
+export abstract class Event {
   dispatch() {
-    revite.logger.log({
+    logger().log({
       args: [this],
-      level: 'info',
+      level: 'debug',
       color: 'purple',
       context: this.constructor.name,
     })
 
-    revite.emitter.emit(this.constructor.name, this)
+    events.emit(this.constructor.name, this)
   }
 }

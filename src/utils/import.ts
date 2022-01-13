@@ -1,4 +1,6 @@
-export function getImportsByFileNames(configSource?: Revite.Config.Sources) {
+import { Import, Sources } from '../types'
+
+export function getImportsByFileNames(configSource?: Sources) {
   const parseResult: Record<string, any> = {}
 
   for (const path in configSource) {
@@ -18,7 +20,7 @@ export function resolveModule(module: Record<string, any>) {
   return module.default || module[importKey] || module
 }
 
-export async function resolveImport<T>(source: Revite.Import<T>): Promise<any> {
+export async function resolveImport<T = any>(source: Import<T>): Promise<any> {
   let module: any
 
   if (source instanceof Function) {

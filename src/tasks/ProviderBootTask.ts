@@ -1,43 +1,24 @@
 import { Task } from '../core/Task'
+import { ServiceProvider } from '../core/ServiceProvider'
+import { ioc } from '../state'
 
 export class ProviderBootTask extends Task {
-  log = {
-    color: 'success',
-    label: 'Boot Provider',
-  }
-
-  async run(manifest: Revite.Provider.Manifest) {
-    const { provider } = manifest
-
-    provider.tasks.boot = this
-    this.log.label = `Boot ${provider.label}`
-
-    this.beginReport()
+  async run(provider: ServiceProvider) {
+    this.label = `Boot ${provider.constructor.name}`
+    provider.setBootTask(this)
 
     if (!provider.isRegistered) {
-      this.error = provider.tasks.register?.error || new Error('Not registered')
+      this.error = new Error('Not registered')
       return
     }
 
     if (provider.boot instanceof Function) {
       return provider.boot({
-        resolve: async (contract) => {
-          const targetProvider = revite.providers.getProviderByContract(contract)
-
-          if (provider.constructor.name !== targetProvider.constructor.name) {
-            await revite.providers.ensureLoaded(contract)
-          }
-
-          return revite.container.resolveInstance(contract)
+        resolve(contract, options?) {
+          return ioc.resolve(contract, options)
         },
-        resolveIfExist: async (contract) => {
-          const targetProvider = revite.providers.getProviderByContract(contract)
-
-          if (provider.constructor.name !== targetProvider.constructor.name) {
-            await revite.providers.ensureLoaded(contract)
-          }
-
-          return revite.container.resolveInstanceIfExist(contract)
+        resolveIfExist(contract, options?) {
+          return ioc.resolveIfExist(contract, options)
         },
       })
     }

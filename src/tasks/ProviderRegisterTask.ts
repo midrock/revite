@@ -1,9 +1,10 @@
 import { Task } from '../core/Task'
 import { config, ioc } from '../state'
-import { BindOptions, ResolveOptions } from '../types'
+import { ServiceProvider } from '../core/ServiceProvider'
 
 export class ProviderRegisterTask extends Task {
-  async run(provider: Revite.ServiceProvider) {
+  async run(provider: ServiceProvider) {
+    this.label = `Reg ${provider.constructor.name}`
     provider.setRegisterTask(this)
 
     if (provider.register instanceof Function) {
@@ -11,14 +12,14 @@ export class ProviderRegisterTask extends Task {
         config(name: string) {
           return config.get(name)
         },
-        bind(config: BindOptions) {
-          return ioc.bind(config)
+        bind(contract) {
+          return ioc.bind(contract)
         },
-        resolve<T>(contract: Revite.AbstractConstructor<T>, options?: ResolveOptions) {
-          return ioc.resolve<T>(contract, options)
+        resolve(contract, options?) {
+          return ioc.resolve(contract, options)
         },
-        resolveIfExist<T>(contract: Revite.AbstractConstructor<T>, options?: ResolveOptions) {
-          return ioc.resolveIfExist<T>(contract, options)
+        resolveIfExist(contract, options?) {
+          return ioc.resolveIfExist(contract, options)
         },
       })
     }

@@ -1,20 +1,22 @@
+import { AbstractConstructor, Constructor } from '../types'
+import { ServiceProvider } from '../core/ServiceProvider'
 import { ProviderRegisterTask } from '../tasks/ProviderRegisterTask'
 import { ProviderBootTask } from '../tasks/ProviderBootTask'
 
 export class ProvidersRegistry {
-  registry = new Map<string, Revite.ServiceProvider>()
-  contracts = new WeakMap<Revite.AbstractConstructor, Revite.ServiceProvider>()
+  registry = new Map<string, ServiceProvider>()
+  contracts = new WeakMap<AbstractConstructor, ServiceProvider>()
 
-  create(Constructor: Revite.Provider.Constructor) {
-    this.registry.set(Constructor.name, new Constructor())
+  create(Provider: Constructor<ServiceProvider>) {
+    this.registry.set(Provider.name, new Provider())
   }
 
-  registerContract(contract: Revite.AbstractConstructor, provider: Revite.ServiceProvider) {
+  registerContract(contract: AbstractConstructor, provider: ServiceProvider) {
     this.contracts.set(contract, provider)
   }
 
   getAll() {
-    const providers: Revite.ServiceProvider[] = []
+    const providers: (ServiceProvider)[] = []
 
     for (const provider of this.registry.values()) {
       providers.push(provider)
@@ -23,11 +25,11 @@ export class ProvidersRegistry {
     return providers
   }
 
-  getProviderByContract(contract: Revite.AbstractConstructor) {
+  getProviderByContract(contract: AbstractConstructor) {
     return this.contracts.get(contract)
   }
 
-  async register(provider: Revite.ServiceProvider) {
+  async register(provider: ServiceProvider) {
     if (provider.isRegistered) return
 
     const task = provider.getRegisterTask()
@@ -41,7 +43,7 @@ export class ProvidersRegistry {
     }
   }
 
-  async boot(provider: Revite.ServiceProvider) {
+  async boot(provider: ServiceProvider) {
     if (provider.isLoaded) return
 
     const task = provider.getBootTask()
@@ -55,7 +57,7 @@ export class ProvidersRegistry {
     }
   }
 
-  async ensureLoaded<T>(contract: Revite.AbstractConstructor<T>): Promise<void> {
+  async ensureLoaded(contract: AbstractConstructor): Promise<void> {
     const provider = this.getProviderByContract(contract)
 
     if (provider) {

@@ -1,6 +1,10 @@
+import { LogGroupOptions, LogLevel, LogOptions } from '../types'
 import { logger } from '../utils/log'
 
 export abstract class Task {
+  color = ''
+  level: LogLevel = 'debug'
+  timeout = 3000
   /**
    * Label for the current task. For example, to use with logger.
    */
@@ -16,7 +20,6 @@ export abstract class Task {
    */
   isCompleted = false
   promise?: Promise<any>
-  protected logger = logger
   private executeTime = 0
 
   get isFailed() {
@@ -34,8 +37,19 @@ export abstract class Task {
   async execute(...args: any[]) {
     const startTime = performance.now()
 
+    let timer
+
+    if (this.timeout > 0) {
+      timer = setInterval(() => {
+        this.log({
+          level: 'warn',
+          context: this.label,
+          message: 'Waiting',
+        })
+      }, this.timeout)
+    }
+
     try {
-      this.beginReport()
       this.promise = this.run(...args)
 
       await this.promise
@@ -45,40 +59,41 @@ export abstract class Task {
       this.executeTime = performance.now() - startTime
       this.isCompleted = true
       this.endReport()
+
+      clearTimeout(timer)
     }
 
     return this.promise
-  }
-
-  beginReport() {
-    if (!this.label) return
-
-    this.logger().log({
-      level: 'debug',
-      context: this.label,
-      message: 'Executing...',
-    })
   }
 
   endReport() {
     const { error } = this
 
     if (error) {
-      this.logger().group({
+      this.group({
         message: `Failed in ${this.formatTime(this.executeTime)}`,
         level: 'error',
         context: this.label || this.constructor.name,
         entry: () => {
-          this.logger().error(error)
+          logger().error(error)
         },
       })
     } else if (this.label) {
-      this.logger().log({
-        level: 'debug',
+      this.log({
+        level: this.level,
+        color: this.color,
         context: this.label,
         message: `Completed in ${this.formatTime(this.executeTime)}`,
       })
     }
+  }
+
+  protected log(options: LogOptions) {
+    logger().log(options)
+  }
+
+  protected group(options: LogGroupOptions) {
+    logger().group(options)
   }
 
   private formatTime(time: number) {

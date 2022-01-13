@@ -1,17 +1,19 @@
 // import { resolveImport } from './utils/utils'
 import { BuiltInServicesTask } from '../tasks/BuiltInServicesTask'
 import { BootstrapSessionTask } from '../tasks/BootstrapSessionTask'
-import { config } from '../state'
+import { config, ioc } from '../state'
+import { Sources } from '../types'
 
 export class ReviteController {
   private initialized = false
-  // async resolve<T>(contract: Revite.AbstractConstructor<T>): Promise<T> {
-  //   return this.ioc.resolveLoaded(contract)
-  // }
-  //
-  // async resolveIfExist<T>(contract: Revite.AbstractConstructor<T>): Promise<T | undefined> {
-  //   return this.ioc.resolveLoadedIfExist(contract)
-  // }
+
+  async resolve(contract, options) {
+    return ioc.resolve(contract, options)
+  }
+
+  async resolveIfExist(contract, options) {
+    return ioc.resolveIfExist(contract, options)
+  }
 
   // /**
   //  * Resolve import
@@ -23,7 +25,7 @@ export class ReviteController {
   /**
    * Bootstrap application
    */
-  async bootstrap(appConfig: Revite.Config.Sources) {
+  async bootstrap(appConfig: Sources) {
     await config.apply(appConfig)
 
     if (!this.initialized) {

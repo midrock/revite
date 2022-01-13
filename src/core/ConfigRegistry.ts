@@ -1,8 +1,9 @@
 import { getImportsByFileNames } from '../utils/import'
 import { ioc } from '../state'
+import { Sources } from '../types'
 
 export class ConfigRegistry {
-  set(key: string, config: Revite.Config.SourceRaw) {
+  set(key: string, config) {
     ioc.bindValue(`config.${key}`).to(config)
   }
 
@@ -10,7 +11,7 @@ export class ConfigRegistry {
     return ioc.getValue(`config.${key}`)
   }
 
-  async apply(raw: Revite.Config.Sources) {
+  async apply(raw: Sources) {
     const config = getImportsByFileNames(raw)
 
     for (const key in config) {

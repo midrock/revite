@@ -1,16 +1,24 @@
 import mitt from 'mitt'
+import { Event } from './Event'
+import { Listener } from './Listener'
+import { Constructor } from '../types'
+import { logger } from '../utils/log'
+
+type EventConstructor = Constructor<Event>
+type ListenerConstructor = Constructor<Listener>
 
 export class EventsRegistry {
   private emitter = mitt()
 
-  constructor(private context: Revite.Controller) {
+  emit(event, payload) {
+    this.emitter.emit(event, payload)
   }
 
   on(
-    event: Revite.Events.EventConstructor,
-    listen: Revite.Events.ListenerConstructor | Revite.Events.ListenerConstructor[],
+    event: EventConstructor,
+    listen: ListenerConstructor | ListenerConstructor[],
   ) {
-    const createListener = (Listener: Revite.Events.ListenerConstructor) => {
+    const createListener = (Listener: ListenerConstructor) => {
       if (!Listener.name) {
         throw new Error(`Listener for ${event.name} should be a constructor.`)
       }
@@ -18,7 +26,7 @@ export class EventsRegistry {
       const listener = new Listener()
 
       this.emitter.on(event.name, listener.execute)
-      revite.logger.log({
+      logger().log({
         level: 'debug',
         color: 'teal',
         context: Listener.name,
@@ -34,11 +42,11 @@ export class EventsRegistry {
   }
 
   off(
-    event: Revite.Events.EventConstructor,
-    listen?: Revite.Events.ListenerConstructor | Revite.Events.ListenerConstructor[],
+    event: EventConstructor,
+    listen?: ListenerConstructor | ListenerConstructor[],
   ) {
-    const removeListener = (Listener: Revite.Events.ListenerConstructor) => {
-      console.warn('implement this', Listener)
+    const removeListener = (Listener: ListenerConstructor) => {
+      this.emitter.off(event.name, new Listener().execute)
     }
 
     if (listen instanceof Array) {
@@ -47,7 +55,7 @@ export class EventsRegistry {
       removeListener(listen)
     } else {
       this.emitter.off(event.name)
-      revite.logger.log({
+      logger().log({
         level: 'debug',
         color: 'brown',
         context: event.name,
