@@ -1,5 +1,12 @@
 # Changelog
 
+# [1.1.0](https://github.com/midrock/revite/compare/v1.0.0...v1.1.0) (2022-01-18)
+
+
+### Features
+
+* **build:** trigger ([ec58f14](https://github.com/midrock/revite/commit/ec58f14740b495b5dccc5f06e323a0446bc817e0))
+
 # 1.0.0 (2022-01-18)
 
 
