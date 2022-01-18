@@ -2,7 +2,7 @@ import mitt from 'mitt'
 import { Event } from './Event'
 import { Listener } from './Listener'
 import { Constructor } from '../types'
-import { logger } from '../utils/log'
+import { logger } from '../utils/built-in'
 
 type EventConstructor = Constructor<Event>
 type ListenerConstructor = Constructor<Listener>
@@ -28,7 +28,6 @@ export class EventsRegistry {
       this.emitter.on(event.name, listener.execute)
       logger().log({
         level: 'debug',
-        color: 'teal',
         context: Listener.name,
         message: `Registered for ${event.name}`,
       })

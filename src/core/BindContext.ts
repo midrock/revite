@@ -1,7 +1,7 @@
 import { Container, Scope } from 'typescript-ioc'
 import { AbstractConstructor, BindFactory, ExtendedConstructor, Import } from '../types'
 import { resolveImport } from '../utils/import'
-import { logger } from '../utils/log'
+import { logger, reactivity } from '../utils/built-in'
 
 export class BindContext<T extends AbstractConstructor> {
   private resolver?: () => Promise<void>
@@ -24,13 +24,19 @@ export class BindContext<T extends AbstractConstructor> {
   to(options: {
     reactive?: boolean
     singleton?: boolean
-    service: Import<T>
+    service?: Import<T>
     factory?: (options: {
       Service: ExtendedConstructor<T>
     }) => (BindFactory<T> | Promise<BindFactory<T>>)
   }) {
     this.resolver = async () => {
-      const Service = await resolveImport(options.service)
+      let Service
+
+      if (options.service) {
+        Service = await resolveImport(options.service)
+      } else {
+        Service = this.contract
+      }
 
       const bind = Container.bind(this.contract)
 
@@ -53,6 +59,10 @@ export class BindContext<T extends AbstractConstructor> {
             logger().dir(instance)
           },
         })
+
+        if (options.reactive) {
+          return reactivity().makeReactive(instance)
+        }
 
         return instance
       })

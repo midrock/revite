@@ -14,5 +14,6 @@ export function defineConfig(config: Config) {
 export type {
   RegisterContext,
   BootContext,
+  BeforeBootContext,
   Config,
 } from './types'

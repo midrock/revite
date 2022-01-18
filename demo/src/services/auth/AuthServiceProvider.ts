@@ -1,22 +1,20 @@
-import { RegisterContext, ServiceProvider } from 'revite'
+import { BootContext, RegisterContext, ServiceProvider } from 'revite'
 import { AuthServiceContract } from '/~/services/auth/AuthServiceContract'
-import { ApiServiceContract } from '/~/services/api/ApiServiceContract'
 
 export class AuthServiceProvider extends ServiceProvider {
   register(ctx: RegisterContext) {
     const config: Service.Auth.Config = ctx.config('auth')
 
     ctx.bind(AuthServiceContract).to({
-      service: () => import('./versions/MockLoggedAuthService'),
+      service: config.service,
       reactive: true,
       singleton: true,
-      async factory({ Service }) {
-        const apiService = await ctx.resolve(ApiServiceContract)
-
-        return () => new Service({
-          apiService,
-        })
-      },
     })
+  }
+
+  async boot(ctx: BootContext) {
+    const authService = await ctx.resolve(AuthServiceContract)
+
+    return authService.fetchUser()
   }
 }

@@ -1,5 +1,5 @@
 import { LogGroupOptions, LogLevel, LogOptions } from '../types'
-import { logger } from '../utils/log'
+import { logger } from '../utils/built-in'
 
 export abstract class Task {
   color = ''

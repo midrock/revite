@@ -1,4 +1,4 @@
-import { logger } from '../utils/log'
+import { logger } from '../utils/built-in'
 
 export abstract class Listener {
   abstract handle(...args: any[]): void | Promise<void>

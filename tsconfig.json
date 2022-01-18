@@ -31,7 +31,9 @@
   },
   "include": [
     "src/**/*.ts",
-    "demo/**/*.ts"
+    "demo/**/*.ts",
+    "demo/**/*.md",
+    "demo/**/*.vue",
   ],
   "exclude": [
     "node_modules",

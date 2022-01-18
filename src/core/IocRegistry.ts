@@ -4,7 +4,7 @@ import { providers } from '../state'
 import { BindContext } from './BindContext'
 
 export class IocRegistry {
-  binders = new Map<AbstractConstructor, BindContext<any>>()
+  binders = new Map<AbstractConstructor, BindContext<any> | true>()
   container = Container
 
   getValue(target: string) {
@@ -12,13 +12,11 @@ export class IocRegistry {
   }
 
   get<T>(target: AbstractConstructor): T {
-    const instance = Container.get(target)
-
-    if (/contract/i.test(instance.constructor.name)) {
-      throw new Error(`${target.name} does not have a linked service`)
+    if (this.binders.has(target)) {
+      return Container.get(target)
     }
 
-    return instance
+    throw new Error(`${target.name} does not registered`)
   }
 
   bindValue(name: string) {
@@ -39,9 +37,9 @@ export class IocRegistry {
 
     const binder = this.binders.get(contract)
 
-    if (binder) {
+    if (binder instanceof Object) {
       await binder.resolve()
-      this.binders.delete(contract)
+      this.binders.set(contract, true)
     }
 
     return this.get(contract)

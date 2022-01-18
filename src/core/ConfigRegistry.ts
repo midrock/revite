@@ -1,6 +1,6 @@
 import { getImportsByFileNames } from '../utils/import'
 import { ioc } from '../state'
-import { Sources } from '../types'
+import { Config, Sources } from '../types'
 
 export class ConfigRegistry {
   set(key: string, config) {
@@ -13,9 +13,18 @@ export class ConfigRegistry {
 
   async apply(raw: Sources) {
     const config = getImportsByFileNames(raw)
+    const mainConfig: Config = config.main
 
     for (const key in config) {
       this.set(key, config[key])
+    }
+
+    if (mainConfig.config) {
+      for (const key in mainConfig.config) {
+        if (!config[key]) {
+          this.set(key, mainConfig.config[key])
+        }
+      }
     }
   }
 }

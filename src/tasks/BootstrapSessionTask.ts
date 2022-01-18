@@ -28,20 +28,34 @@ export class BootstrapSessionTask extends Task {
         })
     })
 
-    await Promise.all(tasks)
-
-    const providers = providersRegistry.getAll()
+    const providers = await Promise.all(tasks)
 
     await Promise.all([
-      ...providers.map(provider => {
-        return providersRegistry.register(provider)
-      }),
+      ...providers
+        .filter(provider => provider.mayRegister)
+        .map(provider => {
+          return providersRegistry.register(provider)
+        }),
     ])
 
     await Promise.all([
-      ...providers.map(provider => {
-        return providersRegistry.boot(provider)
-      }),
+      ...providers
+        .filter(provider => provider.mayBeforeBoot)
+        .map(provider => {
+          return providersRegistry.beforeBoot(provider)
+        }),
     ])
+
+    await Promise.all([
+      ...providers
+        .filter(provider => provider.mayBoot)
+        .map(provider => {
+          return providersRegistry.boot(provider)
+        }),
+    ])
+
+    providers.forEach(provider => {
+      providersRegistry.completeProvider(provider)
+    })
   }
 }

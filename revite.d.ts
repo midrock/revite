@@ -5,8 +5,7 @@ declare module '@revite/config' {
 }
 
 declare namespace Revite {
-  type RegisterContext = import('./dist/types').RegisterContext
-  type BootContext = import('./dist/types').BootContext
   type Constructor<T> = import('./dist/types').Constructor<T>
   type Import<T> = import('./dist/types').Import<T>
+  type ImportConstructor<T> = Import<Constructor<T>>
 }

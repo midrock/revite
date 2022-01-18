@@ -14,12 +14,8 @@ export class ProviderBootTask extends Task {
 
     if (provider.boot instanceof Function) {
       return provider.boot({
-        resolve(contract, options?) {
-          return ioc.resolve(contract, options)
-        },
-        resolveIfExist(contract, options?) {
-          return ioc.resolveIfExist(contract, options)
-        },
+        resolve: ioc.resolve.bind(ioc),
+        resolveIfExist: ioc.resolveIfExist.bind(ioc),
       })
     }
   }

@@ -2,31 +2,25 @@ import { AbstractConstructor, Constructor } from '../types'
 import { ServiceProvider } from '../core/ServiceProvider'
 import { ProviderRegisterTask } from '../tasks/ProviderRegisterTask'
 import { ProviderBootTask } from '../tasks/ProviderBootTask'
+import { ProviderBeforeBootTask } from '../tasks/ProviderBeforeBootTask'
 
 export class ProvidersRegistry {
-  registry = new Map<string, ServiceProvider>()
-  contracts = new WeakMap<AbstractConstructor, ServiceProvider>()
+  private registry = new Map<string, ServiceProvider | true>()
+  private contracts = new Map<string, string>()
 
   create(Provider: Constructor<ServiceProvider>) {
-    this.registry.set(Provider.name, new Provider())
+    const provider = new Provider()
+
+    this.registry.set(Provider.name, provider)
+    return provider
   }
 
-  registerContract(contract: AbstractConstructor, provider: ServiceProvider) {
-    this.contracts.set(contract, provider)
+  getRegistry() {
+    return this.registry
   }
 
-  getAll() {
-    const providers: (ServiceProvider)[] = []
-
-    for (const provider of this.registry.values()) {
-      providers.push(provider)
-    }
-
-    return providers
-  }
-
-  getProviderByContract(contract: AbstractConstructor) {
-    return this.contracts.get(contract)
+  linkContractToProvider(contract: AbstractConstructor, provider: ServiceProvider) {
+    this.contracts.set(contract.name, provider.constructor.name)
   }
 
   async register(provider: ServiceProvider) {
@@ -40,6 +34,12 @@ export class ProvidersRegistry {
 
     if (provider.mayRegister) {
       return new ProviderRegisterTask().execute(provider)
+    }
+  }
+
+  async beforeBoot(provider: ServiceProvider) {
+    if (provider.mayBeforeBoot) {
+      return new ProviderBeforeBootTask().execute(provider)
     }
   }
 
@@ -58,14 +58,23 @@ export class ProvidersRegistry {
   }
 
   async ensureLoaded(contract: AbstractConstructor): Promise<void> {
-    const provider = this.getProviderByContract(contract)
+    const providerName = this.contracts.get(contract.name) || ''
+    const provider = this.registry.get(providerName)
 
-    if (provider) {
+    if (!provider || provider === true) return
+
+    const bootTask = provider.getBootTask()
+
+    if (bootTask) {
+      await bootTask.promise
+    } else if (!provider.isFailed) {
       await this.boot(provider)
+    }
+  }
 
-      if (provider.isFailed) {
-        throw new Error(`${provider.label} is failed`)
-      }
+  completeProvider(provider: ServiceProvider) {
+    if (!provider.isFailed) {
+      this.registry.set(provider.constructor.name, true)
     }
   }
 }

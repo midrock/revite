@@ -1,6 +1,6 @@
 import { ProviderBootTask } from '../tasks/ProviderBootTask'
 import { ProviderRegisterTask } from '../tasks/ProviderRegisterTask'
-import { BootContext, RegisterContext } from '../types'
+import { BeforeBootContext, BootContext, RegisterContext } from '../types'
 
 export abstract class ServiceProvider {
   private tasks: {
@@ -17,6 +17,10 @@ export abstract class ServiceProvider {
 
   get mayRegister() {
     return this.register instanceof Function
+  }
+
+  get mayBeforeBoot() {
+    return this.beforeBoot instanceof Function
   }
 
   get mayBoot() {
@@ -47,6 +51,12 @@ export abstract class ServiceProvider {
     }
 
     return !this.mayBoot
+  }
+
+  get error() {
+    const { register, boot } = this.tasks
+
+    return register?.error || boot?.error
   }
 
   /**
@@ -82,9 +92,9 @@ export abstract class ServiceProvider {
     this.tasks.boot = task
   }
 
-  register?(ctx: RegisterContext): void | Promise<void>
+  register?(ctx: RegisterContext): void
 
-  beforeBoot?(ctx: BootContext): void | Promise<void>
+  beforeBoot?(ctx: BeforeBootContext): (void | Promise<void>)
 
-  boot?(ctx: BootContext): void | Promise<void>
+  boot?(ctx: BootContext): (void | Promise<void>)
 }

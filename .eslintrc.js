@@ -13,6 +13,7 @@ module.exports = {
   },
   globals: {
     Revite: true,
+    Service: true,
   },
   extends: [
     'eslint:recommended',

@@ -2,7 +2,7 @@ import { Plugin } from 'vite'
 
 interface PluginOptions {
   root: string
-  use: Record<string, boolean>
+  use: string | Record<string, boolean>
 }
 
 export default function(options: PluginOptions): Plugin {
@@ -16,9 +16,15 @@ export default function(options: PluginOptions): Plugin {
     throw new Error('Revite Plugin: root directory with configurations should be defined')
   }
 
-  const targetConfig = Object.keys(options.use).find(key => {
-    return !!options.use[key]
-  })
+  let targetConfig: string | undefined
+
+  if (typeof options.use === 'string') {
+    targetConfig = options.use
+  } else {
+    targetConfig = Object.keys(options.use).find(key => {
+      return !!options.use[key]
+    })
+  }
 
   if (!targetConfig) {
     throw new Error('Revite Plugin: no active config was found')

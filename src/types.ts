@@ -1,5 +1,7 @@
 import { LoggerServiceContract } from './contracts/LoggerServiceContract'
 import { ReactivityServiceContract } from './contracts/ReactivityServiceContract'
+import { Event } from './core/Event'
+import { Listener } from './core/Listener'
 
 type ServiceProvider = import('./core/ServiceProvider').ServiceProvider
 type BindContext<T> = import('./core/BindContext').BindContext<T>
@@ -8,12 +10,13 @@ export type AbstractConstructor = abstract new (...args: any[]) => any
 
 export type ExtendedConstructor<T extends AbstractConstructor> = {
   new(...args: ConstructorParameters<T>): T
-  prototype: T
 }
+
+export type EventConstructor = Constructor<Event>
+export type ListenerConstructor = Constructor<Listener>
 
 export type Constructor<T> = {
   new(...args: any): T
-  prototype: T
 }
 
 type SourceRaw = Record<string, any>
@@ -44,6 +47,7 @@ export interface Config {
   logger?: LoggerConfig
   reactivity?: ReactivityConfig
   providers: (Import<Constructor<ServiceProvider>>)[]
+  config?: Record<string, any>
 }
 
 interface LoggerConfig {
@@ -71,9 +75,15 @@ export interface ProviderContext {
 }
 
 export interface RegisterContext extends ProviderContext {
+  on(event: EventConstructor, listen: ListenerConstructor | ListenerConstructor[]): void
+
   config<T>(name: string): T
 
   bind<T extends AbstractConstructor>(contract: T): BindContext<T>
+}
+
+export interface BeforeBootContext extends ProviderContext {
+  config<T>(name: string): T
 }
 
 export type BootContext = ProviderContext
