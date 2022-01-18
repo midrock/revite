@@ -13,8 +13,12 @@
     "type": "git",
     "url": "https://github.com/midrock/revite.git"
   },
+  "files": [
+    "dist/*",
+    "revite.d.ts"
+  ],
   "main": "./dist/index.js",
-  "types": "./dist/types.d.ts",
+  "types": "./revite.d.ts",
   "dependencies": {
     "mitt": "^3.0.0",
     "typescript-ioc": "^3.2.2"
