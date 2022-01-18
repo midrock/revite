@@ -1,11 +1,5 @@
 # Revite
 
-If you are using decorators you should add this before.
-
-```ts
-import "reflect-metadata";
-```
-
 Built-in contracts
 
 # Build
