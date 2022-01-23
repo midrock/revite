@@ -4,6 +4,8 @@
   "license": "MIT",
   "scripts": {
     "build": "tsc --project tsconfig.release.json",
+    "build:lib": "tsc --project tsconfig.release.json",
+    "build:plugin": "tsc ./plugin.ts --declaration true",
     "demo": "vite --config demo/vite.config.ts",
     "test:unit": "vite-jest --no-cache",
     "release": "semantic-release",
@@ -15,10 +17,10 @@
   },
   "files": [
     "dist/*",
+    "plugin.ts",
     "revite.d.ts"
   ],
   "main": "./dist/index.js",
-  "types": "./revite.d.ts",
   "dependencies": {
     "mitt": "^3.0.0",
     "typescript-ioc": "^3.2.2"
@@ -81,5 +83,12 @@
     "commitizen": {
       "path": "cz-conventional-changelog"
     }
-  }
+  },
+  "keywords": [
+    "service",
+    "provider",
+    "ioc",
+    "container",
+    "bootstrap"
+  ]
 }
