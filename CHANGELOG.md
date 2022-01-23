@@ -1,5 +1,12 @@
 # Changelog
 
+# [1.2.0](https://github.com/midrock/revite/compare/v1.1.0...v1.2.0) (2022-01-23)
+
+
+### Features
+
+* **core:** configure types ([be7e825](https://github.com/midrock/revite/commit/be7e825b4aff049cd83525326ac80844ca749e5a))
+
 # [1.1.0](https://github.com/midrock/revite/compare/v1.0.0...v1.1.0) (2022-01-18)
 
 
