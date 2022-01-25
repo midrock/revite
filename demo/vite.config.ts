@@ -1,5 +1,5 @@
 import path from 'path'
-import revite from '../plugin'
+import revite from '../src/plugin'
 import vue from '@vitejs/plugin-vue'
 import { Mode, plugin as markdown } from 'vite-plugin-markdown'
 import { defineConfig } from 'vite'

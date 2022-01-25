@@ -3,24 +3,20 @@
   "version": "0.1.0",
   "license": "MIT",
   "scripts": {
+    "demo:vue": "env APP_CONFIG=vue vite --config demo/vite.config.ts",
     "build": "tsc --project tsconfig.release.json",
-    "build:lib": "tsc --project tsconfig.release.json",
-    "build:plugin": "tsc ./plugin.ts --declaration true",
-    "demo": "vite --config demo/vite.config.ts",
     "test:unit": "vite-jest --no-cache",
+    "release:prepare": "node --experimental-json-modules scripts/pre-release.mjs",
     "release": "semantic-release",
     "typecheck": "vue-tsc --noEmit -p tsconfig.json"
   },
+  "contributors": [
+    "Roman Tebenkov <iteam4u@ya.ru>"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/midrock/revite.git"
   },
-  "files": [
-    "dist/*",
-    "plugin.ts",
-    "revite.d.ts"
-  ],
-  "main": "./dist/index.js",
   "dependencies": {
     "mitt": "^3.0.0",
     "typescript-ioc": "^3.2.2"

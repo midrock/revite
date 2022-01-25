@@ -40,6 +40,6 @@
     "dist"
   ],
   "files": [
-    "./global.d.ts",
+    "./src/global.d.ts"
   ]
 }

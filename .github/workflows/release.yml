@@ -4,7 +4,7 @@ on:
     branches:
       - "release"
 jobs:
-  build:
+  release:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -14,6 +14,7 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
       - run: yarn
       - run: yarn build
+      - run: yarn release:prepare
       - run: yarn release
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
