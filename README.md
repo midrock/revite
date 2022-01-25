@@ -1,9 +1,9 @@
 # Revite
 
-[![npm latest version](https://img.shields.io/npm/v/revite)](https://www.npmjs.com/package/revite)
-
 The Revite is the easy way to implement the application bootstrap through configurations. Approach borrowed
 from [Laravel Framework](https://laravel.com/docs/master/providers).
+
+[![npm latest version](https://img.shields.io/npm/v/revite)](https://www.npmjs.com/package/revite)
 
 # Contents
 
@@ -11,13 +11,13 @@ from [Laravel Framework](https://laravel.com/docs/master/providers).
 - [Getting started](#getting-started)
 - [Purpose of Revite development](#purpose-of-revite-development)
 - [Basic Concepts](#basic-concepts)
-- [Recommended project structure](#recommended-project-structure)
+    - [Contracts](#contracts)
+    - [Configurations](#configurations)
+    - [Service Providers](#service-providers)
+    - [Services](#services)
+    - [Events and Listeners](#events-and-listeners)
 - [Built-in contracts](#built-in-contracts)
 - [Dependencies](#dependencies)
-
-<a href="https://github.com/midrock/revite/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=midrock/revite" />
-</a>
 
 # Installation
 
@@ -91,7 +91,7 @@ async function getNotes() {
 }
 ```
 
-### Configurations
+## Configurations
 
 - Each service can contain its configuration in a separate config file or `config` section in `main.ts`.
 - Configuration is a set of files:
@@ -297,7 +297,7 @@ interface BootContext {
 }
 ```
 
-### Services
+## Services
 
 - Services should be extended from contracts.
 - There are situations when the service itself does not contain any connections and can act as a contract.
@@ -310,7 +310,7 @@ export class MockNotesService extends NotesServiceContract {
 }
 ```
 
-### Events and Listeners
+## Events and Listeners
 
 ```ts
 import {Event} from 'revite'
@@ -354,8 +354,6 @@ export class EventServiceProvider extends ServiceProvider {
 }
 
 ```
-
-# Recommended project structure
 
 # Built-in contracts
 
