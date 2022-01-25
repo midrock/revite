@@ -1,5 +1,12 @@
 # Changelog
 
+# [1.4.0](https://github.com/midrock/revite/compare/v1.3.0...v1.4.0) (2022-01-25)
+
+
+### Features
+
+* **docs:** update documentation ([d569089](https://github.com/midrock/revite/commit/d56908907f7e8e6bc4f9aae52eb7c29bdf20d618))
+
 # [1.3.0](https://github.com/midrock/revite/compare/v1.2.0...v1.3.0) (2022-01-25)
 
 
