@@ -47,7 +47,7 @@ export class IocRegistry {
 
   async resolveIfExist<T extends AbstractConstructor>(contract: T, options?: ResolveOptions): Promise<InstanceType<T> | undefined> {
     try {
-      return this.resolve(contract, options)
+      return await this.resolve(contract, options)
     } catch (error) {
       return undefined
     }
