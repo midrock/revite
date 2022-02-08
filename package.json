@@ -18,7 +18,6 @@
     "url": "https://github.com/midrock/revite.git"
   },
   "dependencies": {
-    "mitt": "^3.0.0",
     "typescript-ioc": "^3.2.2"
   },
   "devDependencies": {

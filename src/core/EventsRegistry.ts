@@ -1,4 +1,3 @@
-import mitt from 'mitt'
 import { Event } from './Event'
 import { Listener } from './Listener'
 import { Constructor } from '../types'
@@ -8,10 +7,14 @@ type EventConstructor = Constructor<Event>
 type ListenerConstructor = Constructor<Listener>
 
 export class EventsRegistry {
-  private emitter = mitt()
+  registry = new Map()
 
-  emit(event, payload) {
-    this.emitter.emit(event, payload)
+  emit(event: Event) {
+    const handlers = this.registry.get(event.constructor.name) || []
+
+    handlers.forEach(handler => {
+      handler(event)
+    })
   }
 
   on(
@@ -24,8 +27,16 @@ export class EventsRegistry {
       }
 
       const listener = new Listener()
+      const handlers = this.registry.get(event.name)
 
-      this.emitter.on(event.name, listener.execute)
+      if (handlers) {
+        handlers.push(listener.execute)
+      } else {
+        this.registry.set(event.name, [listener.execute])
+      }
+
+      console.log(this.registry.get(event.name))
+
       logger().log({
         level: 'debug',
         context: Listener.name,
@@ -44,8 +55,11 @@ export class EventsRegistry {
     event: EventConstructor,
     listen?: ListenerConstructor | ListenerConstructor[],
   ) {
+    const handlers = this.registry.get(event.name)
     const removeListener = (Listener: ListenerConstructor) => {
-      this.emitter.off(event.name, new Listener().execute)
+      if (handlers) {
+        handlers.splice(handlers.indexOf(new Listener().execute) >>> 0, 1)
+      }
     }
 
     if (listen instanceof Array) {
@@ -53,7 +67,7 @@ export class EventsRegistry {
     } else if (listen) {
       removeListener(listen)
     } else {
-      this.emitter.off(event.name)
+      this.registry.delete(event.name)
       logger().log({
         level: 'debug',
         color: 'brown',

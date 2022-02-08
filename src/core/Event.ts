@@ -3,7 +3,7 @@ import { events } from '../state'
 
 export abstract class Event {
   dispatch() {
-    events.emit(this.constructor.name, this)
+    events.emit(this)
 
     logger().group({
       message: 'Created',

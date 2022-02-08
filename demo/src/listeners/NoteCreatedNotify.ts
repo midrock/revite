@@ -6,6 +6,8 @@ export class NoteCreatedNotify extends Listener {
   async handle(event: NoteCreatedEvent) {
     const notifyService = await revite.resolve(NotifyServiceContract)
 
+    console.log('notify')
+
     notifyService.show({
       title: 'Note created',
       type: 'success',
