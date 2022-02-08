@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.2](https://github.com/midrock/revite/compare/v1.4.1...v1.4.2) (2022-02-08)
+
+
+### Bug Fixes
+
+* **ioc:** update resolver ([3dbe95a](https://github.com/midrock/revite/commit/3dbe95a9a9fd7bc24371e99454c8eb97b73a1518))
+
 ## [1.4.1](https://github.com/midrock/revite/compare/v1.4.0...v1.4.1) (2022-02-08)
 
 # [1.4.0](https://github.com/midrock/revite/compare/v1.3.0...v1.4.0) (2022-01-25)
