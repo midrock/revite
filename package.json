@@ -78,5 +78,8 @@
     "ioc",
     "container",
     "bootstrap"
-  ]
+  ],
+  "engines": {
+    "node": ">16.14"
+  }
 }

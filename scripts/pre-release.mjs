@@ -1,7 +1,7 @@
 import url from 'url'
 import path from 'path'
 import fs from 'fs'
-import pkg from '../package.json'
+import pkg from '../package.json' assert {type: 'json'}
 
 const rel = (() => {
   const __dirname = path.dirname(url.fileURLToPath(import.meta.url))
