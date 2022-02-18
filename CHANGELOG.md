@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.4.3](https://github.com/midrock/revite/compare/v1.4.2...v1.4.3) (2022-02-18)
+
+
+### Bug Fixes
+
+* **ioc:** update resolver ([f27b624](https://github.com/midrock/revite/commit/f27b62410b9bd14d54b9118c7bd59ed7d4cd6f5b))
+* node version ([3fe53db](https://github.com/midrock/revite/commit/3fe53dbe8489458ad0d7a74e72bf07de7114e9ea))
+
 ## [1.4.2](https://github.com/midrock/revite/compare/v1.4.1...v1.4.2) (2022-02-08)
 
 
