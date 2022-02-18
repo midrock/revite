@@ -35,8 +35,6 @@ export class EventsRegistry {
         this.registry.set(event.name, [listener.execute])
       }
 
-      console.log(this.registry.get(event.name))
-
       logger().log({
         level: 'debug',
         context: Listener.name,

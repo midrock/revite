@@ -1,5 +1,5 @@
 import { Task } from '../core/Task'
-import { config, ioc } from '../state'
+import { config, services } from '../state'
 import { ServiceProvider } from '../core/ServiceProvider'
 
 export class ProviderBeforeBootTask extends Task {
@@ -11,8 +11,8 @@ export class ProviderBeforeBootTask extends Task {
         config(name: string) {
           return config.get(name)
         },
-        resolve: ioc.resolve.bind(ioc),
-        resolveIfExist: ioc.resolveIfExist.bind(ioc),
+        resolve: services.resolve.bind(services),
+        resolveIfExist: services.resolveIfExist.bind(services),
       })
     }
   }

@@ -3,7 +3,7 @@ import { LoggerServiceContract } from '../contracts/LoggerServiceContract'
 
 export class LoggerService extends LoggerServiceContract {
   private colors = {
-    debug: '#616161',
+    debug: '#424242',
     info: '#5c6bc0',
     warn: '#f57f17',
     error: '#d32f2f',

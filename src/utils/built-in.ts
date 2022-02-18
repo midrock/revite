@@ -1,12 +1,12 @@
-import { ioc } from '../state'
 import { LoggerServiceContract, ReactivityServiceContract } from '../'
+import { services } from '../state'
 
 export const logger = (() => {
   let loggerService: LoggerServiceContract
 
   return () => {
     if (!loggerService) {
-      loggerService = ioc.container.get(LoggerServiceContract)
+      loggerService = services.get(LoggerServiceContract)
     }
 
     return loggerService
@@ -18,7 +18,7 @@ export const reactivity = (() => {
 
   return () => {
     if (!reactivityService) {
-      reactivityService = ioc.container.get(ReactivityServiceContract)
+      reactivityService = services.get(ReactivityServiceContract)
     }
 
     return reactivityService

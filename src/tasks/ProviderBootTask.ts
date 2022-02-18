@@ -1,6 +1,6 @@
 import { Task } from '../core/Task'
 import { ServiceProvider } from '../core/ServiceProvider'
-import { ioc } from '../state'
+import { services } from '../state'
 
 export class ProviderBootTask extends Task {
   async run(provider: ServiceProvider) {
@@ -14,8 +14,8 @@ export class ProviderBootTask extends Task {
 
     if (provider.boot instanceof Function) {
       return provider.boot({
-        resolve: ioc.resolve.bind(ioc),
-        resolveIfExist: ioc.resolveIfExist.bind(ioc),
+        resolve: services.resolve.bind(services),
+        resolveIfExist: services.resolveIfExist.bind(services),
       })
     }
   }

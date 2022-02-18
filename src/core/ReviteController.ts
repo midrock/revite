@@ -1,18 +1,17 @@
-// import { resolveImport } from './utils/utils'
 import { BuiltInServicesTask } from '../tasks/BuiltInServicesTask'
 import { BootstrapSessionTask } from '../tasks/BootstrapSessionTask'
-import { config, ioc } from '../state'
+import { config, services } from '../state'
 import { AbstractConstructor, Sources } from '../types'
 
 export class ReviteController {
   private initialized = false
 
   async resolve<T extends AbstractConstructor>(contract: T, options?): Promise<InstanceType<T>> {
-    return ioc.resolve(contract, options)
+    return services.resolve(contract, options)
   }
 
   async resolveIfExist<T extends AbstractConstructor>(contract: T, options?): Promise<InstanceType<T> | undefined> {
-    return ioc.resolveIfExist(contract, options)
+    return services.resolveIfExist(contract, options)
   }
 
   // /**
