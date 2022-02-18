@@ -1,11 +1,12 @@
-import { Container, Scope } from 'typescript-ioc'
 import { AbstractConstructor, BindFactory, ExtendedConstructor, Import } from '../types'
 import { resolveImport } from '../utils/import'
 import { logger, reactivity } from '../utils/built-in'
 
 export class BindContext<T extends AbstractConstructor> {
-  private resolver?: () => Promise<void>
   private resolvePromise?: Promise<void>
+  private singleton = false
+  private reactive = false
+  private instance?: any
 
   constructor(private contract: AbstractConstructor) {
   }
@@ -13,12 +14,42 @@ export class BindContext<T extends AbstractConstructor> {
   async resolve() {
     if (this.resolvePromise) {
       await this.resolvePromise
-    } else if (this.resolver) {
-      const promise = this.resolver()
-
-      this.resolvePromise = promise
-      await promise
+    } else {
+      this.resolvePromise = this.resolver()
+      await this.resolvePromise
     }
+  }
+
+  get() {
+    if (this.singleton && this.instance) {
+      return this.instance
+    }
+
+    let instance: any
+
+    if (this.reactive) {
+      instance = reactivity().makeReactive(this.factory())
+    } else {
+      instance = this.factory()
+    }
+
+    if (this.singleton) {
+      this.instance = instance
+    }
+
+    const loggerService = logger()
+
+    loggerService.group({
+      message: '=> ' + instance.constructor.name,
+      level: 'debug',
+      collapsed: true,
+      context: `IOC ${this.contract.name}`,
+      entry: () => {
+        logger().dir(instance)
+      },
+    })
+
+    return instance
   }
 
   to(options: {
@@ -29,6 +60,9 @@ export class BindContext<T extends AbstractConstructor> {
       Service: ExtendedConstructor<T>
     }) => (BindFactory<T> | Promise<BindFactory<T>>)
   }) {
+    this.singleton = !!options.singleton
+    this.reactive = !!options.reactive
+
     this.resolver = async () => {
       let Service
 
@@ -38,40 +72,15 @@ export class BindContext<T extends AbstractConstructor> {
         Service = this.contract
       }
 
-      const bind = Container.bind(this.contract)
-
-      if (options.singleton) {
-        bind.scope(Scope.Singleton)
+      if (options.factory instanceof Function) {
+        this.factory = await options.factory({ Service })
+      } else {
+        this.factory = () => new Service()
       }
-
-      const factory = options.factory && await options.factory({ Service })
-      const loggerService = logger()
-
-      bind.factory(() => {
-        const instance = factory ? factory() : new Service()
-
-        loggerService.group({
-          message: '=> ' + Service.name,
-          level: 'debug',
-          collapsed: true,
-          context: `IOC ${this.contract.name}`,
-          entry: () => {
-            logger().dir(instance)
-          },
-        })
-
-        if (options.reactive) {
-          return reactivity().makeReactive(instance)
-        }
-
-        return instance
-      })
-
-      loggerService.log({
-        message: 'bind ' + Service.name,
-        level: 'debug',
-        context: `IOC ${this.contract.name}`,
-      })
     }
   }
+
+  private resolver = () => Promise.resolve()
+
+  private factory: () => any = () => undefined
 }

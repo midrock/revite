@@ -1,14 +1,21 @@
 import { getImportsByFileNames } from '../utils/import'
-import { ioc } from '../state'
 import { Config, Sources } from '../types'
 
 export class ConfigRegistry {
+  values = new Map<string, Record<string, any>>()
+
   set(key: string, config) {
-    ioc.bindValue(`config.${key}`).to(config)
+    this.values.set(key, config)
   }
 
   get<T>(key: string): T {
-    return ioc.getValue(`config.${key}`)
+    const config = this.values.get(key)
+
+    if (!config) {
+      throw new Error(`No config for ${key}`)
+    }
+
+    return config as T
   }
 
   async apply(raw: Sources) {

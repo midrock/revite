@@ -392,7 +392,3 @@ export default defineConfig({
   },
 })
 ```
-
-# Dependencies
-
-- [typescript-ioc](https://github.com/thiagobustamante/typescript-ioc) - IOC container implementation

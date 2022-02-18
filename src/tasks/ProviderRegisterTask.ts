@@ -1,5 +1,5 @@
 import { Task } from '../core/Task'
-import { config, events, ioc, providers } from '../state'
+import { config, events, providers, services } from '../state'
 import { ServiceProvider } from '../core/ServiceProvider'
 
 export class ProviderRegisterTask extends Task {
@@ -14,10 +14,10 @@ export class ProviderRegisterTask extends Task {
         },
         bind(contract) {
           providers.linkContractToProvider(contract, provider)
-          return ioc.bind(contract)
+          return services.bind(contract)
         },
-        resolve: ioc.resolve.bind(ioc),
-        resolveIfExist: ioc.resolveIfExist.bind(ioc),
+        resolve: services.resolve.bind(services),
+        resolveIfExist: services.resolveIfExist.bind(services),
         on: events.on.bind(events),
       })
     }
