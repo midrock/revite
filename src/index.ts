@@ -11,6 +11,10 @@ export function defineConfig(config: Config) {
   return config
 }
 
+export {
+  resolveImport,
+} from './utils/import'
+
 export type {
   RegisterContext,
   BootContext,
