@@ -1,5 +1,12 @@
 # Changelog
 
+# [1.5.0](https://github.com/midrock/revite/compare/v1.4.3...v1.5.0) (2022-03-16)
+
+
+### Features
+
+* resolveImport as lib part ([010395c](https://github.com/midrock/revite/commit/010395c829c289e797be84a8a8ab8c1ec31ef3ce))
+
 ## [1.4.3](https://github.com/midrock/revite/compare/v1.4.2...v1.4.3) (2022-02-18)
 
 
