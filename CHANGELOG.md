@@ -1,5 +1,12 @@
 # Changelog
 
+# [1.6.0](https://github.com/midrock/revite/compare/v1.5.0...v1.6.0) (2022-04-16)
+
+
+### Features
+
+* create packages ([1e50e68](https://github.com/midrock/revite/commit/1e50e68a4b0856682a4f65a25cd3715b46bce098))
+
 # [1.5.0](https://github.com/midrock/revite/compare/v1.4.3...v1.5.0) (2022-03-16)
 
 
