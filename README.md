@@ -11,11 +11,12 @@ from [Laravel Framework](https://laravel.com/docs/master/providers).
 - [Getting started](#getting-started)
 - [Purpose of Revite development](#purpose-of-revite-development)
 - [Basic Concepts](#basic-concepts)
-    - [Contracts](#contracts)
-    - [Configurations](#configurations)
-    - [Service Providers](#service-providers)
-    - [Services](#services)
-    - [Events and Listeners](#events-and-listeners)
+  - [Contracts](#contracts)
+  - [Configurations](#configurations)
+  - [Service Providers](#service-providers)
+  - [Services](#services)
+  - [Events and Listeners](#events-and-listeners)
+  - [Packages](#packages)
 - [Built-in contracts](#built-in-contracts)
 - [Dependencies](#dependencies)
 
@@ -119,6 +120,9 @@ export default defineConfig({
   reactivity: {
     service: VueReactivityService,
   },
+  packages: [
+    import('/~/packages/ViewsPackage'),
+  ],
   providers: [
     import('/~/providers/EventServiceProvider'),
     import('/~/services/render/RenderServiceProvider'),
@@ -353,6 +357,21 @@ export class EventServiceProvider extends ServiceProvider {
   }
 }
 
+```
+
+# Packages
+
+```ts
+import {Package} from 'revite'
+
+export class ViewsPackage extends Package {
+  providers = [
+    import('/~/views/home/VueHomeViewProvider'),
+    import('/~/views/terms/vue/TermsViewProvider'),
+    import('/~/views/notes/VueNotesViewProvider'),
+    import('/~/views/report/VueReportViewProvider'),
+  ]
+}
 ```
 
 # Built-in contracts

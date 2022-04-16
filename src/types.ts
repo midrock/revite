@@ -2,6 +2,7 @@ import { LoggerServiceContract } from './contracts/LoggerServiceContract'
 import { ReactivityServiceContract } from './contracts/ReactivityServiceContract'
 import { Event } from './core/Event'
 import { Listener } from './core/Listener'
+import { Package } from './core/Package'
 
 type ServiceProvider = import('./core/ServiceProvider').ServiceProvider
 type BindContext<T> = import('./core/BindContext').BindContext<T>
@@ -46,7 +47,8 @@ export interface LogGroupOptions {
 export interface Config {
   logger?: LoggerConfig
   reactivity?: ReactivityConfig
-  providers: (Import<Constructor<ServiceProvider>>)[]
+  packages?: Import<Constructor<Package>>[]
+  providers: Import<Constructor<ServiceProvider>>[]
   config?: Record<string, any>
 }
 
