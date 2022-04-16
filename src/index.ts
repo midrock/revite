@@ -1,6 +1,7 @@
 import { Config } from './types'
 
 export { ServiceProvider } from './core/ServiceProvider'
+export { Package } from './core/Package'
 export { Event } from './core/Event'
 export { Listener } from './core/Listener'
 export { LoggerServiceContract } from './contracts/LoggerServiceContract'

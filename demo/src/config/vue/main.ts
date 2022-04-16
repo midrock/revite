@@ -8,6 +8,9 @@ export default defineConfig({
   reactivity: {
     service: VueReactivityService,
   },
+  packages: [
+    import('/~/packages/ViewsPackage'),
+  ],
   providers: [
     import('/~/providers/EventServiceProvider'),
     import('/~/services/render/RenderServiceProvider'),
@@ -17,10 +20,6 @@ export default defineConfig({
     import('/~/services/ui/UiServiceProvider'),
     import('/~/services/notes/NotesServiceProvider'),
     import('/~/services/notify/NotifyServiceProvider'),
-    import('/~/views/home/VueHomeViewProvider'),
-    import('/~/views/terms/vue/TermsViewProvider'),
-    import('/~/views/notes/VueNotesViewProvider'),
-    import('/~/views/report/VueReportViewProvider'),
   ],
   config: {
     router: {
