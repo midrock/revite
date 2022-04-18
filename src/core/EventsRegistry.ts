@@ -1,5 +1,6 @@
 import { Event } from './Event'
 import { Listener } from './Listener'
+import { debounce } from '../utils/timer'
 import { Constructor } from '../types'
 import { logger } from '../utils/built-in'
 
@@ -20,6 +21,9 @@ export class EventsRegistry {
   on(
     event: EventConstructor,
     listen: ListenerConstructor | ListenerConstructor[],
+    options?: {
+      wait?: number
+    },
   ) {
     const createListener = (Listener: ListenerConstructor) => {
       if (!Listener.name) {
@@ -27,25 +31,38 @@ export class EventsRegistry {
       }
 
       const listener = new Listener()
-      const handlers = this.registry.get(event.name)
-
-      if (handlers) {
-        handlers.push(listener.execute)
-      } else {
-        this.registry.set(event.name, [listener.execute])
-      }
 
       logger().log({
         level: 'debug',
         context: Listener.name,
         message: `Registered for ${event.name}`,
       })
+
+      return listener.execute
     }
 
+    const handlers: Listener['execute'][] = []
+
     if (listen instanceof Array) {
-      listen.forEach(createListener)
+      listen.forEach(ListenerConstructor => {
+        handlers.push(createListener(ListenerConstructor))
+      })
     } else {
-      createListener(listen)
+      handlers.push(createListener(listen))
+    }
+
+    const handlersInRegistry = this.registry.get(event.name)
+
+    const eventHandler = debounce((event: Event) => {
+      handlers.forEach(handler => {
+        handler(event)
+      })
+    }, options?.wait || 0)
+
+    if (handlersInRegistry) {
+      handlersInRegistry.push(eventHandler)
+    } else {
+      this.registry.set(event.name, [eventHandler])
     }
   }
 

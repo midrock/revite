@@ -1,7 +1,8 @@
+import { reactive } from 'vue'
 import { NotifyServiceContract } from '../index'
 
 export class NotifyService extends NotifyServiceContract {
-  items: Service.Notify.Item[] = []
+  items: Service.Notify.Item[] = reactive([])
 
   private config = {
     max: 10,

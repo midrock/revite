@@ -77,7 +77,13 @@ export interface ProviderContext {
 }
 
 export interface RegisterContext extends ProviderContext {
-  on(event: EventConstructor, listen: ListenerConstructor | ListenerConstructor[]): void
+  on(
+    event: EventConstructor,
+    listen: ListenerConstructor | ListenerConstructor[],
+    options?: {
+      wait?: number
+    }
+  ): void
 
   config<T>(name: string): T
 
