@@ -1,5 +1,12 @@
 # Changelog
 
+# [1.7.0](https://github.com/midrock/revite/compare/v1.6.0...v1.7.0) (2022-04-18)
+
+
+### Features
+
+* debounce for events registry ([bb41ef6](https://github.com/midrock/revite/commit/bb41ef6199d76c2c05d205bcc5aa98cb5aa8e2be))
+
 # [1.6.0](https://github.com/midrock/revite/compare/v1.5.0...v1.6.0) (2022-04-16)
 
 
