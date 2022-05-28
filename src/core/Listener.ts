@@ -1,15 +1,7 @@
-import { logger } from '../utils/built-in'
-
 export abstract class Listener {
+  static isBuiltIn = true
+
   abstract handle(...args: any[]): void | Promise<void>
 
-  execute = (...args: any[]) => {
-    this.handle(...args)
-    logger().log({
-      args: [...args],
-      level: 'debug',
-      context: this.constructor.name,
-      message: 'Executed by',
-    })
-  }
+  handleError?(error?: any): void | Promise<void>
 }

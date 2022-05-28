@@ -353,7 +353,28 @@ export class EventServiceProvider extends ServiceProvider {
   register(ctx: RegisterContext) {
     ctx.on(NoteCreatedEvent, [
       NoteCreatedNotify,
+      (event: NoteCreatedEvent) => {
+        // use event
+      }
     ])
+
+    /**
+     * Sequential execution of listeners
+     */
+    ctx.on(NoteCreatedEvent, [
+      NoteCreatedNotify,
+    ], {
+      sequential: true
+    })
+
+    /**
+     * Listeners will be executed one time in 500 ms
+     */
+    ctx.on(NoteCreatedEvent, [
+      NoteCreatedNotify,
+    ], {
+      wait: 500
+    })
   }
 }
 
