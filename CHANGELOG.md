@@ -1,5 +1,12 @@
 # Changelog
 
+# [1.8.0](https://github.com/midrock/revite/compare/v1.7.0...v1.8.0) (2022-05-28)
+
+
+### Features
+
+* **events:** implement consistent execution ([e22a0da](https://github.com/midrock/revite/commit/e22a0daea94cee2f9c67e3118fda82104987561c))
+
 # [1.7.0](https://github.com/midrock/revite/compare/v1.6.0...v1.7.0) (2022-04-18)
 
 
