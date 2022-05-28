@@ -3,6 +3,7 @@ import { ReactivityServiceContract } from './contracts/ReactivityServiceContract
 import { Event } from './core/Event'
 import { Listener } from './core/Listener'
 import { Package } from './core/Package'
+import { EventsRegistry } from './core/EventsRegistry'
 
 type ServiceProvider = import('./core/ServiceProvider').ServiceProvider
 type BindContext<T> = import('./core/BindContext').BindContext<T>
@@ -15,6 +16,11 @@ export type ExtendedConstructor<T extends AbstractConstructor> = {
 
 export type EventConstructor = Constructor<Event>
 export type ListenerConstructor = Constructor<Listener>
+
+export type EventHandlerOptions = {
+  wait?: number
+  sequential?: boolean
+}
 
 export type Constructor<T> = {
   new(...args: any): T
@@ -77,13 +83,7 @@ export interface ProviderContext {
 }
 
 export interface RegisterContext extends ProviderContext {
-  on(
-    event: EventConstructor,
-    listen: ListenerConstructor | ListenerConstructor[],
-    options?: {
-      wait?: number
-    }
-  ): void
+  on(...args: Parameters<EventsRegistry['on']>): void
 
   config<T>(name: string): T
 

@@ -3,10 +3,24 @@ import { events } from '../state'
 
 export abstract class Event {
   dispatch() {
+    this.log()
     events.emit(this)
+  }
 
+  async dispatchAndWait() {
+    this.log()
+    return events.emit(this)
+  }
+
+  dispose() {
+    Object.keys(this).forEach(key => {
+      this[key] = undefined
+    })
+  }
+
+  private log() {
     logger().group({
-      message: 'Created',
+      message: 'Dispatched',
       level: 'debug',
       collapsed: true,
       context: this.constructor.name,

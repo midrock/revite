@@ -14,13 +14,6 @@ export class ReviteController {
     return services.resolveIfExist(contract, options)
   }
 
-  // /**
-  //  * Resolve import
-  //  */
-  // import<T = any>(source: Revite.Import<T>) {
-  //   return resolveImport(source)
-  // }
-
   /**
    * Bootstrap application
    */

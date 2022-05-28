@@ -1,14 +1,26 @@
 export function debounce(handler: (...args: any) => any, timeout: number) {
-  let timer
+  let dispose: undefined | (() => void)
 
   return (...args) => {
-    if (!timeout) {
-      return handler(...args)
-    }
+    return new Promise<void>((resolve, reject) => {
+      if (dispose) {
+        dispose()
+      }
 
-    clearTimeout(timer)
-    timer = setTimeout(() => {
-      handler(...args)
-    }, timeout)
+      const timer = setTimeout(() => {
+        toPromise(handler, ...args)
+          .then(resolve)
+          .catch(reject)
+      }, timeout)
+
+      dispose = () => {
+        clearTimeout(timer)
+        resolve()
+      }
+    })
   }
+}
+
+async function toPromise(handler: ((...args: any) => any), ...args) {
+  return handler(...args)
 }
