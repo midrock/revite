@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.8.1](https://github.com/midrock/revite/compare/v1.8.0...v1.8.1) (2022-06-11)
+
+
+### Bug Fixes
+
+* **events:** error handler for listener ([0a4ad82](https://github.com/midrock/revite/commit/0a4ad82f76cea25fc9c7cba9c2dddab9cf247b8c))
+
 # [1.8.0](https://github.com/midrock/revite/compare/v1.7.0...v1.8.0) (2022-05-28)
 
 
