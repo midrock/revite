@@ -119,6 +119,8 @@ export class EventsRegistry {
       } catch (e) {
         if (listener.handleError) {
           listener.handleError(e)
+        } else {
+          console.error(e)
         }
 
         return
@@ -129,7 +131,11 @@ export class EventsRegistry {
   private async executeListenersParallel(event: Event, listeners: Listener[]) {
     return Promise.all(listeners.map(listener => {
       return this.executeListener(event, listener).catch(e => {
-        listener.handleError && listener.handleError(e)
+        if (listener.handleError) {
+          listener.handleError(e)
+        } else {
+          console.error(e)
+        }
       })
     }))
   }
