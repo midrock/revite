@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "license": "MIT",
   "scripts": {
-    "demo:vue": "env APP_CONFIG=vue vite --config demo/vite.config.ts",
+    "demo:vue": "cross-env APP_CONFIG=vue vite --config demo/vite.config.ts",
     "build": "tsc --project tsconfig.release.json",
     "test:unit": "vite-jest --no-cache",
     "release:prepare": "node --experimental-json-modules scripts/pre-release.mjs",
@@ -37,6 +37,7 @@
     "autoprefixer": "^10.3.6",
     "babel-core": "^6.26.3",
     "commitizen": "^4.2.4",
+    "cross-env": "^7.0.3",
     "eslint": "^7.32.0",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-jest": "^24.5.0",
