@@ -11,7 +11,7 @@ type BindContext<T> = import('./core/BindContext').BindContext<T>
 export type AbstractConstructor = abstract new (...args: any[]) => any
 
 export type ExtendedConstructor<T extends AbstractConstructor> = {
-  new(...args: ConstructorParameters<T>): T
+  new(...args: ConstructorParameters<T>): InstanceType<T>
 }
 
 export type EventConstructor = Constructor<Event>
@@ -95,4 +95,4 @@ export interface BeforeBootContext extends ProviderContext {
 }
 
 export type BootContext = ProviderContext
-export type BindFactory<T> = () => T
+export type BindFactory<T extends AbstractConstructor> = () => InstanceType<T>
