@@ -5,90 +5,91 @@
 .markup h2,
 .markup h3,
 .markup h4 {
-    margin-bottom: 1rem;
+  margin-bottom: 1rem;
 }
+
 
 .markup ul,
 .markup ol {
-    padding-left: 1.25rem;
-    margin-left: 1rem;
+  padding-left: 1.25rem;
+  margin-left: 1rem;
 }
 
 .markup ul li,
 .markup ol li {
-    margin-top: 0.5rem;
+  margin-top: 0.5rem;
 }
 
 .markup ol li.ql-indent-1 {
-    padding-left: 1.25rem;
-    counter-reset: list-2 list-3;
-    counter-increment: list-1;
+  padding-left: 1.25rem;
+  counter-reset: list-2 list-3;
+  counter-increment: list-1;
 }
 
 .markup ol li.ql-indent-1:before {
-    content: counter(list-1, upper-roman) '. ';
+  content: counter(list-1, upper-roman) '. ';
 }
 
 .markup ol li.ql-indent-2 {
-    padding-left: 2.5rem;
-    counter-reset: list-3;
-    counter-increment: list-2;
+  padding-left: 2.5rem;
+  counter-reset: list-3;
+  counter-increment: list-2;
 }
 
 .markup ol li.ql-indent-2:before {
-    content: counter(list-2, lower-alpha) '. ';
+  content: counter(list-2, lower-alpha) '. ';
 }
 
 .markup ol li.ql-indent-3 {
-    padding-left: 3.75rem;
-    counter-increment: list-3;
+  padding-left: 3.75rem;
+  counter-increment: list-3;
 }
 
 .markup ol li.ql-indent-3:before {
-    content: counter(list-3, decimal) '. ';
+  content: counter(list-3, decimal) '. ';
 }
 
 .markup ul,
 .markup ol,
 .markup p {
-    margin-bottom: 1.5rem;
+  margin-bottom: 1.5rem;
 }
 
 .markup h1 {
-    @apply text-4xl;
-    @apply mb-10;
+  @apply text-4xl;
+  @apply mb-10;
 }
 
 .markup h4 {
-    font-size: 1.25rem;
-    font-weight: bold;
-    line-height: 1.5rem;
+  font-size: 1.25rem;
+  font-weight: bold;
+  line-height: 1.5rem;
 }
 
 .markup ol {
-    counter-reset: list-0 list-1 list-2 list-3;
+  counter-reset: list-0 list-1 list-2 list-3;
 }
 
 .markup ol li {
-    counter-reset: list-1 list-2 list-3;
-    counter-increment: list-0;
+  counter-reset: list-1 list-2 list-3;
+  counter-increment: list-0;
 }
 
 .markup ol li:before {
-    content: counter(list-0, decimal) '. ';
+  content: counter(list-0, decimal) '. ';
 }
 
 .markup ul {
-    list-style-type: disc;
+  list-style-type: disc;
 }
 
 .markup a {
-    font-weight: bold;
-    text-decoration: none;
+  font-weight: bold;
+  text-decoration: none;
 
-    @apply text-indigo-700;
+  @apply text-indigo-700;
 }
 
 .markup hr {
-    margin: 1.25rem 0;
+  margin: 1.25rem 0;
 }
