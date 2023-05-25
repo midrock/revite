@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.8.3](https://github.com/midrock/revite/compare/v1.8.2...v1.8.3) (2023-05-25)
+
+
+### Bug Fixes
+
+* trigger release ([49cb364](https://github.com/midrock/revite/commit/49cb3647f37093641442ffccaf3e6c616eaead44))
+
 ## [1.8.2](https://github.com/midrock/revite/compare/v1.8.1...v1.8.2) (2023-05-25)
 
 
