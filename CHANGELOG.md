@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.8.2](https://github.com/midrock/revite/compare/v1.8.1...v1.8.2) (2023-05-25)
+
+
+### Bug Fixes
+
+* update constructor types ([b7174c6](https://github.com/midrock/revite/commit/b7174c616973190572e9ccbdbfd94c79a5c4b4d6))
+
 ## [1.8.1](https://github.com/midrock/revite/compare/v1.8.0...v1.8.1) (2022-06-11)
 
 
