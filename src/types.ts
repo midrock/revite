@@ -53,6 +53,7 @@ export interface LogGroupOptions {
 export interface Config {
   logger?: LoggerConfig
   reactivity?: ReactivityConfig
+  preload?: (Import<Constructor<ServiceProvider>>[] | Import<Constructor<ServiceProvider>>)[]
   packages?: Import<Constructor<Package>>[]
   providers: Import<Constructor<ServiceProvider>>[]
   config?: Record<string, any>
