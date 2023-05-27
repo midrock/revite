@@ -1,5 +1,12 @@
 # Changelog
 
+# [1.9.0](https://github.com/midrock/revite/compare/v1.8.3...v1.9.0) (2023-05-27)
+
+
+### Features
+
+* preload providers with sequential loading ([ab482ad](https://github.com/midrock/revite/commit/ab482ad848ee2a22f0d5eb866973728b77b53123))
+
 ## [1.8.3](https://github.com/midrock/revite/compare/v1.8.2...v1.8.3) (2023-05-25)
 
 
