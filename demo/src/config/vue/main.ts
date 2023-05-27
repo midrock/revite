@@ -11,15 +11,17 @@ export default defineConfig({
   packages: [
     import('/~/packages/ViewsPackage'),
   ],
+  preload: [
+    import('/~/services/router/RouterServiceProvider'),
+    import('/~/services/render/RenderServiceProvider'),
+  ],
   providers: [
     import('/~/providers/EventServiceProvider'),
-    import('/~/services/render/RenderServiceProvider'),
-    import('/~/services/router/RouterServiceProvider'),
-    import('/~/services/auth/AuthServiceProvider'),
-    import('/~/services/dashboard/DashboardServiceProvider'),
     import('/~/services/ui/UiServiceProvider'),
     import('/~/services/notes/NotesServiceProvider'),
+    import('/~/services/auth/AuthServiceProvider'),
     import('/~/services/notify/NotifyServiceProvider'),
+    import('/~/services/dashboard/DashboardServiceProvider'),
   ],
   config: {
     router: {
