@@ -26,6 +26,14 @@ export abstract class Task {
     return !!this.error
   }
 
+  static formatTime(time: number) {
+    if (time >= 1000) {
+      return `${(time / 1000).toFixed(2)}s`
+    }
+
+    return `${time.toFixed(2)}ms`
+  }
+
   /**
    * Method to define the runner in an extended class
    */
@@ -71,7 +79,7 @@ export abstract class Task {
 
     if (error) {
       this.group({
-        message: `Failed in ${this.formatTime(this.executeTime)}`,
+        message: `Failed in ${Task.formatTime(this.executeTime)}`,
         level: 'error',
         context: this.label || this.constructor.name,
         entry: () => {
@@ -83,7 +91,7 @@ export abstract class Task {
         level: this.level,
         color: this.color,
         context: this.label,
-        message: `Completed in ${this.formatTime(this.executeTime)}`,
+        message: `Done in ${Task.formatTime(this.executeTime)}`,
       })
     }
   }
@@ -94,13 +102,5 @@ export abstract class Task {
 
   protected group(options: LogGroupOptions) {
     logger().group(options)
-  }
-
-  private formatTime(time: number) {
-    if (time >= 1000) {
-      return `${(time / 1000).toFixed(2)}s`
-    }
-
-    return `${time.toFixed(2)}ms`
   }
 }

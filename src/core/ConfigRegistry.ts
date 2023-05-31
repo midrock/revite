@@ -1,5 +1,4 @@
-import { getImportsByFileNames } from '../utils/import'
-import { Config, Sources } from '../types'
+import { logger } from '../utils/built-in'
 
 export class ConfigRegistry {
   values = new Map<string, Record<string, any>>()
@@ -18,20 +17,18 @@ export class ConfigRegistry {
     return config as T
   }
 
-  async apply(raw: Sources) {
-    const config = getImportsByFileNames(raw)
-    const mainConfig: Config = config.main
+  apply(config?: Record<string, any>) {
+    if (!config) return
 
     for (const key in config) {
-      this.set(key, config[key])
-    }
-
-    if (mainConfig.config) {
-      for (const key in mainConfig.config) {
-        if (!config[key]) {
-          this.set(key, mainConfig.config[key])
-        }
+      if (this.values.get(key)) {
+        logger().log({
+          level: 'warn',
+          context: `CFG ${key}`,
+          message: 'Override',
+        })
       }
+      this.set(key, config[key])
     }
   }
 }

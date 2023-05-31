@@ -1,12 +1,11 @@
 import { defineConfig } from 'revite'
-import { VueReactivityService } from '/~/../../src/services/VueReactivityService'
 
 export default defineConfig({
   logger: {
     level: 'debug',
   },
   reactivity: {
-    service: VueReactivityService,
+    service: () => import('/~/services/reactivity/VueReactivityService'),
   },
   packages: [
     import('/~/packages/ViewsPackage'),

@@ -1,27 +1,32 @@
 import { Task } from '../core/Task'
-import { config, providers as providersRegistry } from '../state'
+import { providers as providersRegistry } from '../state'
 import { Package, resolveImport, ServiceProvider } from '..'
-import { Config, Constructor, Import, LogLevel } from '../types'
+import { BaseConfig, Constructor, Import, LogLevel } from '../types'
 import { flatten } from '../utils/transform'
 
 export class BootstrapSessionTask extends Task {
-  label = 'Revite'
   color = 'success'
   timeout = -1
   level: LogLevel = 'info'
 
-  async run() {
+  constructor(options: {
+    label: string
+  }) {
+    super()
+    this.label = options.label
+  }
+
+  async run(config: BaseConfig) {
     this.log({
-      message: 'Session started',
-      context: 'Revite',
+      message: 'Started',
+      context: this.label,
       level: 'info',
       color: 'success',
     })
 
-    const mainConfig: Config = config.get('main')
-    const providersSources = mainConfig.providers || []
-    const packagesSources = mainConfig.packages || []
-    const preloadSources = mainConfig.preload || []
+    const providersSources = config.providers || []
+    const packagesSources = config.packages || []
+    const preloadSources = config.preload || []
     const creationTasks: Promise<any>[] = []
     const preloadProviders: (ServiceProvider | ServiceProvider[])[] = []
     const providers: ServiceProvider[] = []
@@ -119,7 +124,7 @@ export class BootstrapSessionTask extends Task {
         }),
     ])
 
-    providers.forEach(provider => {
+    allProviders.forEach(provider => {
       providersRegistry.completeProvider(provider)
     })
   }

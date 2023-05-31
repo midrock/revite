@@ -1,5 +1,5 @@
 import { LogLevel } from '../types'
-import { LoggerServiceContract } from '../contracts/LoggerServiceContract'
+import { LoggerServiceContract } from '..'
 
 export class LoggerService extends LoggerServiceContract {
   private colors = {
@@ -70,7 +70,7 @@ export class LoggerService extends LoggerServiceContract {
     color?: string
     context?: string
   }): string[] {
-    let logArguments: string[] = []
+    let logArguments: string[]
     const context = options.context
     const message = options.args[0] || ''
 

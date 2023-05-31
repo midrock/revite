@@ -1,5 +1,4 @@
-import { Event } from './Event'
-import { Listener } from './Listener'
+import { Event, Listener } from '..'
 import { debounce } from '../utils/timer'
 import { Constructor, EventHandlerOptions } from '../types'
 import { logger } from '../utils/built-in'
@@ -54,8 +53,8 @@ export class EventsRegistry {
 
       logger().log({
         level: 'debug',
-        context: Listener.name,
-        message: `Registered for ${event.name}`,
+        context: `REG ${Source.name}`,
+        message: `on ${event.name}`,
       })
 
       return listener
@@ -144,8 +143,8 @@ export class EventsRegistry {
     logger().log({
       args: [event],
       level: 'debug',
-      context: listener.constructor.name,
-      message: 'Executed by',
+      context: `LSN ${listener.constructor.name}`,
+      message: '',
     })
 
     return listener.handle(event)
