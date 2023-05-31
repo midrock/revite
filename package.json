@@ -11,7 +11,7 @@
     "test:unit": "vite-jest --no-cache",
     "release:prepare": "node --experimental-json-modules scripts/pre-release.mjs",
     "release": "semantic-release",
-    "postinstall": "husky install",
+    "prepare": "husky install",
     "typecheck": "vue-tsc --noEmit -p tsconfig.json"
   },
   "contributors": [
