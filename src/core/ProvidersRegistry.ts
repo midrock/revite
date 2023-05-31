@@ -1,5 +1,5 @@
 import { AbstractConstructor, Constructor } from '../types'
-import { ServiceProvider } from '../core/ServiceProvider'
+import { ServiceProvider } from '..'
 import { ProviderRegisterTask } from '../tasks/ProviderRegisterTask'
 import { ProviderBootTask } from '../tasks/ProviderBootTask'
 import { ProviderBeforeBootTask } from '../tasks/ProviderBeforeBootTask'

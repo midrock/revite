@@ -50,14 +50,20 @@ export interface LogGroupOptions {
   collapsed?: boolean
 }
 
-export interface Config {
+export interface Config extends BaseConfig {
   logger?: LoggerConfig
   reactivity?: ReactivityConfig
+  next?: Record<string, NextConfig>
+}
+
+export interface BaseConfig {
   preload?: (Import<Constructor<ServiceProvider>>[] | Import<Constructor<ServiceProvider>>)[]
   packages?: Import<Constructor<Package>>[]
-  providers: Import<Constructor<ServiceProvider>>[]
+  providers?: Import<Constructor<ServiceProvider>>[]
   config?: Record<string, any>
 }
+
+export type NextConfig = () => BaseConfig
 
 interface LoggerConfig {
   service?: Constructor<LoggerServiceContract>
@@ -65,7 +71,7 @@ interface LoggerConfig {
 }
 
 interface ReactivityConfig {
-  service?: Constructor<ReactivityServiceContract>
+  service?: Import<Constructor<ReactivityServiceContract>>
 }
 
 export type Import<T = any> =

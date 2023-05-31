@@ -1,10 +1,10 @@
 import { Task } from '../core/Task'
 import { config, events, providers, services } from '../state'
-import { ServiceProvider } from '../core/ServiceProvider'
+import { ServiceProvider } from '..'
 
 export class ProviderRegisterTask extends Task {
   async run(provider: ServiceProvider) {
-    this.label = `Reg ${provider.constructor.name}`
+    this.label = `REG ${provider.constructor.name}`
     provider.setRegisterTask(this)
 
     if (provider.register instanceof Function) {

@@ -20,10 +20,10 @@ export abstract class Event {
 
   private log() {
     logger().group({
-      message: 'Dispatched',
+      message: '',
       level: 'debug',
       collapsed: true,
-      context: this.constructor.name,
+      context: `EVT ${this.constructor.name}`,
       entry: () => {
         logger().dir(this)
       },

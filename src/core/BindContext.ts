@@ -1,6 +1,6 @@
 import { AbstractConstructor, BindFactory, ExtendedConstructor, Import } from '../types'
-import { resolveImport } from '../utils/import'
-import { logger, reactivity } from '../utils/built-in'
+import { resolveImport } from '..'
+import { ensureReactivityReady, logger, reactivity } from '../utils/built-in'
 
 export class BindContext<T extends AbstractConstructor> {
   private resolvePromise?: Promise<void>
@@ -65,6 +65,10 @@ export class BindContext<T extends AbstractConstructor> {
 
     this.resolver = async () => {
       let Service
+
+      if (options.reactive) {
+        await ensureReactivityReady()
+      }
 
       if (options.service) {
         Service = await resolveImport(options.service)

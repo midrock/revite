@@ -1,10 +1,10 @@
 import { Task } from '../core/Task'
-import { ServiceProvider } from '../core/ServiceProvider'
+import { ServiceProvider } from '..'
 import { services } from '../state'
 
 export class ProviderBootTask extends Task {
   async run(provider: ServiceProvider) {
-    this.label = `Boot ${provider.constructor.name}`
+    this.label = `BOT ${provider.constructor.name}`
     provider.setBootTask(this)
 
     if (!provider.isRegistered) {

@@ -1,7 +1,7 @@
 import { LoggerServiceContract, ReactivityServiceContract } from '../'
 import { Task } from '../core/Task'
 import { config, services } from '../state'
-import { Config } from '../types'
+import { Config } from '..'
 
 const DEFAULT_LOGGER = () => import('../services/LoggerService')
 
@@ -26,8 +26,6 @@ export class BuiltInServicesTask extends Task {
         service: mainConfig.reactivity?.service,
         singleton: true,
       })
-
-      await services.resolve(ReactivityServiceContract)
     }
   }
 }

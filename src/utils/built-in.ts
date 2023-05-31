@@ -24,3 +24,7 @@ export const reactivity = (() => {
     return reactivityService
   }
 })()
+
+export async function ensureReactivityReady() {
+  return services.resolve(ReactivityServiceContract)
+}

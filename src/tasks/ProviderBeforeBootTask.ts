@@ -1,10 +1,10 @@
 import { Task } from '../core/Task'
 import { config, services } from '../state'
-import { ServiceProvider } from '../core/ServiceProvider'
+import { ServiceProvider } from '..'
 
 export class ProviderBeforeBootTask extends Task {
   async run(provider: ServiceProvider) {
-    this.label = `Pre ${provider.constructor.name}`
+    this.label = `PRE ${provider.constructor.name}`
 
     if (provider.beforeBoot instanceof Function) {
       return provider.beforeBoot({
