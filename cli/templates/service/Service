@@ -1,0 +1,4 @@
+import { <%= fileName %>ServiceContract } from '../index'
+
+export class <%= fileName %>Service extends <%= fileName %>ServiceContract {
+}

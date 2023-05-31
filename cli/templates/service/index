@@ -1,0 +1,1 @@
+export { <%= fileName %>ServiceContract } from './<%= fileName %>ServiceContract'
