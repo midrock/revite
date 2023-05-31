@@ -22,4 +22,11 @@ export default defineConfig({
       use: process.env.APP_CONFIG as string,
     }),
   ],
+  build: {
+    minify: 'terser',
+    terserOptions: {
+      keep_classnames: /ServiceContract|ServiceProvider/,
+      keep_fnames: /ServiceContract|ServiceProvider/,
+    },
+  },
 })

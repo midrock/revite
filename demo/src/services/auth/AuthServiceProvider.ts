@@ -7,7 +7,6 @@ export class AuthServiceProvider extends ServiceProvider {
 
     ctx.bind(AuthServiceContract).to({
       service: config.service,
-      reactive: true,
       singleton: true,
     })
   }
