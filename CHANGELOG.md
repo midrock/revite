@@ -1,5 +1,13 @@
 # Changelog
 
+# [1.10.0](https://github.com/midrock/revite/compare/v1.9.0...v1.10.0) (2023-05-31)
+
+
+### Features
+
+* implement next scenarios ([84eaa60](https://github.com/midrock/revite/commit/84eaa6035d37b6e33d74e922d5b0129579a85559))
+* preload providers with sequential loading ([35b4932](https://github.com/midrock/revite/commit/35b4932225a4a952ec11f8f2a819edc01c687972))
+
 # [1.9.0](https://github.com/midrock/revite/compare/v1.8.3...v1.9.0) (2023-05-27)
 
 
