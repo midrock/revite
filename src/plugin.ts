@@ -6,7 +6,8 @@ interface PluginOptions {
 }
 
 export default function(options: PluginOptions): Plugin {
-  const virtualFileId = '@revite/config'
+  const virtualModuleId = '@revite/config'
+  const resolvedVirtualModuleId = '\0' + virtualModuleId
 
   if (!options.root) {
     throw new Error('Revite Plugin: root directory with configurations should be defined')
@@ -33,16 +34,16 @@ export default function(options: PluginOptions): Plugin {
   return {
     name: 'revite-plugin',
     resolveId(id) {
-      if (id === virtualFileId) {
-        return virtualFileId
+      if (id === virtualModuleId) {
+        return resolvedVirtualModuleId
       }
     },
     load(id) {
-      if (id === virtualFileId) {
+      if (id === resolvedVirtualModuleId) {
         const path = [options.root, targetConfig, '*.ts'].filter(v => v).join('/')
 
         return `
-          const config = import.meta.globEager("${path}")
+          const config = import.meta.glob("${path}", { eager: true })
           export default config
         `
       }
