@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.10.1](https://github.com/midrock/revite/compare/v1.10.0...v1.10.1) (2023-06-09)
+
+
+### Bug Fixes
+
+* bug running on windows ([85b2aae](https://github.com/midrock/revite/commit/85b2aaecacdfa94fcc644ef33f1a32f619ae6310))
+
 # [1.10.0](https://github.com/midrock/revite/compare/v1.9.0...v1.10.0) (2023-05-31)
 
 
