@@ -24,6 +24,7 @@
     "url": "https://github.com/midrock/revite.git"
   },
   "devDependencies": {
+    "@types/node": "18.16.16",
     "@commitlint/cli": "^16.0.2",
     "@commitlint/config-conventional": "^16.0.0",
     "@headlessui/vue": "^1.4.2",
@@ -88,7 +89,7 @@
     "bootstrap"
   ],
   "engines": {
-    "node": ">=16.14"
+    "node": ">=18"
   },
   "bin": {
     "revite": "cli/dist/revite.js"
