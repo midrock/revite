@@ -4,15 +4,18 @@
   "license": "MIT",
   "scripts": {
     "demo": "vite --config demo/vite.config.ts",
+    "revite": "./cli/bin/revite",
     "demo:vue": "cross-env APP_CONFIG=vue yarn demo",
     "demo:next": "cross-env APP_CONFIG=next yarn demo",
     "demo:next:build": "cross-env APP_CONFIG=next vite build --config demo/vite.config.ts",
-    "build": "tsc --project tsconfig.release.json",
+    "build": "yarn build:lib && yarn build:cli",
+    "build:lib": "tsc --project tsconfig.release.json",
+    "build:cli": "vite build --config cli/vite.config.ts",
     "test:unit": "vite-jest --no-cache",
     "release:prepare": "node --experimental-json-modules scripts/pre-release.mjs",
     "release": "semantic-release",
-    "prepare": "husky install",
-    "typecheck": "vue-tsc --noEmit -p tsconfig.json"
+    "typecheck": "vue-tsc --noEmit -p tsconfig.json",
+    "postinstall": "husky install"
   },
   "contributors": [
     "Roman Tebenkov <iteam4u@ya.ru>"
@@ -22,7 +25,6 @@
     "url": "https://github.com/midrock/revite.git"
   },
   "devDependencies": {
-    "@types/node": "18.16.16",
     "@commitlint/cli": "^16.0.2",
     "@commitlint/config-conventional": "^16.0.0",
     "@headlessui/vue": "^1.4.2",
@@ -33,6 +35,7 @@
     "@semantic-release/npm": "^9.0.0",
     "@semantic-release/release-notes-generator": "^10.0.3",
     "@types/jest": "^27.4.0",
+    "@types/node": "18.16.16",
     "@typescript-eslint/eslint-plugin": "^5.2.0",
     "@typescript-eslint/parser": "^5.2.0",
     "@vitejs/plugin-vue": "^4.2.3",
@@ -48,9 +51,11 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^5.1.0",
     "eslint-plugin-vue": "^7.18.0",
+    "fs-extra": "^11.1.1",
     "generate-source-map": "^0.0.5",
     "husky": "^8.0.3",
     "jest": "^29.5.0",
+    "lodash-es": "^4.17.21",
     "lint-staged": "^13.2.2",
     "postcss": "^8.4.24",
     "prettier": "^2.8.8",
@@ -62,6 +67,7 @@
     "vite": "^4.3.9",
     "vite-jest": "^0.1.4",
     "vite-plugin-markdown": "^2.1.0",
+    "vite-raw-plugin": "latest",
     "vue": "^3.3.4",
     "vue-jest": "^3.0.6",
     "vue-router": "^4.2.2",
@@ -86,5 +92,8 @@
   ],
   "engines": {
     "node": ">=18"
+  },
+  "bin": {
+    "revite": "./cli/bin/revite"
   }
 }

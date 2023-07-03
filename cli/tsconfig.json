@@ -14,13 +14,11 @@
     "baseUrl": ".",
     "strict": true,
     "paths": {
-      "revite": ["src"],
-      "/~/*": ["demo/src/*"]
+      "/~/*": ["./src/*"]
     },
     "lib": ["ES2020", "DOM"],
-    "types": ["vite/client", "node", "jest"]
+    "types": ["vite/client", "node"]
   },
-  "include": ["src/**/*.ts", "demo/**/*.ts", "demo/**/*.md", "demo/**/*.vue"],
-  "exclude": ["node_modules", "dist"],
-  "files": ["./src/global.d.ts"]
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules", "dist"]
 }

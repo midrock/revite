@@ -1,0 +1,7 @@
+import { Listener } from 'revite'
+
+export class <%= className %> extends Listener {
+  async handle(event) {
+    //
+  }
+}

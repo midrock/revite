@@ -1,0 +1,4 @@
+import { <%= contractName %> } from '..'
+
+export class <%= serviceName %> extends <%= contractName %> {
+}

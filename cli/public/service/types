@@ -1,0 +1,9 @@
+declare namespace Service {
+  namespace <%= name %> {
+    type Contract = import('./').<%= contractName %>
+
+    interface Config {
+      service: Revite.ImportConstructor<Contract>
+    }
+  }
+}
