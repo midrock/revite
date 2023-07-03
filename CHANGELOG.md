@@ -1,5 +1,17 @@
 # Changelog
 
+# [1.11.0](https://github.com/midrock/revite/compare/v1.10.1...v1.11.0) (2023-07-03)
+
+
+### Bug Fixes
+
+* husky paths ([14de338](https://github.com/midrock/revite/commit/14de338cae12a1dc01ee417e153f3cae57ce48ad))
+
+
+### Features
+
+* **cli:** add a utility for creating service, provider, and listener templates ([#2](https://github.com/midrock/revite/issues/2)) ([4497014](https://github.com/midrock/revite/commit/4497014d89ece75827faafc26667fd6edf939b9a))
+
 ## [1.10.1](https://github.com/midrock/revite/compare/v1.10.0...v1.10.1) (2023-06-09)
 
 
