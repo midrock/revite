@@ -1,15 +1,15 @@
 import { BootContext, BeforeBootContext, RegisterContext, ServiceProvider } from 'revite'
 
-export class <%= fileName %>Provider extends ServiceProvider {
+export class <%= className %> extends ServiceProvider {
   register(ctx: RegisterContext) {
-   ctx.on(
-
-   )
+    //
   }
 
   async beforeBoot(ctx: BeforeBootContext) {
+    //
   }
 
   async boot(ctx: BootContext) {
+    //
   }
 }

@@ -1,0 +1,5 @@
+import { Event } from 'revite'
+
+export class <%= className %> extends Event {
+
+}

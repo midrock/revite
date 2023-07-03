@@ -1,0 +1,25 @@
+import { BootContext, BeforeBootContext, RegisterContext, ServiceProvider } from 'revite'
+import { <%= contractName %> } from '.'
+
+export class <%= providerName %> extends ServiceProvider {
+  register(ctx: RegisterContext) {
+    const config = ctx.config('<%= configName %>') as Service.<%= name %>.Config
+
+    ctx.bind(<%= contractName %>).to({
+      service: config.service,
+      singleton: true,
+      reactive: false,
+      async factory({ Service }) {
+        return () => new Service()
+      },
+    })
+  }
+
+  async beforeBoot(ctx: BeforeBootContext) {
+    //
+  }
+
+  async boot(ctx: BootContext) {
+    //
+  }
+}

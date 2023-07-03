@@ -1,0 +1,1 @@
+export { <%= contractName %> } from './<%= contractName %>'
