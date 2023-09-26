@@ -17,6 +17,8 @@ from [Laravel Framework](https://laravel.com/docs/master/providers).
   - [Services](#services)
   - [Events and Listeners](#events-and-listeners)
   - [Packages](#packages)
+  - [Extensions](#extensions)
+  - [Boot scenarios](#boot-scenarios)
 - [Built-in contracts](#built-in-contracts)
 - [Dependencies](#dependencies)
 
@@ -31,9 +33,7 @@ tsconfig.json
 ```json
 {
   "compilerOptions": {
-    "types": [
-      "revite/global"
-    ]
+    "types": ["revite/global"]
   }
 }
 ```
@@ -45,10 +45,10 @@ tsconfig.json
 3. Load configuration via Revite
 
 ```ts
-import {revite} from 'revite'
-import config from '@revite/config'
+import { revite } from "revite";
+import config from "@revite/config";
 
-revite.bootstrap(config)
+revite.bootstrap(config);
 ```
 
 See [Demo Application](./demo)
@@ -71,24 +71,24 @@ Contracts are the only one way to get the service instance. Abstract classes are
 
 ```ts
 export abstract class NotesServiceContract {
-  notes: Service.Notes.Note[] = []
+  notes: Service.Notes.Note[] = [];
 
-  abstract get isEmpty(): boolean
+  abstract get isEmpty(): boolean;
 
-  abstract createNote(note: Service.Notes.Note): Promise<void>
+  abstract createNote(note: Service.Notes.Note): Promise<void>;
 
-  abstract deleteNote(noteId: string): Promise<void>
+  abstract deleteNote(noteId: string): Promise<void>;
 }
 ```
 
 ```ts
-import {revite} from 'revite'
-import {NotesServiceContract} from "/~/services/notes";
+import { revite } from "revite";
+import { NotesServiceContract } from "/~/services/notes";
 
 async function getNotes() {
-  const notesService = await revite.resolve(NotesServiceContract)
+  const notesService = await revite.resolve(NotesServiceContract);
 
-  return notesService.notes
+  return notesService.notes;
 }
 ```
 
@@ -110,43 +110,41 @@ config
 - `main.ts` is a required file for the Revite bootstrap and should look like this:
 
 ```ts
-import {defineConfig} from 'revite'
-import {VueReactivityService} from 'revite/services/VueReactivityService'
+import { defineConfig } from "revite";
+import { VueReactivityService } from "revite/services/VueReactivityService";
 
 export default defineConfig({
   logger: {
-    level: 'debug',
+    level: "debug",
   },
   reactivity: {
     service: VueReactivityService,
   },
-  packages: [
-    import('/~/packages/ViewsPackage'),
-  ],
+  packages: [import("/~/packages/ViewsPackage")],
   providers: [
-    import('/~/providers/EventServiceProvider'),
-    import('/~/services/render/RenderServiceProvider'),
-    import('/~/services/router/RouterServiceProvider'),
-    import('/~/services/auth/AuthServiceProvider'),
+    import("/~/providers/EventServiceProvider"),
+    import("/~/services/render/RenderServiceProvider"),
+    import("/~/services/router/RouterServiceProvider"),
+    import("/~/services/auth/AuthServiceProvider"),
   ],
   config: {
     router: {
-      service: () => import('/~/services/router/versions/VueRouterService'),
+      service: () => import("/~/services/router/versions/VueRouterService"),
     } as Service.Router.Config,
   },
-})
+});
 ```
 
 config/prod/manifest.ts
 
 ```ts
 export const config: Service.Manifest.Config = {
-  service: () => import('/~/services/manifest/versions/ManifestServiceV1'),
+  service: () => import("/~/services/manifest/versions/ManifestServiceV1"),
   env: import.meta.env.VITE_ENV,
   keys: {
-    recaptcha: '000',
+    recaptcha: "000",
   },
-}
+};
 ```
 
 There are two ways to load the configuration into Revite.
@@ -154,9 +152,9 @@ There are two ways to load the configuration into Revite.
 - Directly Load directory in source code.
 
 ```ts
-import {revite} from 'revite'
+import { revite } from "revite";
 
-revite.bootstrap(import.meta.globEager('./config/default/*.ts'))
+revite.bootstrap(import.meta.globEager("./config/default/*.ts"));
 ```
 
 - Apply Vite plugin
@@ -164,26 +162,26 @@ revite.bootstrap(import.meta.globEager('./config/default/*.ts'))
 vite.config.ts
 
 ```ts
-import {defineConfig} from 'vite'
-import revite from 'revite/plugin'
+import { defineConfig } from "vite";
+import revite from "revite/plugin";
 
 export default defineConfig({
   plugins: [
     revite({
-      root: '/src/config',
+      root: "/src/config",
       use: process.env.TARGET_CONFIG as string,
-    })
+    }),
   ],
-})
+});
 ```
 
 main.ts
 
 ```ts
-import {revite} from 'revite'
-import config from '@revite/config'
+import { revite } from "revite";
+import config from "@revite/config";
 
-revite.bootstrap(config)
+revite.bootstrap(config);
 ```
 
 Then start the application with:
@@ -200,31 +198,36 @@ env TARGET_CONFIG=prod yarn dev
 - Also, they can be used to bootstrap any code that you need.
 
 ```ts
-import {BootContext, BeforeBootContext, RegisterContext, ServiceProvider} from 'revite'
-import {AuthServiceContract} from '/~/services/auth'
-import {UiServiceContract} from '/~/services/ui'
+import {
+  BootContext,
+  BeforeBootContext,
+  RegisterContext,
+  ServiceProvider,
+} from "revite";
+import { AuthServiceContract } from "/~/services/auth";
+import { UiServiceContract } from "/~/services/ui";
 
 export class AuthServiceProvider extends ServiceProvider {
   register(ctx: RegisterContext) {
-    const config: Service.Auth.Config = ctx.config('auth')
+    const config: Service.Auth.Config = ctx.config("auth");
 
     ctx.bind(AuthServiceContract).to({
       service: config.service,
       reactive: true,
       singleton: true,
-    })
+    });
   }
 
   async beforeBoot(ctx: BeforeBootContext) {
-    const uiService = await ctx.resolve(UiServiceContract)
+    const uiService = await ctx.resolve(UiServiceContract);
 
-    await uiService.setFetchStatus()
+    await uiService.setFetchStatus();
   }
 
   async boot(ctx: BootContext) {
-    const authService = await ctx.resolve(AuthServiceContract)
+    const authService = await ctx.resolve(AuthServiceContract);
 
-    return authService.fetchUser()
+    return authService.fetchUser();
   }
 }
 ```
@@ -235,19 +238,28 @@ Synchronous method to register services, bind events, and configuration to them.
 
 ```ts
 export interface ResolveOptions {
-  loaded?: boolean
+  loaded?: boolean;
 }
 
 interface RegisterContext {
-  resolve<T extends AbstractConstructor>(contract: T, options?: ResolveOptions): Promise<InstanceType<T>>
+  resolve<T extends AbstractConstructor>(
+    contract: T,
+    options?: ResolveOptions
+  ): Promise<InstanceType<T>>;
 
-  resolveIfExist<T extends AbstractConstructor>(contract: T, options?: ResolveOptions): Promise<InstanceType<T> | undefined>
+  resolveIfExist<T extends AbstractConstructor>(
+    contract: T,
+    options?: ResolveOptions
+  ): Promise<InstanceType<T> | undefined>;
 
-  on(event: EventConstructor, listen: ListenerConstructor | ListenerConstructor[]): void
+  on(
+    event: EventConstructor,
+    listen: ListenerConstructor | ListenerConstructor[]
+  ): void;
 
-  config<T>(name: string): T
+  config<T>(name: string): T;
 
-  bind<T extends AbstractConstructor>(contract: T): BindContext<T>
+  bind<T extends AbstractConstructor>(contract: T): BindContext<T>;
 }
 ```
 
@@ -281,11 +293,17 @@ routes to RouterService before it starts routing.
 
 ```ts
 interface BeforeBootContext {
-  resolve<T extends AbstractConstructor>(contract: T, options?: ResolveOptions): Promise<InstanceType<T>>
+  resolve<T extends AbstractConstructor>(
+    contract: T,
+    options?: ResolveOptions
+  ): Promise<InstanceType<T>>;
 
-  resolveIfExist<T extends AbstractConstructor>(contract: T, options?: ResolveOptions): Promise<InstanceType<T> | undefined>
+  resolveIfExist<T extends AbstractConstructor>(
+    contract: T,
+    options?: ResolveOptions
+  ): Promise<InstanceType<T> | undefined>;
 
-  config<T>(name: string): T
+  config<T>(name: string): T;
 }
 ```
 
@@ -295,9 +313,15 @@ Asynchronous method to call any code after all providers will be registered and 
 
 ```ts
 interface BootContext {
-  resolve<T extends AbstractConstructor>(contract: T, options?: ResolveOptions): Promise<InstanceType<T>>
+  resolve<T extends AbstractConstructor>(
+    contract: T,
+    options?: ResolveOptions
+  ): Promise<InstanceType<T>>;
 
-  resolveIfExist<T extends AbstractConstructor>(contract: T, options?: ResolveOptions): Promise<InstanceType<T> | undefined>
+  resolveIfExist<T extends AbstractConstructor>(
+    contract: T,
+    options?: ResolveOptions
+  ): Promise<InstanceType<T> | undefined>;
 }
 ```
 
@@ -317,37 +341,37 @@ export class MockNotesService extends NotesServiceContract {
 ## Events and Listeners
 
 ```ts
-import {Event} from 'revite'
+import { Event } from "revite";
 
 export class NoteCreatedEvent extends Event {
   constructor(public note: Service.Notes.Note) {
-    super()
+    super();
   }
 }
 ```
 
 ```ts
-import {Listener, revite} from 'revite'
-import {NoteCreatedEvent} from '/~/events/NoteCreatedEvent'
-import {NotifyServiceContract} from '/~/services/notify'
+import { Listener, revite } from "revite";
+import { NoteCreatedEvent } from "/~/events/NoteCreatedEvent";
+import { NotifyServiceContract } from "/~/services/notify";
 
 export class NoteCreatedNotify extends Listener {
   async handle(event: NoteCreatedEvent) {
-    const notifyService = await revite.resolve(NotifyServiceContract)
+    const notifyService = await revite.resolve(NotifyServiceContract);
 
     notifyService.show({
-      title: 'Note created',
-      type: 'success',
-      text: 'ID ' + event.note.id,
-    })
+      title: "Note created",
+      type: "success",
+      text: "ID " + event.note.id,
+    });
   }
 }
 ```
 
 ```ts
-import {RegisterContext, ServiceProvider} from 'revite'
-import {NoteCreatedEvent} from '/~/events/NoteCreatedEvent'
-import {NoteCreatedNotify} from '/~/listeners/NoteCreatedNotify'
+import { RegisterContext, ServiceProvider } from "revite";
+import { NoteCreatedEvent } from "/~/events/NoteCreatedEvent";
+import { NoteCreatedNotify } from "/~/listeners/NoteCreatedNotify";
 
 export class EventServiceProvider extends ServiceProvider {
   register(ctx: RegisterContext) {
@@ -355,43 +379,156 @@ export class EventServiceProvider extends ServiceProvider {
       NoteCreatedNotify,
       (event: NoteCreatedEvent) => {
         // use event
-      }
-    ])
+      },
+    ]);
 
     /**
      * Sequential execution of listeners
      */
-    ctx.on(NoteCreatedEvent, [
-      NoteCreatedNotify,
-    ], {
-      sequential: true
-    })
+    ctx.on(NoteCreatedEvent, [NoteCreatedNotify], {
+      sequential: true,
+    });
 
     /**
      * Listeners will be executed one time in 500 ms
      */
-    ctx.on(NoteCreatedEvent, [
-      NoteCreatedNotify,
-    ], {
-      wait: 500
-    })
+    ctx.on(NoteCreatedEvent, [NoteCreatedNotify], {
+      wait: 500,
+    });
   }
 }
-
 ```
 
 # Packages
 
 ```ts
-import {Package} from 'revite'
+import { Package } from "revite";
 
 export class ViewsPackage extends Package {
   providers = [
-    import('/~/views/home/VueHomeViewProvider'),
-    import('/~/views/terms/vue/TermsViewProvider'),
-    import('/~/views/notes/VueNotesViewProvider'),
-    import('/~/views/report/VueReportViewProvider'),
-  ]
+    import("/~/views/home/VueHomeViewProvider"),
+    import("/~/views/terms/vue/TermsViewProvider"),
+    import("/~/views/notes/VueNotesViewProvider"),
+    import("/~/views/report/VueReportViewProvider"),
+  ];
+}
+```
+
+# Extensions
+
+Extensions will be loaded only when service requested.
+
+```ts
+import { defineConfig } from "revite";
+
+export default defineConfig({
+  config: {
+    dashboard: {
+      extend: [() => import("/~/providers/ImageWidgetProvider")],
+    } as Service.Dashboard.Config,
+  },
+});
+```
+
+The `extend` method called with resolved service as argument.
+
+```ts
+import { Extension, revite } from "revite";
+import { DashboardService } from "/~/services/dashboard";
+import { NotesView } from "/~/views/notes/NotesView";
+
+export class ImageWidgetProvider extends Extension {
+  async extend(service: DashboardService) {
+    const notesView = await revite.resolve(NotesView);
+
+    service.registerLink({
+      route: notesView.getRootRoute(),
+      title: "Extended image",
+      description:
+        "Doloribus dolores nostrum quia qui natus officia quod et dolorem. Sit repellendus qui ut at blanditiis et quo et molestiae.",
+      icon: {
+        name: "pencil",
+        class: "text-green-500 bg-green-50",
+      },
+      order: 100,
+    });
+  }
+}
+```
+
+# Boot scenarios
+
+```ts
+import { defineConfig } from "revite";
+
+export default defineConfig({
+  preload: [
+    import("/~/services/auth/AuthServiceProvider"),
+    /**
+     * this provider will load next scenario
+     */
+    import("/~/providers/BootstrapProvider"),
+  ],
+  providers: [
+    import("/~/services/ui/UiServiceProvider"),
+    import("/~/services/notify/NotifyServiceProvider"),
+  ],
+  next: {
+    authorized: () => ({
+      preload: [
+        import("/~/services/router/RouterServiceProvider"),
+        import("/~/services/render/RenderServiceProvider"),
+      ],
+      packages: [import("/~/packages/ViewsPackage")],
+      providers: [
+        import("/~/services/dashboard/DashboardServiceProvider"),
+        import("/~/providers/EventServiceProvider"),
+        import("/~/services/notes/NotesServiceProvider"),
+      ],
+    }),
+    unauthorized: () => ({
+      preload: [
+        import("/~/services/router/RouterServiceProvider"),
+        import("/~/services/render/RenderServiceProvider"),
+      ],
+      providers: [
+        import("/~/services/dashboard/DashboardServiceProvider"),
+        import("/~/views/home/VueHomeViewProvider"),
+        import("/~/views/report/VueReportViewProvider"),
+      ],
+    }),
+  },
+  config: {
+    router: {
+      service: () => import("/~/services/router/versions/VueRouterService"),
+    } as Service.Router.Config,
+    render: {
+      service: () => import("/~/services/render/versions/vue/VueRenderService"),
+    } as Service.Render.Config,
+    notes: {
+      service: () => import("/~/services/notes/versions/MockNotesService"),
+    } as Service.Notes.Config,
+    auth: {
+      service: () => import("/~/services/auth/versions/MockLoggedAuthService"),
+    } as Service.Auth.Config,
+  },
+});
+```
+
+```ts
+import { revite, ServiceProvider } from "revite";
+import { AuthServiceContract } from "/~/services/auth";
+
+export class BootstrapProvider extends ServiceProvider {
+  async boot(ctx) {
+    const authService = await ctx.resolve(AuthServiceContract);
+
+    if (authService.isLoggedIn) {
+      return revite.next("authorized");
+    }
+
+    return revite.next("unauthorized");
+  }
 }
 ```
 
@@ -406,15 +543,15 @@ These contracts are parts of Revite and can be configured in the main section.
 - See [LoggerServiceContract](./src/contracts/LoggerServiceContract.ts)
 
 ```ts
-import {defineConfig} from 'revite'
-import {CustomLoggerService} from '/~/services/logger'
+import { defineConfig } from "revite";
+import { CustomLoggerService } from "/~/services/logger";
 
 export default defineConfig({
   logger: {
     service: CustomLoggerService,
-    level: 'debug' // 'info' | 'warn' | 'error'
+    level: "debug", // 'info' | 'warn' | 'error'
   },
-})
+});
 ```
 
 ## ReactivityServiceContract
@@ -423,12 +560,12 @@ export default defineConfig({
 - See [ReactivityServiceContract](./src/contracts/ReactivityServiceContract.ts)
 
 ```ts
-import {defineConfig} from 'revite'
-import {VueReactivityService} from 'revite/services/VueReactivityService'
+import { defineConfig } from "revite";
+import { VueReactivityService } from "revite/services/VueReactivityService";
 
 export default defineConfig({
   reactivity: {
     service: VueReactivityService,
   },
-})
+});
 ```

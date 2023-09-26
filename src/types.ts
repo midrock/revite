@@ -3,6 +3,7 @@ import { ReactivityServiceContract } from './contracts/ReactivityServiceContract
 import { Event } from './core/Event'
 import { Listener } from './core/Listener'
 import { Package } from './core/Package'
+import { Extension } from './core/Extension'
 import { EventsRegistry } from './core/EventsRegistry'
 
 type ServiceProvider = import('./core/ServiceProvider').ServiceProvider
@@ -16,6 +17,7 @@ export type ExtendedConstructor<T extends AbstractConstructor> = {
 
 export type EventConstructor = Constructor<Event>
 export type ListenerConstructor = Constructor<Listener>
+export type ExtensionConstructor = Constructor<Extension>
 
 export type EventHandlerOptions = {
   wait?: number
@@ -60,7 +62,7 @@ export interface BaseConfig {
   preload?: (Import<Constructor<ServiceProvider>>[] | Import<Constructor<ServiceProvider>>)[]
   packages?: Import<Constructor<Package>>[]
   providers?: Import<Constructor<ServiceProvider>>[]
-  config?: Record<string, any>
+  config?: Record<string, ServiceConfig>
 }
 
 export type NextConfig = () => BaseConfig
@@ -72,6 +74,11 @@ interface LoggerConfig {
 
 interface ReactivityConfig {
   service?: Import<Constructor<ReactivityServiceContract>>
+}
+
+export interface ServiceConfig<T = unknown> {
+  service?: Import<Constructor<T>>
+  extend?: Import<ExtensionConstructor>[]
 }
 
 export type Import<T = any> =

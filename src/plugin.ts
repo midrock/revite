@@ -44,6 +44,7 @@ export default function(options: PluginOptions): Plugin {
 
         return `
           const config = import.meta.glob("${path}", { eager: true })
+          config['__name'] = '${targetConfig}'
           export default config
         `
       }

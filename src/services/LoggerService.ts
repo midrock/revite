@@ -1,5 +1,5 @@
 import { LogLevel } from '../types'
-import { LoggerServiceContract } from '..'
+import { LoggerServiceContract } from '../contracts/LoggerServiceContract'
 
 export class LoggerService extends LoggerServiceContract {
   private colors = {

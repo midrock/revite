@@ -76,5 +76,7 @@ export class ProvidersRegistry {
     if (!provider.isFailed) {
       this.registry.set(provider.constructor.name, true)
     }
+
+    provider.dispose()
   }
 }
