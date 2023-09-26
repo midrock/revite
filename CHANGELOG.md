@@ -1,5 +1,12 @@
 # Changelog
 
+# [1.12.0](https://github.com/midrock/revite/compare/v1.11.0...v1.12.0) (2023-09-26)
+
+
+### Features
+
+* add extensions ([e3b7971](https://github.com/midrock/revite/commit/e3b7971f42304428a2f15533f81ac2f2c0553e86))
+
 # [1.11.0](https://github.com/midrock/revite/compare/v1.10.1...v1.11.0) (2023-07-03)
 
 
