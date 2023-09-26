@@ -2,6 +2,10 @@ declare namespace Service {
   namespace Dashboard {
     type Contract = import('./DashboardService').DashboardService
 
+    interface Config extends Revite.ServiceConfig<Contract> {
+      enable?: boolean
+    }
+
     interface Link {
       route: Service.Router.Location
       title: string

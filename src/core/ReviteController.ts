@@ -1,12 +1,9 @@
-import { BuiltInServicesTask } from '../tasks/BuiltInServicesTask'
 import { BootstrapSessionTask } from '../tasks/BootstrapSessionTask'
 import { config, services } from '../state'
 import { AbstractConstructor, Config, Sources } from '../types'
 import { getImportsByFileNames } from '../utils/import'
 
 export class ReviteController {
-  private initialized = false
-
   async resolve<T extends AbstractConstructor>(contract: T, options?): Promise<InstanceType<T>> {
     return services.resolve(contract, options)
   }
@@ -21,14 +18,14 @@ export class ReviteController {
   async bootstrap(appConfig: Sources) {
     const configInFiles = getImportsByFileNames(appConfig)
     const mainConfig = configInFiles.main
+    const configName = appConfig.__name
+
+    if (!mainConfig) {
+      throw new Error(`Configuration ${configName} does not contain the "main" file`)
+    }
 
     await config.apply(configInFiles)
-
     config.apply(mainConfig.config)
-
-    if (!this.initialized) {
-      await new BuiltInServicesTask().execute()
-    }
 
     return new BootstrapSessionTask({
       label: 'RVT',
@@ -48,7 +45,7 @@ export class ReviteController {
         label: `NXT ${name}`,
       }).execute(nextConfig)
     } else {
-      throw new Error(`Incorrect next config ${name}`)
+      throw new Error(`Session ${name} was not found`)
     }
   }
 }

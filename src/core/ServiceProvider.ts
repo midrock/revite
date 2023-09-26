@@ -92,6 +92,11 @@ export abstract class ServiceProvider {
     this.tasks.boot = task
   }
 
+  dispose() {
+    this.tasks.boot = undefined
+    this.tasks.register = undefined
+  }
+
   register?(ctx: RegisterContext): void
 
   beforeBoot?(ctx: BeforeBootContext): (void | Promise<void>)

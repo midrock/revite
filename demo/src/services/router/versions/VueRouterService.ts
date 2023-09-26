@@ -1,5 +1,5 @@
-import { createRouter, createWebHistory, RouteLocationNormalizedLoaded, Router } from 'vue-router'
-import { RouterServiceContract } from '../RouterServiceContract'
+import { createRouter, createWebHistory, RouteLocationNormalizedLoaded, Router, RouteRecordRaw } from 'vue-router'
+import { RouterServiceContract } from '..'
 
 export class VueRouterService extends RouterServiceContract {
   routes: any[] = []
@@ -35,7 +35,7 @@ export class VueRouterService extends RouterServiceContract {
 
   addRoute(config: Service.Router.RouteConfig) {
     if (this.router) {
-      this.router?.addRoute(config)
+      this.router?.addRoute(config as RouteRecordRaw)
     } else {
       this.routes.push(config)
     }

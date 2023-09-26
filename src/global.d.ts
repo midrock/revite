@@ -11,4 +11,5 @@ declare namespace Revite {
   type Constructor<T> = import('./types').Constructor<T>
   type Import<T> = import('./types').Import<T>
   type ImportConstructor<T> = Import<Constructor<T>>
+  type ServiceConfig<T> = import('./types').ServiceConfig<T>
 }

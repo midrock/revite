@@ -35,5 +35,12 @@ export default defineConfig({
     auth: {
       service: () => import('/~/services/auth/versions/MockLoggedAuthService'),
     } as Service.Auth.Config,
+    dashboard: {
+      enable: false,
+      extend: [
+        () => import('/~/providers/ImageWidgetProvider'),
+        () => import('/~/providers/TextWidgetProvider'),
+      ],
+    } as Service.Dashboard.Config,
   },
 })
