@@ -1,8 +1,8 @@
 import path from 'path'
-import revite from '../src/plugin'
 import vue from '@vitejs/plugin-vue'
-import {Mode, plugin as markdown} from 'vite-plugin-markdown'
-import {defineConfig} from 'vite'
+import { defineConfig } from 'vite'
+import { Mode, plugin as markdown } from 'vite-plugin-markdown'
+import revite from '../src/plugin'
 
 export default defineConfig({
   root: 'demo',

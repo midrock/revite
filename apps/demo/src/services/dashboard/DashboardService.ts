@@ -3,9 +3,9 @@ export class DashboardService {
     links: Service.Dashboard.Link[]
     widgets: Service.Dashboard.Widget[]
   } = {
-    links: [],
-    widgets: [],
-  }
+      links: [],
+      widgets: [],
+    }
 
   get links() {
     return this.content.links.sort((a, b) => {

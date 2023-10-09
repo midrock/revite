@@ -1,6 +1,6 @@
 import { BeforeBootContext, RegisterContext, ServiceProvider } from 'revite'
-import { RouterServiceContract } from '/~/services/router'
 import { DashboardService } from '/~/services/dashboard'
+import { RouterServiceContract } from '/~/services/router'
 import { UiService } from '/~/services/ui'
 import { HomeState } from './HomeState'
 

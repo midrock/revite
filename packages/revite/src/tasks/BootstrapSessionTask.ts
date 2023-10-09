@@ -1,6 +1,6 @@
+import { Package, resolveImport, ServiceProvider } from '..'
 import { Task } from '../core/Task'
 import { providers as providersRegistry } from '../state'
-import { Package, resolveImport, ServiceProvider } from '..'
 import { BaseConfig, Constructor, Import, LogLevel } from '../types'
 import { flatten } from '../utils/transform'
 

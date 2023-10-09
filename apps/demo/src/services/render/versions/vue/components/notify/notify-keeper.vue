@@ -1,6 +1,6 @@
 <script lang="ts">
-import { defineComponent } from 'vue'
 import { revite } from 'revite'
+import { defineComponent } from 'vue'
 import { NotifyServiceContract } from '/~/services/notify'
 import NotifyItem from './notify-item.vue'
 

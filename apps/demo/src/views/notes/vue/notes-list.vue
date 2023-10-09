@@ -1,6 +1,6 @@
 <script lang="ts">
-import { defineComponent } from 'vue'
 import { revite } from 'revite'
+import { defineComponent } from 'vue'
 import { NotesServiceContract } from '/~/services/notes'
 import { NotesView } from '/~/views/notes'
 import NotesEmpty from './components/notes-empty.vue'

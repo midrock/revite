@@ -1,5 +1,5 @@
-import { providers } from '../state'
 import { ServiceProvider } from '..'
+import { providers } from '../state'
 
 export interface ProviderReport {
   name: string

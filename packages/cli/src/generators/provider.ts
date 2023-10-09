@@ -1,6 +1,6 @@
-import { Generator } from '/~/core/Generator'
 import camelCase from 'lodash-es/camelCase'
 import upperFirst from 'lodash-es/upperFirst'
+import { Generator } from '/~/core/Generator'
 
 export class ProviderGenerator extends Generator {
   get files() {

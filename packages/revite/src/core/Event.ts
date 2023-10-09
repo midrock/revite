@@ -1,5 +1,5 @@
-import { logger } from '../utils/built-in'
 import { events } from '../state'
+import { logger } from '../utils/built-in'
 
 export abstract class Event {
   #dispatched = false

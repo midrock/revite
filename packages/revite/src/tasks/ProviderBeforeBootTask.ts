@@ -1,6 +1,6 @@
+import { ServiceProvider } from '..'
 import { Task } from '../core/Task'
 import { config, services } from '../state'
-import { ServiceProvider } from '..'
 
 export class ProviderBeforeBootTask extends Task {
   async run(provider: ServiceProvider) {

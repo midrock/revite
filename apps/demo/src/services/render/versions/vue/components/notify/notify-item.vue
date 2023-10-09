@@ -1,6 +1,6 @@
 <script lang="ts">
-import { defineComponent, PropType } from 'vue'
 import { revite } from 'revite'
+import { defineComponent, PropType } from 'vue'
 import { NotifyServiceContract } from '/~/services/notify'
 
 const CLASSES = {

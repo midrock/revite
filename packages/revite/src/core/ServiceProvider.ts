@@ -7,9 +7,9 @@ export abstract class ServiceProvider {
     register?: ProviderRegisterTask
     boot?: ProviderBootTask
   } = {
-    register: undefined,
-    boot: undefined,
-  }
+      register: undefined,
+      boot: undefined,
+    }
 
   get label() {
     return this.constructor.name

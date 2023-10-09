@@ -1,6 +1,6 @@
 import { RegisterContext, ServiceProvider } from 'revite'
-import { UiService } from './UiService'
 import { RouterServiceContract } from '/~/services/router'
+import { UiService } from './UiService'
 
 export class UiServiceProvider extends ServiceProvider {
   register(ctx: RegisterContext) {

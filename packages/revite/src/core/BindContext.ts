@@ -1,3 +1,5 @@
+import { resolveImport } from '..'
+import { config, services } from '../state'
 import {
   AbstractConstructor,
   BindFactory,
@@ -7,9 +9,7 @@ import {
   Import,
   ServiceConfig,
 } from '../types'
-import { resolveImport } from '..'
 import { logger, reactivity } from '../utils/built-in'
-import { config, services } from '../state'
 
 export class BindContext<T extends AbstractConstructor> {
   key: string

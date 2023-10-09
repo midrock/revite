@@ -1,7 +1,7 @@
 import { RegisterContext, ServiceProvider } from 'revite'
+import { DashboardService } from '/~/services/dashboard'
 import { RouterServiceContract } from '/~/services/router'
 import { UiService } from '/~/services/ui'
-import { DashboardService } from '/~/services/dashboard'
 
 export class VueReportViewProvider extends ServiceProvider {
   async beforeBoot(ctx: RegisterContext) {

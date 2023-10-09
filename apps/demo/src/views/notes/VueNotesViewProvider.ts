@@ -1,8 +1,8 @@
-import { defineAsyncComponent, markRaw } from 'vue'
 import { BeforeBootContext, RegisterContext, ServiceProvider } from 'revite'
+import { defineAsyncComponent, markRaw } from 'vue'
+import { DashboardService } from '/~/services/dashboard'
 import { RouterServiceContract } from '/~/services/router'
 import { UiService } from '/~/services/ui'
-import { DashboardService } from '/~/services/dashboard'
 import { NotesView } from './NotesView'
 
 export class VueNotesViewProvider extends ServiceProvider {

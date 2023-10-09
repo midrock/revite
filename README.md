@@ -33,9 +33,7 @@ tsconfig.json
 ```json
 {
   "compilerOptions": {
-    "types": [
-      "revite"
-    ]
+    "types": ["revite"]
   }
 }
 ```
@@ -47,7 +45,7 @@ tsconfig.json
 3. Load configuration via Revite
 
 ```ts
-import {revite} from "revite";
+import { revite } from "revite";
 import config from "@revite/config";
 
 revite.bootstrap(config);
@@ -84,8 +82,8 @@ export abstract class NotesServiceContract {
 ```
 
 ```ts
-import {revite} from "revite";
-import {NotesServiceContract} from "/~/services/notes";
+import { revite } from "revite";
+import { NotesServiceContract } from "/~/services/notes";
 
 async function getNotes() {
   const notesService = await revite.resolve(NotesServiceContract);
@@ -113,24 +111,23 @@ config
 
 ```ts
 // "~/services/reactivity/versions/vue";
-import {ReactivityServiceContract} from 'revite'
-import {reactive, shallowReactive} from 'vue'
+import { ReactivityServiceContract } from "revite";
+import { reactive, shallowReactive } from "vue";
 
 export class VueReactivityService extends ReactivityServiceContract {
   makeReactive(target: any) {
-    return shallowReactive(target)
+    return shallowReactive(target);
   }
 
   makeDeepReactive(target: any) {
-    return reactive(target)
+    return reactive(target);
   }
 }
-
 ```
 
 ```ts
-import {defineConfig} from "revite";
-import {VueReactivityService} from "~/services/reactivity/versions/vue";
+import { defineConfig } from "revite";
+import { VueReactivityService } from "~/services/reactivity/versions/vue";
 
 export default defineConfig({
   logger: {
@@ -139,9 +136,7 @@ export default defineConfig({
   reactivity: {
     service: VueReactivityService,
   },
-  packages: [
-    import("/~/packages/ViewsPackage")
-  ],
+  packages: [import("/~/packages/ViewsPackage")],
   providers: [
     import("/~/providers/EventServiceProvider"),
     import("/~/services/render/RenderServiceProvider"),
@@ -173,7 +168,7 @@ There are two ways to load the configuration into Revite.
 - Directly Load directory in source code.
 
 ```ts
-import {revite} from "revite";
+import { revite } from "revite";
 
 revite.bootstrap(import.meta.globEager("./config/default/*.ts"));
 ```
@@ -183,7 +178,7 @@ revite.bootstrap(import.meta.globEager("./config/default/*.ts"));
 vite.config.ts
 
 ```ts
-import {defineConfig} from "vite";
+import { defineConfig } from "vite";
 import revite from "revite/plugin";
 
 export default defineConfig({
@@ -199,7 +194,7 @@ export default defineConfig({
 main.ts
 
 ```ts
-import {revite} from "revite";
+import { revite } from "revite";
 import config from "@revite/config";
 
 revite.bootstrap(config);
@@ -225,8 +220,8 @@ import {
   RegisterContext,
   ServiceProvider,
 } from "revite";
-import {AuthServiceContract} from "/~/services/auth";
-import {UiServiceContract} from "/~/services/ui";
+import { AuthServiceContract } from "/~/services/auth";
+import { UiServiceContract } from "/~/services/ui";
 
 export class AuthServiceProvider extends ServiceProvider {
   register(ctx: RegisterContext) {
@@ -362,7 +357,7 @@ export class MockNotesService extends NotesServiceContract {
 ## Events and Listeners
 
 ```ts
-import {Event} from "revite";
+import { Event } from "revite";
 
 export class NoteCreatedEvent extends Event {
   constructor(public note: Service.Notes.Note) {
@@ -372,9 +367,9 @@ export class NoteCreatedEvent extends Event {
 ```
 
 ```ts
-import {Listener, revite} from "revite";
-import {NoteCreatedEvent} from "/~/events/NoteCreatedEvent";
-import {NotifyServiceContract} from "/~/services/notify";
+import { Listener, revite } from "revite";
+import { NoteCreatedEvent } from "/~/events/NoteCreatedEvent";
+import { NotifyServiceContract } from "/~/services/notify";
 
 export class NoteCreatedNotify extends Listener {
   async handle(event: NoteCreatedEvent) {
@@ -406,9 +401,9 @@ export class NoteCreatedNotifyWithError extends Listener {
 ```
 
 ```ts
-import {RegisterContext, ServiceProvider} from "revite";
-import {NoteCreatedEvent} from "/~/events/NoteCreatedEvent";
-import {NoteCreatedNotify} from "/~/listeners/NoteCreatedNotify";
+import { RegisterContext, ServiceProvider } from "revite";
+import { NoteCreatedEvent } from "/~/events/NoteCreatedEvent";
+import { NoteCreatedNotify } from "/~/listeners/NoteCreatedNotify";
 
 export class EventServiceProvider extends ServiceProvider {
   register(ctx: RegisterContext) {
@@ -445,7 +440,7 @@ export class EventServiceProvider extends ServiceProvider {
 # Packages
 
 ```ts
-import {Package} from "revite";
+import { Package } from "revite";
 
 export class ViewsPackage extends Package {
   providers = [
@@ -462,7 +457,7 @@ export class ViewsPackage extends Package {
 Extensions will be loaded only when service requested.
 
 ```ts
-import {defineConfig} from "revite";
+import { defineConfig } from "revite";
 
 export default defineConfig({
   config: {
@@ -476,9 +471,9 @@ export default defineConfig({
 The `extend` method called with resolved service as argument.
 
 ```ts
-import {Extension, revite} from "revite";
-import {DashboardService} from "/~/services/dashboard";
-import {NotesView} from "/~/views/notes/NotesView";
+import { Extension, revite } from "revite";
+import { DashboardService } from "/~/services/dashboard";
+import { NotesView } from "/~/views/notes/NotesView";
 
 export class ImageWidgetProvider extends Extension {
   async extend(service: DashboardService) {
@@ -502,7 +497,7 @@ export class ImageWidgetProvider extends Extension {
 # Boot scenarios
 
 ```ts
-import {defineConfig} from "revite";
+import { defineConfig } from "revite";
 
 export default defineConfig({
   preload: [
@@ -559,8 +554,8 @@ export default defineConfig({
 ```
 
 ```ts
-import {revite, ServiceProvider} from "revite";
-import {AuthServiceContract} from "/~/services/auth";
+import { revite, ServiceProvider } from "revite";
+import { AuthServiceContract } from "/~/services/auth";
 
 export class BootstrapProvider extends ServiceProvider {
   async boot(ctx) {
@@ -586,8 +581,8 @@ These contracts are parts of Revite and can be configured in the main section.
 - See [LoggerServiceContract](./src/contracts/LoggerServiceContract.ts)
 
 ```ts
-import {defineConfig} from "revite";
-import {CustomLoggerService} from "/~/services/logger";
+import { defineConfig } from "revite";
+import { CustomLoggerService } from "/~/services/logger";
 
 export default defineConfig({
   logger: {
@@ -603,8 +598,8 @@ export default defineConfig({
 - See [ReactivityServiceContract](./src/contracts/ReactivityServiceContract.ts)
 
 ```ts
-import {defineConfig} from "revite";
-import {VueReactivityService} from "revite/services/VueReactivityService";
+import { defineConfig } from "revite";
+import { VueReactivityService } from "revite/services/VueReactivityService";
 
 export default defineConfig({
   reactivity: {

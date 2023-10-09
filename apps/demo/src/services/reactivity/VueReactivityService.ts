@@ -1,5 +1,5 @@
-import { reactive, shallowReactive } from 'vue'
 import { ReactivityServiceContract } from 'revite'
+import { reactive, shallowReactive } from 'vue'
 
 export class VueReactivityService extends ReactivityServiceContract {
   makeReactive<T extends object>(target: T) {

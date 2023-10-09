@@ -1,5 +1,5 @@
-import { Task } from '../core/Task'
 import { ServiceProvider } from '..'
+import { Task } from '../core/Task'
 import { services } from '../state'
 
 export class ProviderBootTask extends Task {

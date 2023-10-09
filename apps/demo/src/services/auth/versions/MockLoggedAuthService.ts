@@ -1,5 +1,5 @@
-import { User } from '../core/User'
 import { AuthServiceContract } from '../AuthServiceContract'
+import { User } from '../core/User'
 
 export class MockLoggedAuthService extends AuthServiceContract {
   get isLoggedIn() {

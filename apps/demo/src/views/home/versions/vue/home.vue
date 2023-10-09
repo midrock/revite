@@ -1,6 +1,6 @@
 <script lang="ts">
-import { defineComponent } from 'vue'
 import { revite } from 'revite'
+import { defineComponent } from 'vue'
 import { HomeState } from '/~/views/home'
 import HomeLinks from './components/home-links.vue'
 import HomeWidgets from './components/home-widgets.vue'

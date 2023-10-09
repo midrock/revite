@@ -1,8 +1,8 @@
-import { AbstractConstructor, Constructor } from '../types'
 import { ServiceProvider } from '..'
-import { ProviderRegisterTask } from '../tasks/ProviderRegisterTask'
-import { ProviderBootTask } from '../tasks/ProviderBootTask'
 import { ProviderBeforeBootTask } from '../tasks/ProviderBeforeBootTask'
+import { ProviderBootTask } from '../tasks/ProviderBootTask'
+import { ProviderRegisterTask } from '../tasks/ProviderRegisterTask'
+import { AbstractConstructor, Constructor } from '../types'
 
 export class ProvidersRegistry {
   private registry = new Map<string, ServiceProvider | true>()
