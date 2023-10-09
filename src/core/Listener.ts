@@ -1,7 +1,9 @@
+import type { Event } from './Event'
+
 export abstract class Listener {
-  static isBuiltIn = true
+  static isBuiltInListener = true
 
-  abstract handle(...args: any[]): void | Promise<void>
+  abstract handle(event: Event): (void | Promise<void>)
 
-  handleError?(error?: any): void | Promise<void>
+  handleError?(event: Event, error?: unknown): (void | Promise<void>)
 }

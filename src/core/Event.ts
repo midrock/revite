@@ -2,12 +2,24 @@ import { logger } from '../utils/built-in'
 import { events } from '../state'
 
 export abstract class Event {
+  #dispatched = false
+
   dispatch() {
+    if (this.#dispatched) {
+      throw new Error('Event already dispatched')
+    }
+
+    this.#dispatched = true
     this.log()
-    events.emit(this)
+    events.emit(this).then()
   }
 
   async dispatchAndWait() {
+    if (this.#dispatched) {
+      throw new Error('Event already dispatched')
+    }
+
+    this.#dispatched = true
     this.log()
     return events.emit(this)
   }
