@@ -18,8 +18,11 @@ export {
 } from './utils/import'
 
 export type {
+  Constructor,
   RegisterContext,
   BootContext,
   BeforeBootContext,
   Config,
+  Import,
+  ServiceConfig,
 } from './types'

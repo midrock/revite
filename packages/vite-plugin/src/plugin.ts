@@ -5,7 +5,7 @@ interface PluginOptions {
   use: string | Record<string, boolean>
 }
 
-export default function(options: PluginOptions): Plugin {
+export default function revitePluginVite(options: PluginOptions): Plugin {
   const virtualModuleId = '@revite/config'
   const resolvedVirtualModuleId = '\0' + virtualModuleId
 

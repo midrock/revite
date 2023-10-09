@@ -1,15 +1,18 @@
 # Revite
 
-The Revite is the easy way to implement the application bootstrap through configurations. Approach borrowed
-from [Laravel Framework](https://laravel.com/docs/master/providers).
+Easy way to implement configurable application bootstrap.
 
-[![npm latest version](https://img.shields.io/npm/v/revite)](https://www.npmjs.com/package/revite)
+<p>
+<a href="https://www.npmjs.com/package/revite"><img src="https://img.shields.io/npm/v/revite" alt="npm latest version"></a>
+<a href="https://nodejs.org/en/about/releases/"><img src="https://img.shields.io/node/v/revite.svg" alt="node compatibility"></a>
+<a href="https://github.com/midrock/revite/actions/workflows/release.yml"><img src="https://github.com/midrock/revite/actions/workflows/release.yml/badge.svg?branch=release" alt="build status"></a>
+</p>
 
 # Contents
 
 - [Installation](#installation)
 - [Getting started](#getting-started)
-- [Purpose of Revite development](#purpose-of-revite-development)
+- [Purpose of development](#purpose-of-revite-development)
 - [Basic Concepts](#basic-concepts)
   - [Contracts](#contracts)
   - [Configurations](#configurations)

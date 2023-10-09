@@ -1189,7 +1189,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@revite/cli@workspace:packages/cli":
+"@revite/cli@*, @revite/cli@workspace:packages/cli":
   version: 0.0.0-use.local
   resolution: "@revite/cli@workspace:packages/cli"
   dependencies:
@@ -1232,21 +1232,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@revite/release@*, @revite/release@workspace:etc/release":
-  version: 0.0.0-use.local
-  resolution: "@revite/release@workspace:etc/release"
-  dependencies:
-    "@semantic-release/changelog": ^6.0.3
-    "@semantic-release/commit-analyzer": ^11.0.0
-    "@semantic-release/git": ^10.0.1
-    "@semantic-release/npm": ^11.0.0
-    "@semantic-release/release-notes-generator": ^12.0.0
-    fs-extra: ^11.1.1
-    semantic-release: ^21.0.2
-  languageName: unknown
-  linkType: soft
-
-"@revite/vite-plugin@workspace:packages/vite-plugin":
+"@revite/vite-plugin@*, @revite/vite-plugin@workspace:packages/vite-plugin":
   version: 0.0.0-use.local
   resolution: "@revite/vite-plugin@workspace:packages/vite-plugin"
   languageName: unknown
@@ -8571,8 +8557,14 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "revite@workspace:packages/revite"
   dependencies:
-    "@revite/release": "*"
-    vite-plugin-dts: ^3.6.0
+    "@revite/cli": "*"
+    "@revite/vite-plugin": "*"
+    "@semantic-release/changelog": ^6.0.3
+    "@semantic-release/commit-analyzer": ^11.0.0
+    "@semantic-release/git": ^10.0.1
+    "@semantic-release/npm": ^11.0.0
+    "@semantic-release/release-notes-generator": ^12.0.0
+    semantic-release: ^21.0.2
   bin:
     revite: ./cli/bin/revite
   languageName: unknown
@@ -8621,6 +8613,7 @@ __metadata:
     "@types/node": 18.16.16
     commitizen: ^4.2.4
     cross-env: ^7.0.3
+    fs-extra: ^11.1.1
     husky: ^8.0.3
     lint-staged: ^13.2.2
     prettier: ^2.8.8
@@ -8628,6 +8621,7 @@ __metadata:
     turbo: ^1.10.0
     typescript: ^5.2.2
     vite: ^4.4.11
+    vite-plugin-dts: ^3.6.0
   languageName: unknown
   linkType: soft
 

@@ -4,10 +4,11 @@
   "license": "MIT",
   "author": "Roman Tebenkov <iteam4u@ya.ru>",
   "scripts": {
-    "build": "vite build",
-    "lint": "vue-tsc --noEmit -p tsconfig.json",
+    "dev": "vite build --watch",
+    "build": "vite build && node --experimental-json-modules scripts/pre-release.mjs",
+    "lint": "vue-tsc --noEmit",
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist",
-    "release": "echo 'Hello'"
+    "release": "semantic-release"
   },
   "main": "./dist/revite.es.js",
   "types": "./dist/revite.es.d.ts",
@@ -19,7 +20,8 @@
     },
     "./global": {
       "types": "./global.d.ts"
-    }
+    },
+    "./package.json": "./package.json"
   },
   "bin": "./cli/bin/revite",
   "repository": {
@@ -30,8 +32,14 @@
     "url": "https://github.com/midrock/revite/issues"
   },
   "devDependencies": {
-    "@revite/release": "*",
-    "vite-plugin-dts": "^3.6.0"
+    "@revite/cli": "*",
+    "@revite/vite-plugin": "*",
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/commit-analyzer": "^11.0.0",
+    "@semantic-release/git": "^10.0.1",
+    "@semantic-release/npm": "^11.0.0",
+    "@semantic-release/release-notes-generator": "^12.0.0",
+    "semantic-release": "^21.0.2"
   },
   "keywords": [
     "service",
