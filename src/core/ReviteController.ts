@@ -1,14 +1,22 @@
 import { BootstrapSessionTask } from '../tasks/BootstrapSessionTask'
 import { config, events, services } from '../state'
-import type { AbstractConstructor, Config, EventConstructor, EventHandler, EventHandlerOptions, Sources } from '../types'
+import type {
+  AbstractConstructor,
+  Config,
+  DispatchedEvent,
+  EventConstructor,
+  EventHandler,
+  EventHandlerOptions,
+  Sources,
+} from '../types'
 import { getImportsByFileNames, resolveImport } from '../utils/import'
 
 export class ReviteController {
   import = resolveImport
 
-  on(
+  on<T extends DispatchedEvent>(
     event: EventConstructor,
-    listeners: EventHandler | EventHandler[],
+    listeners: EventHandler<T> | EventHandler<T>[],
     options?: EventHandlerOptions,
   ) {
     return events.on(event, listeners, options)

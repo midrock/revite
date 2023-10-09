@@ -14,12 +14,17 @@ export type ExtendedConstructor<T extends AbstractConstructor> = {
   new(...args: ConstructorParameters<T>): InstanceType<T>
 }
 
-export type AsyncLoader = () => { $resolver: () => any }
 export type EventConstructor = Constructor<Event>
 export type ListenerConstructor = Constructor<Listener>
 export type ExtensionConstructor = Constructor<Extension>
-export type EventHandler = ListenerConstructor | Import<ListenerConstructor> | ((event: Event) => any)
+export type EventHandler<T extends DispatchedEvent> =
+  FunctionEventHandler<T>
+  | ListenerConstructor
+  | Import<ListenerConstructor>
+export type FunctionEventHandler<T extends DispatchedEvent> = ((event: T) => any)
 export type ListenerWrapper = (event: Event) => any
+
+export type DispatchedEvent = Omit<Event, 'dispatch' | 'dispatchAndWait'>
 
 export type EventHandlerOptions<T = unknown> = {
   wait?: number
@@ -106,9 +111,9 @@ export interface ServiceConfig<T = unknown> {
 export type FactoryConfig<T extends ServiceConfig> = Omit<T, 'service' | 'extend'>
 
 export interface RegisterContext extends ProviderContext {
-  on(
+  on<T extends DispatchedEvent>(
     event: EventConstructor,
-    listen: EventHandler | EventHandler[],
+    listen: EventHandler<T> | EventHandler<T>[],
     options?: EventHandlerOptions,
   ): void
 
