@@ -1,7 +1,7 @@
 import { RegisterContext, ServiceProvider } from 'revite'
+import { DashboardService } from '/~/services/dashboard'
 import { RouterServiceContract } from '/~/services/router/index'
 import { UiService } from '/~/services/ui'
-import { DashboardService } from '/~/services/dashboard'
 
 export class TermsViewProvider extends ServiceProvider {
   async beforeBoot(ctx: RegisterContext) {

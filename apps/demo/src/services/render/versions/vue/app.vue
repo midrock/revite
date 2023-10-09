@@ -1,7 +1,7 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
-import AppMenu from './components/app/app-menu.vue'
 import AppHeader from './components/app/app-header.vue'
+import AppMenu from './components/app/app-menu.vue'
 import NotifyKeeper from './components/notify/notify-keeper.vue'
 
 const userNavigation = [

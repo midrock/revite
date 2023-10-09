@@ -1,6 +1,6 @@
+import { ServiceProvider } from '..'
 import { Task } from '../core/Task'
 import { config, events, providers, services } from '../state'
-import { ServiceProvider } from '..'
 
 export class ProviderRegisterTask extends Task {
   async run(provider: ServiceProvider) {

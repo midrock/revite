@@ -1,6 +1,6 @@
 <script lang="ts">
-import { defineComponent } from 'vue'
 import { revite } from 'revite'
+import { defineComponent } from 'vue'
 import { NotesView } from '/~/views/notes'
 
 export default defineComponent({

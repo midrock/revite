@@ -1,5 +1,4 @@
 <script lang="ts">
-import { computed, defineComponent } from 'vue'
 import {
   AnnotationIcon,
   ChartBarIcon,
@@ -9,6 +8,7 @@ import {
   PencilIcon,
   PlusCircleIcon,
 } from '@heroicons/vue/outline'
+import { computed, defineComponent } from 'vue'
 
 const ICONS = {
   home: HomeIcon,

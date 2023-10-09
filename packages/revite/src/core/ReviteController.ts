@@ -1,5 +1,6 @@
-import { BootstrapSessionTask } from '../tasks/BootstrapSessionTask'
 import { config, events, services } from '../state'
+import { BootstrapSessionTask } from '../tasks/BootstrapSessionTask'
+import { getImportsByFileNames, resolveImport } from '../utils/import'
 import type {
   AbstractConstructor,
   Config,
@@ -9,7 +10,6 @@ import type {
   EventHandlerOptions,
   Sources,
 } from '../types'
-import { getImportsByFileNames, resolveImport } from '../utils/import'
 
 export class ReviteController {
   import = resolveImport

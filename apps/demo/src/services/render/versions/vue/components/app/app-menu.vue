@@ -1,6 +1,6 @@
 <script lang="ts">
-import { defineComponent } from 'vue'
 import { revite } from 'revite'
+import { defineComponent } from 'vue'
 import { UiService } from '/~/services/ui'
 import BaseIcon from '../base/base-icon.vue'
 

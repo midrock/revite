@@ -1,6 +1,6 @@
 <script lang="ts">
-import { defineComponent } from 'vue'
 import { revite } from 'revite'
+import { defineComponent } from 'vue'
 import { AuthServiceContract } from '/~/services/auth'
 
 export default defineComponent({

@@ -14,7 +14,7 @@
     "clean": "turbo run clean",
     "lint": "turbo run lint",
     "test": "turbo run test",
-    "format": "eslint --ext .ts,.js,.mjs,.vue --fix ./ && prettier **/*.{md,json,html} --write && turbo run format",
+    "format": "eslint --ext .ts,.js,.mjs,.vue --fix ./ && prettier **/*.{md,json,html} --write",
     "postinstall": "husky install"
   },
   "devDependencies": {
@@ -34,9 +34,6 @@
     "vite": "^4.4.11"
   },
   "lint-staged": {
-    "*": [
-      "yarn lint"
-    ],
     "*.{js,ts,vue}": [
       "eslint --fix"
     ],

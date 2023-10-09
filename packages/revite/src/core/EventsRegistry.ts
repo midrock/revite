@@ -1,8 +1,8 @@
-import type { EventConstructor, EventHandler, EventHandlerOptions, ListenerWrapper } from '../types'
-import { debounce } from '../utils/timer'
+import { Event, Listener } from '..'
 import { logger } from '../utils/built-in'
 import { resolveImportUnsafe } from '../utils/import'
-import { Event, Listener } from '..'
+import { debounce } from '../utils/timer'
+import type { EventConstructor, EventHandler, EventHandlerOptions, ListenerWrapper } from '../types'
 
 export class EventsRegistry {
   registry = new Map<EventConstructor, Set<ListenerWrapper>>()

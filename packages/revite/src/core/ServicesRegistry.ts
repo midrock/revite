@@ -1,5 +1,5 @@
-import { AbstractConstructor, ResolveOptions } from '../types'
 import { providers } from '../state'
+import { AbstractConstructor, ResolveOptions } from '../types'
 import { BindContext } from './BindContext'
 
 export class ServicesRegistry {

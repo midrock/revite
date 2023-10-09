@@ -1,7 +1,7 @@
+import { Config } from '..'
 import { LoggerServiceContract, ReactivityServiceContract } from '../'
 import { Task } from '../core/Task'
 import { config, services } from '../state'
-import { Config } from '..'
 
 const DEFAULT_LOGGER = () => import('../services/LoggerService')
 

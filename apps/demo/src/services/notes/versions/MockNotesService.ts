@@ -1,5 +1,5 @@
-import { NotesServiceContract } from '../'
 import { NoteCreatedEvent } from '/~/events/NoteCreatedEvent'
+import { NotesServiceContract } from '../'
 
 export class MockNotesService extends NotesServiceContract {
   get isEmpty() {
