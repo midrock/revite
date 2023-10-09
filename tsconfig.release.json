@@ -5,11 +5,11 @@
     "emitDecoratorMetadata": false,
     "lib": ["ES2020", "DOM"],
     "moduleResolution": "node",
-    "module": "commonjs",
+    "module": "ESNext",
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "sourceMap": true,
-    "target": "es6",
+    "target": "esnext",
     "outDir": "./dist"
   },
   "include": ["src/**/*.ts"],
