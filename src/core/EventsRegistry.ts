@@ -27,7 +27,7 @@ export class EventsRegistry {
 
   on(
     constructor: EventConstructor,
-    listen: EventHandler | EventHandler[],
+    listen: EventHandler<any> | EventHandler<any>[],
     options?: EventHandlerOptions,
   ) {
     let handler: ListenerWrapper | undefined
@@ -83,7 +83,7 @@ export class EventsRegistry {
 
   private makeGroupHandler(
     constructor: EventConstructor,
-    handlers: EventHandler[],
+    handlers: EventHandler<any>[],
     options?: EventHandlerOptions,
   ): ListenerWrapper {
     logger().group({
@@ -109,7 +109,7 @@ export class EventsRegistry {
 
   private async executeListenersConsistently(
     event: Event,
-    handlers: EventHandler[],
+    handlers: EventHandler<any>[],
     options?: EventHandlerOptions,
   ) {
     for (const handler of handlers) {
@@ -125,7 +125,7 @@ export class EventsRegistry {
     }
   }
 
-  private async executeListenersParallel(event: Event, handlers: EventHandler[]) {
+  private async executeListenersParallel(event: Event, handlers: EventHandler<any>[]) {
     return Promise.all(handlers.map(listener => {
       return this.executeListener(event, listener)
         .catch(e => {
@@ -143,7 +143,7 @@ export class EventsRegistry {
     return this.listeners.get(Source)
   }
 
-  private async executeListener(event: Event, handler: EventHandler) {
+  private async executeListener(event: Event, handler: EventHandler<any>) {
     const Source: any = handler
 
     let listener = this.getListenerFromConstructor(handler)
