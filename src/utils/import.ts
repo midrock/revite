@@ -15,20 +15,20 @@ export function getImportsByFileNames(configSource?: Sources) {
 }
 
 export function resolveModule(module: Record<string, any>) {
-  const importKey = Object.keys(module)[0]
+  if (module && typeof module === 'object') {
+    const importKey = Object.keys(module)[0]
 
-  return module.default || module[importKey] || module
+    return module.default || module[importKey] || module
+  }
+
+  return module
 }
 
-export async function resolveImport<T = any>(source: Import<T>): Promise<any> {
+export async function resolveImportUnsafe<T = any>(source: Import<T>): Promise<any> {
   let module: any
 
   if (source instanceof Function) {
-    try {
-      module = await source()
-    } catch (error) {
-      return source
-    }
+    module = await source()
   } else if (source instanceof Promise) {
     module = await source
   } else {
@@ -38,4 +38,11 @@ export async function resolveImport<T = any>(source: Import<T>): Promise<any> {
   if (module) {
     return resolveModule(module)
   }
+}
+
+export async function resolveImport<T = any>(source: Import<T>): Promise<any> {
+  return resolveImportUnsafe(source)
+    .catch(() => {
+      return undefined
+    })
 }

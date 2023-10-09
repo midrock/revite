@@ -366,6 +366,22 @@ export class NoteCreatedNotify extends Listener {
     });
   }
 }
+
+export class NoteCreatedNotifyWithError extends Listener {
+  async handle(event: NoteCreatedEvent) {
+    const notifyService = await revite.resolve(NotifyServiceContract);
+
+    notifyService.show({
+      title: "Note created",
+      type: "success",
+      text: "ID " + event.note.id,
+    });
+  }
+
+  handleError(event: NoteCreatedEvent, error: unknown) {
+    // handle error
+  }
+}
 ```
 
 ```ts
@@ -380,13 +396,19 @@ export class EventServiceProvider extends ServiceProvider {
       (event: NoteCreatedEvent) => {
         // use event
       },
+      () => import("/~/events/NoteCreatedEvent"),
     ]);
 
     /**
-     * Sequential execution of listeners
+     * Sequential execution of listeners.
+     * If some of listeners will throw an error the next execution will be stopped
      */
     ctx.on(NoteCreatedEvent, [NoteCreatedNotify], {
       sequential: true,
+      onError(event: NoteCreatedEvent, error) {
+        // use error
+        // use event
+      },
     });
 
     /**

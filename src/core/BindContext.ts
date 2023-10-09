@@ -3,6 +3,7 @@ import {
   BindFactory,
   ExtendedConstructor,
   ExtensionConstructor,
+  FactoryConfig,
   Import,
   ServiceConfig,
 } from '../types'
@@ -104,13 +105,13 @@ export class BindContext<T extends AbstractConstructor> {
     return this.getterPromise
   }
 
-  to<C extends ServiceConfig<T>>(options: {
+  to<C extends ServiceConfig<any>>(options: {
     reactive?: boolean | 'deep'
     singleton?: boolean
     config?: string
     service?: Import<T>
     factory?: (options: {
-      config: C,
+      config: FactoryConfig<C>,
       Service: ExtendedConstructor<T>
     }) => (BindFactory<T> | Promise<BindFactory<T>>)
   }) {

@@ -1,152 +1,176 @@
-import { Event, Listener } from '..'
+import type { EventConstructor, EventHandler, EventHandlerOptions, ListenerWrapper } from '../types'
 import { debounce } from '../utils/timer'
-import { Constructor, EventHandlerOptions } from '../types'
 import { logger } from '../utils/built-in'
-
-type EventConstructor = Constructor<Event>
-type ListenerConstructor = Constructor<Listener>
-
-type Handler = (event?: any) => any
-type EventHandler = ListenerConstructor | Handler
+import { resolveImportUnsafe } from '../utils/import'
+import { Event, Listener } from '..'
 
 export class EventsRegistry {
-  registry = new Map<EventConstructor, Handler[]>()
+  registry = new Map<EventConstructor, Set<ListenerWrapper>>()
+  listeners = new Map<EventConstructor, Listener>()
 
-  emit(event: Event) {
+  async emit(event: Event) {
     const constructor = event.constructor as EventConstructor
-    const handlers = this.registry.get(constructor) || []
+    const handlers = this.registry.get(constructor)
 
-    return Promise
-      .all(handlers.map(handler => {
-        return handler(event).catch(e => {
-          console.error(e)
-        })
-      }))
-      .finally(() => {
-        event.dispose()
+    if (handlers) {
+      const promises: Promise<any>[] = []
+
+      handlers.forEach(handler => {
+        promises.push(handler(event))
       })
+
+      await Promise.all(promises)
+    }
+
+    event.dispose()
   }
 
   on(
-    event: EventConstructor,
+    constructor: EventConstructor,
     listen: EventHandler | EventHandler[],
     options?: EventHandlerOptions,
   ) {
-    if (!listen) {
-      throw new Error(`No listeners was provided for ${event.name}`)
-    }
+    let handler: ListenerWrapper | undefined
 
-    const createListener = (Source: any) => {
-      let listener: Listener
+    if (!listen || (listen instanceof Array && listen.length === 0)) {
+      logger().log({
+        message: 'No listeners was provided',
+        level: 'warn',
+        context: `REV ${constructor.name}`,
+      })
+    } else {
+      handler = this.makeGroupHandler(
+        constructor,
+        (() => {
+          if (listen instanceof Array) {
+            return listen
+          }
 
-      if (Source.isBuiltIn) {
-        listener = new Source()
-      } else if (Source instanceof Function) {
-        class FunctionListener extends Listener {
-          handle = Source
-        }
+          return [listen]
+        })(),
+        options,
+      )
 
-        listener = new FunctionListener()
-      } else {
-        throw new Error(`Listener for ${event.name} should be a constructor or function.`)
+      if (!this.registry.has(constructor)) {
+        this.registry.set(constructor, new Set())
       }
 
-      logger().log({
-        level: 'debug',
-        context: `REG ${Source.name}`,
-        message: `on ${event.name}`,
-      })
-
-      return listener
+      this.registry.get(constructor)?.add(handler)
     }
 
-    const listeners: Listener[] = []
+    const dispose = () => {
+      if (handler) {
+        this.registry.get(constructor)?.delete(handler)
 
-    if (listen instanceof Array) {
-      listen.forEach(ListenerConstructor => {
-        listeners.push(createListener(ListenerConstructor))
-      })
-    } else {
-      listeners.push(createListener(listen))
+        logger().group({
+          message: '',
+          level: 'debug',
+          collapsed: true,
+          context: `DIS ${constructor.name}`,
+          entry: () => {
+            logger().dir(listen)
+          },
+        })
+
+        handler = undefined
+      }
     }
 
-    const handlersInRegistry = this.registry.get(event)
-    const registryHandler = this.makeEventHandler({
-      event,
-      listeners,
-      params: options,
-    })
-
-    if (handlersInRegistry) {
-      handlersInRegistry.push(registryHandler)
-    } else {
-      this.registry.set(event, [registryHandler])
+    return {
+      dispose,
     }
   }
 
-  off(event: EventConstructor) {
-    this.registry.delete(event)
-
-    logger().log({
+  private makeGroupHandler(
+    constructor: EventConstructor,
+    handlers: EventHandler[],
+    options?: EventHandlerOptions,
+  ): ListenerWrapper {
+    logger().group({
+      message: '',
       level: 'debug',
-      color: 'brown',
-      context: event.name,
-      message: 'All listeners removed',
+      collapsed: true,
+      context: `REV ${constructor.name}`,
+      entry: () => {
+        handlers.forEach(handler => {
+          logger().dir(handler)
+        })
+      },
     })
-  }
-
-  private makeEventHandler(options: {
-    event: EventConstructor
-    listeners: Listener[]
-    params?: EventHandlerOptions
-  }) {
-    const { params, listeners } = options
 
     return debounce((event: Event) => {
-      if (params?.sequential) {
-        return this.executeListenersConsistently(event, listeners)
+      if (options?.sequential) {
+        return this.executeListenersConsistently(event, handlers, options)
       }
 
-      return this.executeListenersParallel(event, listeners)
-    }, params?.wait || 0)
+      return this.executeListenersParallel(event, handlers)
+    }, options?.wait || 0)
   }
 
-  private async executeListenersConsistently(event: Event, listeners: Listener[]) {
-    for (const listener of listeners) {
+  private async executeListenersConsistently(
+    event: Event,
+    handlers: EventHandler[],
+    options?: EventHandlerOptions,
+  ) {
+    for (const handler of handlers) {
       try {
-        await this.executeListener(event, listener)
-      } catch (e) {
-        if (listener.handleError) {
-          listener.handleError(e)
-        } else {
-          console.error(e)
-        }
+        await this.executeListener(event, handler)
+      } catch (error) {
+        console.error(error)
 
-        return
+        if (options?.onError instanceof Function) {
+          return options.onError(event, error)
+        }
       }
     }
   }
 
-  private async executeListenersParallel(event: Event, listeners: Listener[]) {
-    return Promise.all(listeners.map(listener => {
-      return this.executeListener(event, listener).catch(e => {
-        if (listener.handleError) {
-          listener.handleError(e)
-        } else {
+  private async executeListenersParallel(event: Event, handlers: EventHandler[]) {
+    return Promise.all(handlers.map(listener => {
+      return this.executeListener(event, listener)
+        .catch(e => {
           console.error(e)
-        }
-      })
+        })
     }))
   }
 
-  private async executeListener(event: Event, listener: Listener) {
-    logger().log({
-      args: [event],
-      level: 'debug',
-      context: `LSN ${listener.constructor.name}`,
-      message: '',
-    })
+  private getListenerFromConstructor(Source?: any): Listener | undefined {
+    if (!Source?.isBuiltInListener) return
+    if (!this.listeners.has(Source)) {
+      this.listeners.set(Source, new Source())
+    }
 
-    return listener.handle(event)
+    return this.listeners.get(Source)
+  }
+
+  private async executeListener(event: Event, handler: EventHandler) {
+    const Source: any = handler
+
+    let listener = this.getListenerFromConstructor(handler)
+
+    if (!listener) {
+      const module = await resolveImportUnsafe(Source)
+
+      listener = this.getListenerFromConstructor(module)
+    }
+
+    if (listener) {
+      try {
+        await listener.handle(event)
+      } catch (error) {
+        if (listener.handleError instanceof Function) {
+          listener.handleError(event, error)
+        }
+
+        throw error
+      } finally {
+        logger().log({
+          args: [event],
+          level: 'debug',
+          context: `LSN ${listener?.constructor.name || 'Anonymous function'}`,
+          message: '',
+        })
+      }
+    }
   }
 }

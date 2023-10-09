@@ -2,9 +2,8 @@ declare namespace Service {
   namespace Notes {
     type Contract = import('./NotesServiceContract').NotesServiceContract
 
-    interface Config {
-      service: Revite.ImportConstructor<Contract>
-    }
+    type Config = Revite.ServiceConfig<Contract>
+    type Constructor = Revite.ImportConstructor<Contract>
 
     interface Note {
       id: string

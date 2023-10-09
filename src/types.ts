@@ -4,24 +4,27 @@ import { Event } from './core/Event'
 import { Listener } from './core/Listener'
 import { Package } from './core/Package'
 import { Extension } from './core/Extension'
-import { EventsRegistry } from './core/EventsRegistry'
 
 type ServiceProvider = import('./core/ServiceProvider').ServiceProvider
 type BindContext<T> = import('./core/BindContext').BindContext<T>
 
-export type AbstractConstructor = abstract new (...args: any[]) => any
+export type AbstractConstructor = (abstract new (...args: any[]) => any) | (abstract new () => any)
 
 export type ExtendedConstructor<T extends AbstractConstructor> = {
   new(...args: ConstructorParameters<T>): InstanceType<T>
 }
 
+export type AsyncLoader = () => { $resolver: () => any }
 export type EventConstructor = Constructor<Event>
 export type ListenerConstructor = Constructor<Listener>
 export type ExtensionConstructor = Constructor<Extension>
+export type EventHandler = ListenerConstructor | Import<ListenerConstructor> | ((event: Event) => any)
+export type ListenerWrapper = (event: Event) => any
 
-export type EventHandlerOptions = {
+export type EventHandlerOptions<T = unknown> = {
   wait?: number
   sequential?: boolean
+  onError?(event: T, error: unknown): any
 }
 
 export type Constructor<T> = {
@@ -62,7 +65,7 @@ export interface BaseConfig {
   preload?: (Import<Constructor<ServiceProvider>>[] | Import<Constructor<ServiceProvider>>)[]
   packages?: Import<Constructor<Package>>[]
   providers?: Import<Constructor<ServiceProvider>>[]
-  config?: Record<string, ServiceConfig>
+  config?: Record<string, ServiceConfig<unknown>>
 }
 
 export type NextConfig = () => BaseConfig
@@ -74,11 +77,6 @@ interface LoggerConfig {
 
 interface ReactivityConfig {
   service?: Import<Constructor<ReactivityServiceContract>>
-}
-
-export interface ServiceConfig<T = unknown> {
-  service?: Import<Constructor<T>>
-  extend?: Import<ExtensionConstructor>[]
 }
 
 export type Import<T = any> =
@@ -96,8 +94,23 @@ export interface ProviderContext {
   resolveIfExist<T extends AbstractConstructor>(contract: T, options?: ResolveOptions): Promise<InstanceType<T> | undefined>
 }
 
+export interface Disposable {
+  dispose(): void
+}
+
+export interface ServiceConfig<T = unknown> {
+  service?: Import<Constructor<T>>
+  extend?: Import<ExtensionConstructor>[]
+}
+
+export type FactoryConfig<T extends ServiceConfig> = Omit<T, 'service' | 'extend'>
+
 export interface RegisterContext extends ProviderContext {
-  on(...args: Parameters<EventsRegistry['on']>): void
+  on(
+    event: EventConstructor,
+    listen: EventHandler | EventHandler[],
+    options?: EventHandlerOptions,
+  ): void
 
   config<T>(name: string): T
 

@@ -1,9 +1,19 @@
 import { BootstrapSessionTask } from '../tasks/BootstrapSessionTask'
-import { config, services } from '../state'
-import { AbstractConstructor, Config, Sources } from '../types'
-import { getImportsByFileNames } from '../utils/import'
+import { config, events, services } from '../state'
+import type { AbstractConstructor, Config, EventConstructor, EventHandler, EventHandlerOptions, Sources } from '../types'
+import { getImportsByFileNames, resolveImport } from '../utils/import'
 
 export class ReviteController {
+  import = resolveImport
+
+  on(
+    event: EventConstructor,
+    listeners: EventHandler | EventHandler[],
+    options?: EventHandlerOptions,
+  ) {
+    return events.on(event, listeners, options)
+  }
+
   async resolve<T extends AbstractConstructor>(contract: T, options?): Promise<InstanceType<T>> {
     return services.resolve(contract, options)
   }

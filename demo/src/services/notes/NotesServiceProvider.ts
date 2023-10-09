@@ -3,12 +3,13 @@ import { NotesServiceContract } from './NotesServiceContract'
 
 export class NotesServiceProvider extends ServiceProvider {
   register(ctx: RegisterContext) {
-    const config = ctx.config('notes') as Service.Notes.Config
-
-    ctx.bind(NotesServiceContract).to({
-      service: config.service,
+    ctx.bind(NotesServiceContract).to<Service.Notes.Config>({
+      config: 'notes',
       reactive: true,
       singleton: true,
+      factory({ Service }) {
+        return () => new Service()
+      },
     })
   }
 }
