@@ -1,14 +1,14 @@
 <script lang="ts">
+// import { getReport } from 'revite/src/utils/report'
 import { defineComponent } from 'vue'
-import { getReport } from '/~/../../src/utils/report'
 
 export default defineComponent({
   name: 'report-view',
   setup() {
-    const report = getReport()
+    // const report = getReport()
 
     return {
-      report,
+      // report,
     }
   },
 })

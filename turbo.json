@@ -6,6 +6,7 @@
       "cache": false
     },
     "build": {
+      "cache": false,
       "dependsOn": ["^build"]
     },
     "lint": {
@@ -17,7 +18,10 @@
     },
     "release": {
       "cache": false,
-      "dependsOn": ["^build"]
+      "dependsOn": ["^build", "build"]
+    },
+    "@revite/demo#dev": {
+      "dependsOn": ["revite#dev"]
     }
   }
 }

@@ -9,7 +9,7 @@ declare module '@revite/config' {
 
 declare namespace Revite {
   type Constructor<T> = import('revite').Constructor<T>
-  type Import<T> = import('./types').Import<T>
+  type Import<T> = import('revite').Import<T>
   type ImportConstructor<T> = Import<Constructor<T>>
-  type ServiceConfig<T> = import('./types').ServiceConfig<T>
+  type ServiceConfig<T> = import('revite').ServiceConfig<T>
 }

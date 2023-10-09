@@ -2,10 +2,9 @@ import path from 'path'
 import vue from '@vitejs/plugin-vue'
 import { defineConfig } from 'vite'
 import { Mode, plugin as markdown } from 'vite-plugin-markdown'
-import revite from '../src/plugin'
+import revite from '../../packages/vite-plugin/src/plugin'
 
 export default defineConfig({
-  root: 'demo',
   resolve: {
     alias: {
       '/~': path.resolve(__dirname, 'src'),
@@ -21,6 +20,11 @@ export default defineConfig({
       use: process.env.APP_CONFIG as string,
     }),
   ],
+  optimizeDeps: {
+    exclude: [
+      'revite',
+    ],
+  },
   build: {
     minify: 'terser',
     terserOptions: {

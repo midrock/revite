@@ -24,7 +24,7 @@ module.exports = {
     [
       '@semantic-release/npm',
       {
-        pkgRoot: '../../packages/revite/dist',
+        pkgRoot: 'dist',
         npmPublish: true,
       },
     ],
