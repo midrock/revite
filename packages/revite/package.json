@@ -1,0 +1,46 @@
+{
+  "name": "revite",
+  "version": "1.2.0",
+  "license": "MIT",
+  "author": "Roman Tebenkov <iteam4u@ya.ru>",
+  "scripts": {
+    "build": "vite build",
+    "lint": "vue-tsc --noEmit -p tsconfig.json",
+    "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist",
+    "release": "echo 'Hello'"
+  },
+  "main": "./dist/revite.es.js",
+  "types": "./dist/revite.es.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/revite.es.d.ts",
+      "import": "./dist/revite.es.js",
+      "require": "./dist/revite.cjs.js"
+    },
+    "./global": {
+      "types": "./global.d.ts"
+    }
+  },
+  "bin": "./cli/bin/revite",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/midrock/revite.git"
+  },
+  "bugs": {
+    "url": "https://github.com/midrock/revite/issues"
+  },
+  "devDependencies": {
+    "@revite/release": "*",
+    "vite-plugin-dts": "^3.6.0"
+  },
+  "keywords": [
+    "service",
+    "provider",
+    "ioc",
+    "container",
+    "bootstrap"
+  ],
+  "engines": {
+    "node": "^14.18.0 || >=16.0.0"
+  }
+}

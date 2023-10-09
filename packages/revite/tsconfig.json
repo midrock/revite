@@ -1,0 +1,33 @@
+{
+  "compilerOptions": {
+    "declaration": true,
+    "experimentalDecorators": false,
+    "emitDecoratorMetadata": false,
+    "lib": [
+      "ES2020",
+      "DOM"
+    ],
+    "moduleResolution": "node",
+    "module": "CommonJS",
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "sourceMap": true,
+    "target": "ES6",
+    "outDir": "./dist"
+  },
+  "include": [
+    "src/**/*.ts",
+    "global.d.ts",
+    "src/global.d.ts"
+  ],
+  "files": [
+    "src/global.d.ts",
+    "global.d.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "vue",
+    "dist",
+    "src/**/*.d.ts"
+  ]
+}
