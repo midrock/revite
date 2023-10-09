@@ -1,5 +1,7 @@
 # Changelog
 
+## [1.13.1](https://github.com/midrock/revite/compare/v1.13.0...v1.13.1) (2023-10-09)
+
 # [1.13.0](https://github.com/midrock/revite/compare/v1.12.0...v1.13.0) (2023-10-09)
 
 
