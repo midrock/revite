@@ -1,8 +1,20 @@
-.DS_Store
+# Dev artifacts
+.turbo
 node_modules
-dist
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
 
-# local env files
+# Build artifacts
+dist
+build/**
+coverage/*
+еtс/ssl/keys
+
+# Local env files
 .env.local
 .env.*.local
 
@@ -11,15 +23,27 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-plugin.js
-plugin.d.ts
-
 # Editor directories and files
-.idea*
+.DS_Store
+cp
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
-*.sw?
+*.sw*
 *.pdf
 
+# SSL certs
+/keys
+*.crt
+*.key
+
+# IDE
+.vercel
+.idea
+.vscode
+
+# Tests
+etc/tests/test-results/
+etc/tests/playwright-report/
+etc/tests/playwright/.cache/

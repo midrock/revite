@@ -1,74 +1,48 @@
 {
-  "name": "revite",
   "version": "0.1.0",
-  "license": "MIT",
-  "scripts": {
-    "demo": "vite --config demo/vite.config.ts",
-    "revite": "./cli/bin/revite",
-    "demo:vue": "cross-env APP_CONFIG=vue yarn demo",
-    "demo:next": "cross-env APP_CONFIG=next yarn demo",
-    "demo:next:build": "cross-env APP_CONFIG=next vite build --config demo/vite.config.ts",
-    "build": "yarn build:lib && yarn build:cli",
-    "build:lib": "tsc --project tsconfig.release.json",
-    "build:cli": "vite build --config cli/vite.config.ts",
-    "test:unit": "vite-jest --no-cache",
-    "release:prepare": "node --experimental-json-modules scripts/pre-release.mjs",
-    "release": "semantic-release",
-    "postinstall": "husky install",
-    "typecheck": "vue-tsc --noEmit -p tsconfig.json",
-    "build:cli:revite": "tsc cli/revite.ts --outDir cli/dist --moduleResolution node"
-  },
-  "contributors": [
-    "Roman Tebenkov <iteam4u@ya.ru>"
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*",
+    "etc/*"
   ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/midrock/revite.git"
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "release": "turbo run release",
+    "cli": "./packages/cli/bin/revite",
+    "clean": "turbo run clean",
+    "lint": "turbo run lint",
+    "test": "turbo run test",
+    "format": "eslint --ext .ts,.js,.mjs,.vue --fix ./ && prettier **/*.{md,json,html} --write && turbo run format",
+    "postinstall": "husky install"
   },
   "devDependencies": {
+    "@babel/types": "^7.23.0",
     "@commitlint/cli": "^16.0.2",
     "@commitlint/config-conventional": "^16.0.0",
-    "@headlessui/vue": "^1.4.2",
-    "@heroicons/vue": "^1.0.5",
-    "@babel/types": "^7.23.0",
-    "@semantic-release/changelog": "^6.0.1",
-    "@semantic-release/commit-analyzer": "^9.0.2",
-    "@semantic-release/git": "^10.0.1",
-    "@semantic-release/npm": "^9.0.0",
-    "@semantic-release/release-notes-generator": "^10.0.3",
     "@types/jest": "^27.4.0",
     "@types/node": "18.16.16",
-    "@typescript-eslint/eslint-plugin": "^5.2.0",
-    "@typescript-eslint/parser": "^5.2.0",
-    "@vitejs/plugin-vue": "^4.2.3",
-    "@vue/eslint-config-standard": "^6.1.0",
-    "@vue/eslint-config-typescript": "^8.0.0",
-    "autoprefixer": "^10.3.6",
     "commitizen": "^4.2.4",
     "cross-env": "^7.0.3",
-    "eslint": "^7.32.0",
-    "eslint-plugin-import": "^2.22.1",
-    "eslint-plugin-jest": "^24.5.0",
-    "eslint-plugin-lodash": "^7.1.0",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^5.1.0",
-    "eslint-plugin-vue": "^7.18.0",
-    "fs-extra": "^11.1.1",
     "husky": "^8.0.3",
-    "lodash-es": "^4.17.21",
     "lint-staged": "^13.2.2",
-    "postcss": "^8.4.24",
     "prettier": "^2.8.8",
-    "semantic-release": "^21.0.2",
-    "tailwindcss": "^3.3.2",
     "terser": "^5.17.6",
-    "typescript": "^4.9.5",
-    "vite": "^4.3.9",
-    "vite-plugin-markdown": "^2.1.0",
-    "vite-raw-plugin": "latest",
-    "vue": "^3.3.4",
-    "vue-router": "^4.2.2",
-    "vue-tsc": "^1.6.5"
+    "turbo": "^1.10.0",
+    "typescript": "^5.2.2",
+    "vite": "^4.4.11"
+  },
+  "lint-staged": {
+    "*": [
+      "yarn lint"
+    ],
+    "*.{js,ts,vue}": [
+      "eslint --fix"
+    ],
+    "*.{md,json,html}": [
+      "prettier --write"
+    ]
   },
   "commitlint": {
     "extends": [
@@ -80,17 +54,8 @@
       "path": "cz-conventional-changelog"
     }
   },
-  "keywords": [
-    "service",
-    "provider",
-    "ioc",
-    "container",
-    "bootstrap"
-  ],
   "engines": {
-    "node": ">=18"
+    "node": "^14.18.0 || >=16.0.0"
   },
-  "bin": {
-    "revite": "./cli/bin/revite"
-  }
+  "packageManager": "yarn@3.6.4"
 }
