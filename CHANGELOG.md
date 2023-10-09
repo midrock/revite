@@ -1,5 +1,12 @@
 # Changelog
 
+# [1.13.0](https://github.com/midrock/revite/compare/v1.12.0...v1.13.0) (2023-10-09)
+
+
+### Features
+
+* **core:** add async listeners ([bc7f78e](https://github.com/midrock/revite/commit/bc7f78e67b9d8c43921fb671d3ede6f65d4e8702))
+
 # [1.12.0](https://github.com/midrock/revite/compare/v1.11.0...v1.12.0) (2023-09-26)
 
 
