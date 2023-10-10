@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.15.1](https://github.com/midrock/revite/compare/v1.15.0...v1.15.1) (2023-10-10)
+
+
+### Bug Fixes
+
+* release ([5c3030c](https://github.com/midrock/revite/commit/5c3030c96e795a4376535a7cb9276a92a0560f4a))
+
 # [1.15.0](https://github.com/midrock/revite/compare/v1.14.0...v1.15.0) (2023-10-10)
 
 ### Features
