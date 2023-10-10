@@ -1,5 +1,11 @@
 # `revite` changelog
 
+## 1.16.2
+
+### Patch Changes
+
+- 7833500: Update npm package folders.
+
 ## 1.16.1
 
 ### Patch Changes
