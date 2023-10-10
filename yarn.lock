@@ -1206,6 +1206,7 @@ __metadata:
     "@vitejs/plugin-vue": ^4.2.3
     autoprefixer: ^10.3.6
     postcss: ^8.4.24
+    revite: "*"
     tailwindcss: ^3.3.2
     vite-plugin-markdown: ^2.1.0
     vite-raw-plugin: latest
@@ -8553,7 +8554,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"revite@workspace:packages/revite":
+"revite@*, revite@workspace:packages/revite":
   version: 0.0.0-use.local
   resolution: "revite@workspace:packages/revite"
   dependencies:
