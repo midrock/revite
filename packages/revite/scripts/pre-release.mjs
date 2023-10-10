@@ -17,8 +17,7 @@ function copy(from, to) {
 
 copy('LICENSE', 'packages/revite/LICENSE')
 copy('README.md', 'packages/revite/README.md')
-copy('packages/revite/CHANGELOG.md', 'packages/revite/dist/CHANGELOG.md')
-copy('packages/vite-plugin/dist/plugin.js', 'packages/revite/dist/plugin.js')
-copy('packages/vite-plugin/dist/plugin.d.ts', 'packages/revite/dist/plugin.d.ts')
+copy('packages/vite-plugin/dist/plugin.js', 'packages/revite/plugin/vite/index.js')
+copy('packages/vite-plugin/dist/plugin.d.ts', 'packages/revite/plugin/vite/index.d.ts')
 copy('packages/cli/dist', 'packages/revite/dist/cli/dist')
 copy('packages/cli/bin', 'packages/revite/dist/cli/bin')

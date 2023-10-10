@@ -2,11 +2,9 @@
 
 Easy way to implement configurable application bootstrap.
 
-<p>
-<a href="https://www.npmjs.com/package/revite"><img src="https://img.shields.io/npm/v/revite" alt="npm latest version"></a>
-<a href="https://nodejs.org/en/about/releases/"><img src="https://img.shields.io/node/v/revite.svg" alt="node compatibility"></a>
-<a href="https://github.com/midrock/revite/actions/workflows/release.yml"><img src="https://github.com/midrock/revite/actions/workflows/release.yml/badge.svg?branch=release" alt="build status"></a>
-</p>
+![npm latest version](https://img.shields.io/npm/v/revite)
+![node compatibility](https://img.shields.io/node/v/revite.svg)
+![build status](https://github.com/midrock/revite/actions/workflows/release.yml/badge.svg?branch=master)
 
 # Contents
 
@@ -31,13 +29,11 @@ Easy way to implement configurable application bootstrap.
 yarn add revite
 ```
 
-tsconfig.json
+Add `global.d.ts` to tsconfig.json. Set the correct path to node_modules relative to the tsconfig.json directory.
 
 ```json
 {
-  "compilerOptions": {
-    "types": ["revite"]
-  }
+  "files": ["%node_modules/revite/global.d.ts"]
 }
 ```
 
@@ -263,17 +259,17 @@ export interface ResolveOptions {
 interface RegisterContext {
   resolve<T extends AbstractConstructor>(
     contract: T,
-    options?: ResolveOptions
+    options?: ResolveOptions,
   ): Promise<InstanceType<T>>;
 
   resolveIfExist<T extends AbstractConstructor>(
     contract: T,
-    options?: ResolveOptions
+    options?: ResolveOptions,
   ): Promise<InstanceType<T> | undefined>;
 
   on(
     event: EventConstructor,
-    listen: ListenerConstructor | ListenerConstructor[]
+    listen: ListenerConstructor | ListenerConstructor[],
   ): void;
 
   config<T>(name: string): T;
@@ -314,12 +310,12 @@ routes to RouterService before it starts routing.
 interface BeforeBootContext {
   resolve<T extends AbstractConstructor>(
     contract: T,
-    options?: ResolveOptions
+    options?: ResolveOptions,
   ): Promise<InstanceType<T>>;
 
   resolveIfExist<T extends AbstractConstructor>(
     contract: T,
-    options?: ResolveOptions
+    options?: ResolveOptions,
   ): Promise<InstanceType<T> | undefined>;
 
   config<T>(name: string): T;
@@ -334,12 +330,12 @@ Asynchronous method to call any code after all providers will be registered and 
 interface BootContext {
   resolve<T extends AbstractConstructor>(
     contract: T,
-    options?: ResolveOptions
+    options?: ResolveOptions,
   ): Promise<InstanceType<T>>;
 
   resolveIfExist<T extends AbstractConstructor>(
     contract: T,
-    options?: ResolveOptions
+    options?: ResolveOptions,
   ): Promise<InstanceType<T> | undefined>;
 }
 ```
