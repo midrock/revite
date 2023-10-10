@@ -7,6 +7,9 @@
     "typecheck": "vue-tsc --noEmit",
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
   },
+  "dependencies": {
+    "revite": "*"
+  },
   "devDependencies": {
     "@headlessui/vue": "^1.4.2",
     "@heroicons/vue": "^1.0.5",
