@@ -1,6 +1,7 @@
 {
   "name": "@revite/demo",
   "version": "0.0.0",
+  "private": true,
   "scripts": {
     "dev": "cross-env APP_CONFIG=vue vite",
     "build": "cross-env APP_CONFIG=vue vite build",

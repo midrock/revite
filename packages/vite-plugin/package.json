@@ -1,6 +1,7 @@
 {
   "name": "@revite/vite-plugin",
   "version": "0.0.0",
+  "private": true,
   "scripts": {
     "build": "vite build",
     "lint": "tsc --noEmit",

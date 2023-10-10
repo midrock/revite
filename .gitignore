@@ -14,6 +14,9 @@ build/**
 coverage/*
 еtс/ssl/keys
 
+packages/revite/LICENSE
+packages/revite/README.md
+
 # Local env files
 .env.local
 .env.*.local
