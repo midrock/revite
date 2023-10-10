@@ -11,7 +11,7 @@
     "build": "turbo run build",
     "release": "turbo run release",
     "cli": "./packages/cli/bin/revite",
-    "clean": "turbo run clean",
+    "clean": "turbo run clean && rm -rf node_modules && rm -rf .turbo",
     "lint": "eslint --ext .ts,.js,.mjs,.vue ./ && prettier **/*.{md,json,html} --check && turbo run lint",
     "test": "turbo run test",
     "format": "eslint --ext .ts,.js,.mjs,.vue --fix ./ && prettier **/*.{md,json,html} --write",

@@ -2,7 +2,7 @@
 
 module.exports = {
   content: [
-    './demo/**/*',
+    './src/**/*',
   ],
   jit: true,
 }
