@@ -1,5 +1,11 @@
 # `revite` changelog
 
+## 1.16.0
+
+### Minor Changes
+
+- [`0207eb2`](https://github.com/midrock/revite/commit/0207eb22e91a97d687e0b2556dcdd306a8f005b4) Thanks [@midrock](https://github.com/midrock)! - Added a way to handle events with async listeners by import().
+
 ## 1.13.0
 
 ### Minor Changes
