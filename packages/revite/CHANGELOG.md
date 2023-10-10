@@ -1,5 +1,11 @@
 # `revite` changelog
 
+## 1.16.3
+
+### Patch Changes
+
+- cca62ce: Fix event handlers execution with payload.
+
 ## 1.16.2
 
 ### Patch Changes
