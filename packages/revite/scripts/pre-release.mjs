@@ -30,6 +30,10 @@ copy('packages/cli/bin', 'packages/revite/dist/cli/bin')
 delete revitePackageJson.devDependencies
 delete revitePackageJson.scripts
 
+revitePackageJson.bin = {
+  revite: './cli/bin/revite',
+}
+
 fs.writeFileSync(
   path.join(BASE_DIR, 'packages/revite/dist/package.json'),
   JSON.stringify(revitePackageJson, null, '  '),
