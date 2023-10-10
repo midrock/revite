@@ -32,4 +32,7 @@ export default defineConfig({
       keep_fnames: /ServiceContract|ServiceProvider/,
     },
   },
+  server: {
+    host: '0.0.0.0',
+  },
 })

@@ -24,11 +24,11 @@ export function resolveModule(module: Record<string, any>) {
   return module
 }
 
-export async function resolveImportUnsafe<T = any>(source: Import<T>): Promise<any> {
+export async function resolveImportUnsafe<T = any>(source: Import<T>, ...args: any[]): Promise<any> {
   let module: any
 
   if (source instanceof Function) {
-    module = await source()
+    module = await source(...args)
   } else if (source instanceof Promise) {
     module = await source
   } else {

@@ -86,7 +86,7 @@ interface ReactivityConfig {
 
 export type Import<T = any> =
   T
-  | (() => Promise<{ [key: string]: T }>)
+  | ((...args: any[]) => Promise<{ [key: string]: T }>)
   | Promise<{ [key: string]: T }>
 
 export interface ResolveOptions {

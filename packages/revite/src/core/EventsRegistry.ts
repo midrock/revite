@@ -126,7 +126,7 @@ export class EventsRegistry {
   }
 
   private async executeListenersParallel(event: Event, handlers: EventHandler<any>[]) {
-    return Promise.all(handlers.map(listener => {
+    return Promise.all(handlers.map(async listener => {
       return this.executeListener(event, listener)
         .catch(e => {
           console.error(e)
@@ -149,7 +149,7 @@ export class EventsRegistry {
     let listener = this.getListenerFromConstructor(handler)
 
     if (!listener) {
-      const module = await resolveImportUnsafe(Source)
+      const module = await resolveImportUnsafe(Source, event)
 
       listener = this.getListenerFromConstructor(module)
     }
