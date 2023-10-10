@@ -3,7 +3,8 @@
   "changelog": [
     "@changesets/changelog-github",
     {
-      "repo": "midrock/revite"
+      "repo": "midrock/revite",
+      "commit": "chore(version): updated"
     }
   ],
   "commit": true,
