@@ -1,5 +1,11 @@
 # `revite` changelog
 
+## 1.16.4
+
+### Patch Changes
+
+- 6e70ca9: Fix resolveImport unnecessary catch.
+
 ## 1.16.3
 
 ### Patch Changes
