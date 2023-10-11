@@ -24,10 +24,12 @@ export function resolveModule(module: Record<string, any>) {
   return module
 }
 
-export async function resolveImportUnsafe<T = any>(source: Import<T>, ...args: any[]): Promise<any> {
+export async function resolveImport<T = any>(source: Import<T>, ...args: any[]): Promise<any> {
   let module: any
 
-  if (source instanceof Function) {
+  if ((source as unknown as any).prototype) {
+    return source
+  } else if (source instanceof Function) {
     module = await source(...args)
   } else if (source instanceof Promise) {
     module = await source
@@ -38,11 +40,4 @@ export async function resolveImportUnsafe<T = any>(source: Import<T>, ...args: a
   if (module) {
     return resolveModule(module)
   }
-}
-
-export async function resolveImport<T = any>(source: Import<T>): Promise<any> {
-  return resolveImportUnsafe(source)
-    .catch(() => {
-      return undefined
-    })
 }

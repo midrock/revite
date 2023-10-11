@@ -1,6 +1,6 @@
 import { Event, Listener } from '..'
 import { logger } from '../utils/built-in'
-import { resolveImportUnsafe } from '../utils/import'
+import { resolveImport } from '../utils/import'
 import { debounce } from '../utils/timer'
 import type { EventConstructor, EventHandler, EventHandlerOptions, ListenerWrapper } from '../types'
 
@@ -149,7 +149,7 @@ export class EventsRegistry {
     let listener = this.getListenerFromConstructor(handler)
 
     if (!listener) {
-      const module = await resolveImportUnsafe(Source, event)
+      const module = await resolveImport(Source, event)
 
       listener = this.getListenerFromConstructor(module)
     }
