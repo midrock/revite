@@ -1,5 +1,11 @@
 # `revite` changelog
 
+## 1.17.0
+
+### Minor Changes
+
+- dcd74da: Add resolveSync method.
+
 ## 1.16.4
 
 ### Patch Changes
