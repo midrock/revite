@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "dev": "cross-env APP_CONFIG=vue vite",
+    "dev": "cross-env APP_CONFIG=next vite",
     "build": "cross-env APP_CONFIG=vue vite build",
     "typecheck": "vue-tsc --noEmit",
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"

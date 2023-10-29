@@ -30,6 +30,20 @@ export class ReviteController {
     return services.resolveIfExist(contract, options)
   }
 
+  resolveSync<T extends AbstractConstructor>(contract: T): InstanceType<T> {
+    const singleton = services.getSingleton(contract)
+
+    if (!singleton) {
+      throw new Error(`No service for ${contract.name}`)
+    }
+
+    return singleton
+  }
+
+  resolveSyncIfExist<T extends AbstractConstructor>(contract: T): InstanceType<T> | undefined {
+    return services.getSingleton(contract)
+  }
+
   /**
    * Bootstrap application
    */

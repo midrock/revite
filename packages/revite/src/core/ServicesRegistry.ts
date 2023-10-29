@@ -17,8 +17,12 @@ export class ServicesRegistry {
     return context
   }
 
+  getSingleton<T extends AbstractConstructor>(contract: T): InstanceType<T> | undefined {
+    return this.singletonRegistry.get(contract.name)
+  }
+
   async resolve<T extends AbstractConstructor>(contract: T, options?: ResolveOptions): Promise<InstanceType<T>> {
-    const singleton = this.singletonRegistry.get(contract.name)
+    const singleton = this.getSingleton(contract)
 
     if (singleton) {
       return singleton

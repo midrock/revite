@@ -1,8 +1,8 @@
-import { revite, ServiceProvider } from 'revite'
+import { BootContext, revite, ServiceProvider } from 'revite'
 import { AuthServiceContract } from '/~/services/auth'
 
 export class BootstrapProvider extends ServiceProvider {
-  async boot(ctx) {
+  async boot(ctx: BootContext) {
     const authService = await ctx.resolve(AuthServiceContract)
 
     if (authService.isLoggedIn) {

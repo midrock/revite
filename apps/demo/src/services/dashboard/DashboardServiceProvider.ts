@@ -7,9 +7,6 @@ export class DashboardServiceProvider extends ServiceProvider {
       config: 'dashboard',
       reactive: true,
       singleton: true,
-      factory({ Service }) {
-        return () => new Service()
-      },
     })
   }
 }
