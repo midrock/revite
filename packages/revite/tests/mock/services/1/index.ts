@@ -1,0 +1,1 @@
+export { Test1ServiceContract } from './Test1ServiceContract'

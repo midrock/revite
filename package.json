@@ -15,7 +15,8 @@
     "lint": "eslint --ext .ts,.js,.mjs,.vue ./ && prettier **/*.{md,json,html} --check && turbo run lint",
     "test": "turbo run test",
     "format": "eslint --ext .ts,.js,.mjs,.vue --fix ./ && prettier **/*.{md,json,html} --write",
-    "postinstall": "husky install"
+    "postinstall": "husky install",
+    "test:unit": "turbo run test:unit"
   },
   "devDependencies": {
     "@babel/types": "^7.23.0",
