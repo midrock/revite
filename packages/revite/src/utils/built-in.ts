@@ -1,7 +1,7 @@
-import { LoggerServiceContract, resolveImport } from '..'
+import { LoggerServiceContract, resolveImport, ReactivityServiceContract } from '..'
 import { LoggerService } from '../services/LoggerService'
 import { config } from '../state'
-import type { Config, ReactivityServiceContract } from '..'
+import type { Config } from '..'
 
 export const logger = (() => {
   let loggerService: LoggerServiceContract
