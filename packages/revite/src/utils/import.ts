@@ -27,7 +27,7 @@ export function resolveModule(module: Record<string, any>) {
 export async function resolveImport<T = any>(source: Import<T>, ...args: any[]): Promise<any> {
   let module: any
 
-  if ((source as unknown as any).prototype) {
+  if ((source as unknown as any)?.prototype) {
     return source
   } else if (source instanceof Function) {
     module = await source(...args)
@@ -36,7 +36,6 @@ export async function resolveImport<T = any>(source: Import<T>, ...args: any[]):
   } else {
     return source
   }
-
   if (module) {
     return resolveModule(module)
   }

@@ -48,14 +48,13 @@ export class BindContext<T extends AbstractConstructor> {
         return
       }
 
-      const reactivityService = await reactivity()
       const rawInstance = this.factory.service()
       const extend = this.factory?.extend || []
 
       if (this.reactive === 'deep') {
-        instance = reactivityService.makeDeepReactive(rawInstance)
+        instance = (await reactivity()).makeDeepReactive(rawInstance)
       } else if (this.reactive) {
-        instance = reactivityService.makeReactive(rawInstance)
+        instance = (await reactivity()).makeReactive(rawInstance)
       } else {
         instance = rawInstance
       }
