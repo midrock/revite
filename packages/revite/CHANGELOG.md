@@ -1,5 +1,11 @@
 # `revite` changelog
 
+## 1.17.1
+
+### Patch Changes
+
+- f15fefe: Fix reactivity handlers
+
 ## 1.17.0
 
 ### Minor Changes
