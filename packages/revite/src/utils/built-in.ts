@@ -13,7 +13,9 @@ export const logger = (() => {
 
     const mainConfig = config.get<Config>('main')
     const Service = mainConfig.logger?.service || LoggerService
-    const forceDebug = new URLSearchParams(window.location.search).has('revite_debug')
+    const forceDebug = window 
+      ? new URLSearchParams(window.location.search).has('revite_debug') 
+      : false
 
     loggerService = new Service({
       level: forceDebug ? 'debug' : (mainConfig.logger?.level || 'warn'),
