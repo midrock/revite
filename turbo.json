@@ -20,6 +20,9 @@
     },
     "revite#build": {
       "dependsOn": ["^build"]
+    },
+    "test:unit": {
+      "cache": false
     }
   }
 }
