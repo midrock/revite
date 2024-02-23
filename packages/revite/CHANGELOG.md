@@ -1,5 +1,11 @@
 # `revite` changelog
 
+## 1.17.2
+
+### Patch Changes
+
+- Fix required window when node environment
+
 ## 1.17.1
 
 ### Patch Changes
