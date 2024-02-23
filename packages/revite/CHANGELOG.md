@@ -1,5 +1,11 @@
 # `revite` changelog
 
+## 1.17.3
+
+### Patch Changes
+
+- 3d4090f: Fix utility
+
 ## 1.17.2
 
 ### Patch Changes
