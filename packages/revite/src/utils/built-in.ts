@@ -13,7 +13,7 @@ export const logger = (() => {
 
     const mainConfig = config.get<Config>('main')
     const Service = mainConfig.logger?.service || LoggerService
-    const forceDebug = window 
+    const forceDebug = (typeof window === 'object' && window) 
       ? new URLSearchParams(window.location.search).has('revite_debug') 
       : false
 
