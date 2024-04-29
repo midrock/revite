@@ -1,5 +1,11 @@
 # `revite` changelog
 
+## 1.18.1
+
+### Patch Changes
+
+- 57b8ef1: Fix config in boot method
+
 ## 1.18.0
 
 ### Minor Changes
