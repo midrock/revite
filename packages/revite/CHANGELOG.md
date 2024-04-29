@@ -1,5 +1,11 @@
 # `revite` changelog
 
+## 1.18.0
+
+### Minor Changes
+
+- bdfa69b: Add config to provider boot method
+
 ## 1.17.3
 
 ### Patch Changes
