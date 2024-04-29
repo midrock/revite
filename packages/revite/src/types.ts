@@ -118,9 +118,12 @@ export interface RegisterContext extends ProviderContext {
   bind<T extends AbstractConstructor>(contract: T): BindContext<T>
 }
 
+export interface BootContext extends ProviderContext {
+  config<T>(name: string): T
+}
+
 export interface BeforeBootContext extends ProviderContext {
   config<T>(name: string): T
 }
 
-export type BootContext = ProviderContext
 export type BindFactory<T extends AbstractConstructor> = () => InstanceType<T>

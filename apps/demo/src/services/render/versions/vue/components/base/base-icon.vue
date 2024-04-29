@@ -1,23 +1,21 @@
 <script lang="ts">
 import {
-  AnnotationIcon,
   ChartBarIcon,
   DocumentTextIcon,
   HomeIcon,
-  MenuAlt2Icon,
   PencilIcon,
   PlusCircleIcon,
-} from '@heroicons/vue/outline'
+} from '@heroicons/vue/24/outline'
 import { computed, defineComponent } from 'vue'
 
 const ICONS = {
   home: HomeIcon,
-  annotation: AnnotationIcon,
+  annotation: ChartBarIcon,
   document: DocumentTextIcon,
   pencil: PencilIcon,
   plus: PlusCircleIcon,
   chart: ChartBarIcon,
-  menu: MenuAlt2Icon,
+  menu: ChartBarIcon,
 }
 
 export default defineComponent({

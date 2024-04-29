@@ -9,3 +9,8 @@ export const services = new ServicesRegistry()
 export const providers = new ProvidersRegistry()
 export const revite = new ReviteController()
 export const events = new EventsRegistry()
+
+
+setTimeout(() => {
+  console.log(config)
+}, 3000)
