@@ -1,0 +1,5 @@
+---
+"revite": patch
+---
+
+Remove artifacts
