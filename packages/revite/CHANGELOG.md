@@ -1,5 +1,11 @@
 # `revite` changelog
 
+## 1.18.2
+
+### Patch Changes
+
+- 5aea552: Remove artifacts
+
 ## 1.18.1
 
 ### Patch Changes
