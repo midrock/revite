@@ -1,5 +1,11 @@
 # `revite` changelog
 
+## 1.18.3
+
+### Patch Changes
+
+- a3b0483: Bootstrap flow support object configuration
+
 ## 1.18.2
 
 ### Patch Changes
