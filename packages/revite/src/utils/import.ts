@@ -1,18 +1,4 @@
-import { Import, Sources } from '../types'
-
-export function getImportsByFileNames(configSource?: Sources) {
-  const parseResult: Record<string, any> = {}
-
-  for (const path in configSource) {
-    const fileName = path.split('/').pop()?.replace(/\..+$/, '')
-
-    if (fileName) {
-      parseResult[fileName] = resolveModule(configSource[path])
-    }
-  }
-
-  return parseResult
-}
+import { Import } from '../types'
 
 export function resolveModule(module: Record<string, any>) {
   if (module && typeof module === 'object') {

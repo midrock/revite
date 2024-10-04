@@ -39,15 +39,29 @@ export default function revitePluginVite(options: PluginOptions): Plugin {
       }
     },
     load(id) {
-      if (id === resolvedVirtualModuleId) {
-        const path = [options.root, targetConfig, '*.ts'].filter(v => v).join('/')
+      if (id !== resolvedVirtualModuleId) return
+      
+      const path = [options.root, targetConfig, '*.ts'].filter(v => v).join('/')
 
-        return `
-          const config = import.meta.glob("${path}", { eager: true })
-          config['__name'] = '${targetConfig}'
-          export default config
-        `
-      }
+      return `
+        import { resolveModule } from 'revite'
+
+        const config = import.meta.glob("${path}", { eager: true })
+        config['__name'] = '${targetConfig}'
+
+        const parsed = {}
+
+        for (const path in config) {
+          const fileName = path.split('/').pop()
+          const name = fileName ? fileName.replace(/\\..+$/, '') : ''
+          
+          if (name) {
+            parsed[name] = resolveModule(config[path])
+          }
+        }
+
+        export default parsed
+      `
     },
   }
 }

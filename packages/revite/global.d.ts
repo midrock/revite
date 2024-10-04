@@ -2,7 +2,8 @@
  * Predefined alias for dynamic configuration loaded via the Vite plugin
  */
 declare module '@revite/config' {
-  const config: Record<string, any>
+  type BootstrapConfig = import('revite').BootstrapConfig
+  const config: BootstrapConfig
 
   export default config
 }

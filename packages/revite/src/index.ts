@@ -15,6 +15,7 @@ export function defineConfig(config: Config) {
 
 export {
   resolveImport,
+  resolveModule,
 } from './utils/import'
 
 export type {
@@ -25,4 +26,5 @@ export type {
   Config,
   Import,
   ServiceConfig,
+  BootstrapConfig,
 } from './types'

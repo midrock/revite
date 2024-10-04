@@ -1,6 +1,6 @@
 import { config, events, services } from '../state'
 import { BootstrapSessionTask } from '../tasks/BootstrapSessionTask'
-import { getImportsByFileNames, resolveImport } from '../utils/import'
+import { resolveImport } from '../utils/import'
 import type {
   AbstractConstructor,
   Config,
@@ -8,7 +8,7 @@ import type {
   EventConstructor,
   EventHandler,
   EventHandlerOptions,
-  Sources,
+  BootstrapConfig,
 } from '../types'
 
 export class ReviteController {
@@ -47,16 +47,15 @@ export class ReviteController {
   /**
    * Bootstrap application
    */
-  async bootstrap(appConfig: Sources) {
-    const configInFiles = getImportsByFileNames(appConfig)
-    const mainConfig = configInFiles.main
+  async bootstrap(appConfig: BootstrapConfig) {
+    const mainConfig = appConfig.main
     const configName = appConfig.__name
 
     if (!mainConfig) {
       throw new Error(`Configuration ${configName} does not contain the "main" file`)
     }
 
-    await config.apply(configInFiles)
+    config.apply(appConfig)
     config.apply(mainConfig.config)
 
     return new BootstrapSessionTask({

@@ -38,10 +38,9 @@ export type Constructor<T> = {
 
 type SourceRaw = Record<string, any>
 type SourceFunction = () => (SourceRaw | Promise<SourceRaw>)
-type Source = SourceRaw | SourceFunction
 
-export type Sources = Record<string, Source>
-
+export type Source = SourceRaw | SourceFunction
+export type BootstrapConfig = { main: BaseConfig } & { [key: string]: ServiceConfig }
 export type LogLevel = 'debug' | 'info' | 'warn' | 'error'
 
 export interface LogOptions {
