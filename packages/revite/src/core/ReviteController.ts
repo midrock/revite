@@ -47,12 +47,11 @@ export class ReviteController {
   /**
    * Bootstrap application
    */
-  async bootstrap(appConfig: BootstrapConfig) {
-    const mainConfig = appConfig.main
-    const configName = appConfig.__name
+  async bootstrap<T>(appConfig: BootstrapConfig<T>) {
+    const mainConfig = 'main' in appConfig ? appConfig.main as Config : undefined
 
     if (!mainConfig) {
-      throw new Error(`Configuration ${configName} does not contain the "main" file`)
+      throw new Error('Configuration does not contain the "main" key')
     }
 
     config.apply(appConfig)

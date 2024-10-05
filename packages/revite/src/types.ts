@@ -40,7 +40,10 @@ type SourceRaw = Record<string, any>
 type SourceFunction = () => (SourceRaw | Promise<SourceRaw>)
 
 export type Source = SourceRaw | SourceFunction
-export type BootstrapConfig = { main: BaseConfig } & { [key: string]: ServiceConfig }
+export type BootstrapConfig<T> = {
+  [P in keyof T]: P extends 'main' ? Config : ServiceConfig
+}
+
 export type LogLevel = 'debug' | 'info' | 'warn' | 'error'
 
 export interface LogOptions {
