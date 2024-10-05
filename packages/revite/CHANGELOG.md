@@ -1,5 +1,11 @@
 # `revite` changelog
 
+## 1.18.4
+
+### Patch Changes
+
+- 0f4ced3: Improve types
+
 ## 1.18.3
 
 ### Patch Changes
